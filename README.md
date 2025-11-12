@@ -33,8 +33,8 @@ _Finaliza con un ejemplo de cómo obtener datos del sistema o como usarlos para 
 ## Autores 
 
 
-* **Mireia Pérez** - *Trabajo Inicial* - [villanuevand](https://github.com/villanuevand)
-* **Pau Almendrote** - *Documentación* - [fulanitodetal](#fulanito-de-tal)
+* **Mireia Pérez** - *Trabajo Inicial* - [Github](https://github.com/mirept)
+* **Pau Almendrote** - *Documentación* - [Github](https://github.com/normalatorre04)
 * **Aamna Noor Syed** - *Documentación* - [fulanitodetal](#fulanito-de-tal)
 * **Jason Cardona** - *Documentación* - [fulanitodetal](#fulanito-de-tal)
 * **Laia Gombau** - *Documentación* - [fulanitodetal](#fulanito-de-tal)
@@ -47,4 +47,4 @@ Este proyecto está bajo la Licencia MTI - mira el archivo [LICENSE.md](LICENSE.
 
 ## Expresiones de Gratitud 
 
-* Gracias a dios 🙏
+* Damos las gracias a dios 🙏
