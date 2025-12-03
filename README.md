@@ -1,6 +1,6 @@
-# VR Environment Ratty Snakes
+# Stairway To Heaven
 
-StairwayToHeaven es un juego de realidad virtual donde encarnas a un oficinista sustituto de San Pedro, debido a su reciente despido por "comportamiento indebido", has sido elegido por Dios para decidir quién entra al cielo y quién va al infierno. Debido a un overbooking del cielo celestial, no hay suficientes plazas para todos los muertos, y depende de ti tomar la decisión de quién entra y quién no.
+Stairway To Heaven es un juego de realidad virtual donde encarnas a un oficinista sustituto de San Pedro, debido a su reciente despido por "comportamiento indebido", has sido elegido por Dios para decidir quién entra al cielo y quién va al infierno. Debido a un overbooking del cielo celestial, no hay suficientes plazas para todos los muertos, y depende de ti tomar la decisión de quién entra y quién no.
 
 Durante tu jornada, situado detrás de un escritorio , atenderás a los difuntos uno a uno. Cada muerto presentará una biografía, sus virtudes y defectos, así como los actos lícitos e ilícitos que cometió en la Tierra. Tu objetivo: decidir, según tu criterio, quién es digno de entrar al cielo sin saber si el siguiente será más merecedor que el anterior.
 
