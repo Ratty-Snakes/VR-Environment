@@ -16,6 +16,10 @@ Para aceptar a los muertos en el cielo, simplemente puedes levantar el pulgar ha
 
 Además, el juego incluye distintos elementos interactivos, como un botón para llamar al siguiente en la cola, una palanca que activa una trampilla para enviar a los difuntos directamente al infierno, y un teléfono desde el cual Dios te transmite las órdenes del día.
 
+### Cómo jugar
+
+Llama al siguiente difunto con el botón de la izquierda. Una vez leída su biografía, decide si lo aceptas en el cielo, haciendo con el gesto del pulgar hacia arriba, o si lo envías al infierno, mostrando el pulgar hacia abajo, sacar el dedo del medio y el pulgar a la vez o negar con el dedo índice. Una vez el NPC haya llegado a la puerta del cielo o haya sido eliminado, llama al siguiente NPC con el botón de nuevo.
+
 ### Pre-requisitos 
 
 Para StairwayToHeaven necesitas lo siguiente:
@@ -60,4 +64,4 @@ Este proyecto está bajo la Licencia MTI - mira el archivo [LICENSE.md](LICENSE.
 
 ## Expresiones de Gratitud 
 
-* Damos las gracias a dios 🙏
+Damos las gracias a dios 🙏
