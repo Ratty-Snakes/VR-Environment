@@ -24,6 +24,11 @@ namespace UnityEngine.XR.Content.Interaction
         [Tooltip("If enabled, the lever will snap to the value position when released")]
         bool m_LockToValue;
 
+        // NUEVO CAMPO: Opción para volver al valor inicial
+        [SerializeField]
+        [Tooltip("If enabled, the lever will snap to the original value set on Start when released")]
+        bool m_ReturnToOriginalOnRelease = false;
+
         [SerializeField]
         [Tooltip("Angle of the lever in the 'on' position")]
         [Range(-90.0f, 90.0f)]
@@ -43,6 +48,9 @@ namespace UnityEngine.XR.Content.Interaction
         UnityEvent m_OnLeverDeactivate = new UnityEvent();
 
         IXRSelectInteractor m_Interactor;
+
+        // NUEVO CAMPO: Almacena el valor inicial de la palanca
+        bool m_OriginalValueOnStart;
 
         /// <summary>
         /// The object that is visually grabbed and manipulated
@@ -66,6 +74,17 @@ namespace UnityEngine.XR.Content.Interaction
         /// If enabled, the lever will snap to the value position when released
         /// </summary>
         public bool lockToValue { get; set; }
+
+        /// <summary>
+        /// If enabled, the lever will snap to the original value set on Start when released
+        /// </summary>
+        // NUEVA PROPIEDAD
+        public bool returnToOriginalOnRelease
+        {
+            get => m_ReturnToOriginalOnRelease;
+            set => m_ReturnToOriginalOnRelease = value;
+        }
+
 
         /// <summary>
         /// Angle of the lever in the 'on' position
@@ -97,6 +116,12 @@ namespace UnityEngine.XR.Content.Interaction
 
         void Start()
         {
+            // NUEVO: Guardar el valor inicial de la palanca
+            if (m_ReturnToOriginalOnRelease)
+            {
+                m_OriginalValueOnStart = m_Value;
+            }
+
             SetValue(m_Value, true);
         }
 
@@ -119,9 +144,20 @@ namespace UnityEngine.XR.Content.Interaction
             m_Interactor = args.interactorObject;
         }
 
+        // MODIFICADO: Aplicar el retorno al soltar
         void EndGrab(SelectExitEventArgs args)
         {
-            SetValue(m_Value, true);
+            if (m_ReturnToOriginalOnRelease)
+            {
+                // Si la opción está marcada, vuelve al valor inicial guardado
+                SetValue(m_OriginalValueOnStart, true);
+            }
+            else
+            {
+                // Comportamiento original: vuelve al valor actual (lockToValue)
+                SetValue(m_Value, true);
+            }
+
             m_Interactor = null;
         }
 
@@ -186,14 +222,21 @@ namespace UnityEngine.XR.Content.Interaction
 
             if (m_Value)
             {
+                // NUEVA LÍNEA: Mensaje de debug para activación
+                Debug.Log($"Palanca '{gameObject.name}' ACTIVADA (valor: TRUE)");
+
                 m_OnLeverActivate.Invoke();
             }
             else
             {
+                // OPCIONAL: Mensaje de debug para desactivación
+                Debug.Log($"Palanca '{gameObject.name}' DESACTIVADA (valor: FALSE)");
+
                 m_OnLeverDeactivate.Invoke();
             }
 
-            if (!isSelected && (m_LockToValue || forceRotation))
+            // Solo ajustar la rotación si no está siendo agarrado Y (está bloqueado O se forzó la rotación)
+            if (!isSelected && (m_LockToValue || forceRotation || m_ReturnToOriginalOnRelease))
                 SetHandleAngle(m_Value ? m_MaxAngle : m_MinAngle);
         }
 
