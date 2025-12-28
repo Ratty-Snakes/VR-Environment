@@ -222,16 +222,10 @@ namespace UnityEngine.XR.Content.Interaction
 
             if (m_Value)
             {
-                // NUEVA LÍNEA: Mensaje de debug para activación
-                Debug.Log($"Palanca '{gameObject.name}' ACTIVADA (valor: TRUE)");
-
                 m_OnLeverActivate.Invoke();
             }
             else
             {
-                // OPCIONAL: Mensaje de debug para desactivación
-                Debug.Log($"Palanca '{gameObject.name}' DESACTIVADA (valor: FALSE)");
-
                 m_OnLeverDeactivate.Invoke();
             }
 
