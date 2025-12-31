@@ -1,21 +1,40 @@
 using UnityEngine;
-using UnityEngine.SceneManagement; // Necesario para cambiar de escena
+using UnityEngine.SceneManagement;
 
 public class MainMenuManager : MonoBehaviour
 {
-    [Header("Configuración")]
-    [Tooltip("El nombre exacto de tu escena de juego")]
+    [Header("Escenas")]
     public string nombreEscenaJuego = "GameScene";
+
+    [Header("Paneles UI")]
+    public GameObject mainPanel;    // El menú principal (Jugar / Opciones)
+    public GameObject optionsPanel; // El menú de opciones (Sliders / Volver)
+
+    void Start()
+    {
+        // Asegurar estado inicial correct
+        VolverAlMenuPrincipal();
+    }
 
     public void StartGame()
     {
-        Debug.Log("Cargando el juego...");
         SceneManager.LoadScene(nombreEscenaJuego);
+    }
+
+    public void AbrirOpciones()
+    {
+        mainPanel.SetActive(false);
+        optionsPanel.SetActive(true);
+    }
+
+    public void VolverAlMenuPrincipal()
+    {
+        optionsPanel.SetActive(false);
+        mainPanel.SetActive(true);
     }
 
     public void QuitGame()
     {
-        Debug.Log("Saliendo de la aplicación...");
         Application.Quit();
     }
 }
