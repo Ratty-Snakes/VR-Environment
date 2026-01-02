@@ -10,14 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9d746dfd5547b064384d81121ccfbbee, type: 3}
-  m_Name: Manolo
+  m_Name: "Ill\xE1n"
   m_EditorClassIdentifier: 
-  nombre: Manolo
-  edad: 30
-  hobbies: 1
-  causaMuerte: 2
-  actosBuenos: 3
-  actosMalos: 4
+  nombre: "Ill\xE1n"
+  edad: 12
+  hobbies: Dibujar paisajes de memoria
+  causaMuerte: "Unos ni\xF1os lo empujaron y cay\xF3 de cara sobre el bordillo de
+    una carretera. "
+  actosBuenos: "Compart\xEDa siempre los regalos y postres que le daba su madre con
+    sus hermanos mayores"
+  actosMalos: "Dec\xEDa palabrotas en clase para la aprobaci\xF3n de los dem\xE1s"
   reaccionPositiva: "\xA1Gracias! Has sido muy amable."
   reaccionNegativa: "\xA1No es justo! \xA1Yo merec\xEDa entrar!"
-  modeloEspecifico: {fileID: 816762600386231481, guid: 51724126dfb71664b80ce9fea38595c0, type: 3}
+  modeloEspecifico: {fileID: 919132149155446097, guid: 25c025b5b918d3b438c31322340e3501, type: 3}

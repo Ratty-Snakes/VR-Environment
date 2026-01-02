@@ -1,5 +1,5 @@
 using UnityEngine;
-using TMPro; // Necesario para usar TextMeshPro
+using TMPro;
 using System.Collections;
 
 public class NPCReactionController : MonoBehaviour
@@ -11,62 +11,81 @@ public class NPCReactionController : MonoBehaviour
     [Tooltip("El componente de texto donde escribiremos la frase")]
     public TextMeshProUGUI dialogueText;
 
-    [Tooltip("Tiempo que el texto permanece en pantalla")]
-    public float displayTime = 4f;
+    [Tooltip("Tiempo que el texto permanece en pantalla DESPUÉS de terminar de escribirse")]
+    public float displayTime = 3f;
 
-    // Datos del NPC actual (se rellenan al nacer)
+    [Header("Efecto Máquina de Escribir")]
+    [Tooltip("Velocidad de escritura (segundos por letra). Menor es más rápido.")]
+    public float typingSpeed = 0.05f;
+
+    // Datos del NPC actual
     private NPCData currentData;
+    // Guardamos la corrutina activa para poder pararla si cambiamos de frase rápido
+    private Coroutine activeCoroutine;
 
     void Start()
     {
-        // Al empezar, nos aseguramos de que la burbuja esté oculta
         if (dialogueBubble != null)
             dialogueBubble.SetActive(false);
     }
 
-    // Este método lo llama el NPCManager justo después de instanciar al NPC
     public void Initialize(NPCData data)
     {
         currentData = data;
     }
 
-    // Llamado cuando pulsas el botón VERDE (Salvar)
+    // Llamado al ACEPTAR
     public void ShowPositiveReaction()
     {
         if (currentData != null)
         {
-            StartCoroutine(ShowAndHideCoroutine(currentData.reaccionPositiva));
+            StartReaction(currentData.reaccionPositiva);
         }
     }
 
-    // Llamado cuando pulsas el botón ROJO (Sentenciar)
+    // Llamado al RECHAZAR
     public void ShowNegativeReaction()
     {
         if (currentData != null)
         {
-            StartCoroutine(ShowAndHideCoroutine(currentData.reaccionNegativa));
+            StartReaction(currentData.reaccionNegativa);
         }
     }
 
-    // Corrutina para mostrar, esperar y ocultar
-    private IEnumerator ShowAndHideCoroutine(string message)
+    // Función auxiliar para reiniciar el proceso limpiamente
+    private void StartReaction(string message)
     {
-        if (dialogueBubble == null || dialogueText == null)
-        {
-            Debug.LogWarning("Falta asignar la Burbuja o el Texto en el NPCReactionController");
-            yield break;
-        }
+        // Si ya estaba hablando, le cortamos la frase anterior
+        if (activeCoroutine != null) StopCoroutine(activeCoroutine);
 
-        // 1. Poner el texto
-        dialogueText.text = message;
+        activeCoroutine = StartCoroutine(TypewriterRoutine(message));
+    }
 
-        // 2. Mostrar la burbuja
+    // La Corrutina con el efecto Typewriter
+    private IEnumerator TypewriterRoutine(string message)
+    {
+        if (dialogueBubble == null || dialogueText == null) yield break;
+
+        // 1. Limpiar y Mostrar
+        dialogueText.text = ""; // Empezamos vacíos
         dialogueBubble.SetActive(true);
 
-        // 3. Esperar
+        // 2. Bucle de escritura (Letra a letra)
+        foreach (char letter in message.ToCharArray())
+        {
+            dialogueText.text += letter;
+
+            // Aquí podrías añadir sonido de "blip" si quisieras:
+            // audioSource.PlayOneShot(blipSound);
+
+            yield return new WaitForSeconds(typingSpeed);
+        }
+
+        // 3. Esperar para leer
         yield return new WaitForSeconds(displayTime);
 
-        // 4. Ocultar la burbuja
+        // 4. Ocultar
         dialogueBubble.SetActive(false);
+        activeCoroutine = null;
     }
 }

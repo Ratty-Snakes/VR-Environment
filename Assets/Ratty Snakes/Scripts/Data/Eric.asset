@@ -10,16 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9d746dfd5547b064384d81121ccfbbee, type: 3}
-  m_Name: Bomani
+  m_Name: Eric
   m_EditorClassIdentifier: 
-  nombre: Bomani
-  edad: 24
-  hobbies: Fotografiar aves
-  causaMuerte: "Pis\xF3  una mina durante una expedici\xF3n"
-  actosBuenos: "Participaba activamente en manifestaciones para los derechos de los
-    m\xE1s necesitados"
-  actosMalos: "Ignor\xF3 la agresi\xF3n sexual de sus compa\xF1eros hacia otras mujeres
-    militares, a pesar de no participar en ellas"
+  nombre: Eric
+  edad: 28
+  hobbies: Hacer skate con sus amigos por las noches
+  causaMuerte: "C\xE1ncer de pulm\xF3n"
+  actosBuenos: Preparaba las comidas a su abuela enferma
+  actosMalos: '- Vandalismo en los edificios y tiendas del barrio
+
+    - Vender droga
+    a menores de edad'
   reaccionPositiva: "\xA1Gracias! Has sido muy amable."
   reaccionNegativa: "\xA1No es justo! \xA1Yo merec\xEDa entrar!"
-  modeloEspecifico: {fileID: 919132149155446097, guid: 7d6bd198cc2717e41a112cb2b08be9b1, type: 3}
+  modeloEspecifico: {fileID: 816762600386231481, guid: 51724126dfb71664b80ce9fea38595c0, type: 3}

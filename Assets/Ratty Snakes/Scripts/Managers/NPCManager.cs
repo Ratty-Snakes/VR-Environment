@@ -11,13 +11,17 @@ public class NPCManager : MonoBehaviour
     public Transform[] listaWaypoints;
     public NPCUIController uiController;
 
+    [Header("Configuracion de Tiempos")]
+    [Tooltip("Segundos que espera el NPC agradeciendo antes de irse al cielo")]
+    public float tiempoEsperaCielo = 2.0f;
+
     [Header("Estado Actual")]
     private GameObject npcActualObj;
     private NPCWaypointMovement movimientoActual;
     private NPCReactionController reaccionActual;
     private NPCData datosActuales;
 
-    // <--- CAMBIO: Variable para saber si la mesa está ocupada
+    // Variable para saber si la mesa esta ocupada
     private bool mesaOcupada = false;
 
     private void Awake()
@@ -28,22 +32,19 @@ public class NPCManager : MonoBehaviour
 
     void Start()
     {
-        // <--- CAMBIO: YA NO llamamos a TraerSiguienteNPC automáticamente al inicio.
-        // El juego empieza vacío esperando que pulses el botón.
-        Debug.Log("Esperando a que el jugador pulse el botón de SIGUIENTE.");
+        Debug.Log("Esperando a que el jugador pulse el boton de SIGUIENTE.");
     }
 
-    // <--- CAMBIO: Nueva función pública para el Botón de la Mesa
+    // Boton de la Mesa
     public void BotonSiguientePulsado()
     {
-        // Si ya hay alguien en la mesa o procesándose, el botón no hace nada
         if (mesaOcupada)
         {
-            Debug.Log("¡Espera! Todavía hay un alma en proceso.");
+            Debug.Log("[AVISO] Espera! Todavia hay un alma en proceso.");
             return;
         }
 
-        Debug.Log("¡DING! Llamando al siguiente...");
+        Debug.Log("Llamando al siguiente...");
         TraerSiguienteNPC();
     }
 
@@ -53,19 +54,32 @@ public class NPCManager : MonoBehaviour
 
         if (datosActuales == null)
         {
-            Debug.Log("¡Jornada terminada! No quedan más NPCs.");
+            Debug.Log("Jornada terminada! No quedan mas NPCs.");
             return;
         }
 
-        // <--- CAMBIO: Marcamos la mesa como ocupada
         mesaOcupada = true;
 
-        Debug.Log($"Procesando a: {datosActuales.nombre}");
-
-        // Instanciar
+        // 1. Instanciar el CONTENEDOR (NPC_Base)
         npcActualObj = Instantiate(npcPrefab, listaWaypoints[0].position, listaWaypoints[0].rotation);
 
-        // 1. Configurar Movimiento
+        // --- Logica de cambio de modelo ---
+        MeshRenderer baseMesh = npcActualObj.GetComponent<MeshRenderer>();
+        if (baseMesh != null) baseMesh.enabled = false;
+
+        if (datosActuales.modeloEspecifico != null)
+        {
+            GameObject modeloVisual = Instantiate(datosActuales.modeloEspecifico, npcActualObj.transform);
+            modeloVisual.transform.localPosition = Vector3.zero;
+            modeloVisual.transform.localRotation = Quaternion.identity;
+        }
+        else
+        {
+            if (baseMesh != null) baseMesh.enabled = true;
+        }
+        // ------------------------------------------
+
+        // 2. Configurar Movimiento
         movimientoActual = npcActualObj.GetComponent<NPCWaypointMovement>();
         if (movimientoActual != null)
         {
@@ -74,7 +88,7 @@ public class NPCManager : MonoBehaviour
             movimientoActual.AlLlegarA_Cielo += LimpiarYTraerSiguiente;
         }
 
-        // 2. Configurar Reacción
+        // 3. Configurar Reaccion
         reaccionActual = npcActualObj.GetComponent<NPCReactionController>();
         if (reaccionActual != null)
         {
@@ -84,26 +98,42 @@ public class NPCManager : MonoBehaviour
 
     void AlLlegarAMesa()
     {
-        Debug.Log("EL JUEZ DEBE DECIDIR AHORA.");
         if (uiController != null) uiController.MostrarDatos(datosActuales);
     }
 
     // --- DECISIONES ---
 
+    // GESTO: Pulgar Arriba (Cielo)
     public void Decidir_Aceptar()
     {
         if (npcActualObj == null) return;
 
-        if (uiController != null) uiController.OcultarDatos();
-        GameManager.Instance.RegistrarEntradaCielo();
-
-        if (reaccionActual != null) reaccionActual.ShowPositiveReaction();
-
-        movimientoActual.IrAlCielo();
-
-        // Nota: mesaOcupada sigue siendo true hasta que el NPC se vaya del todo
+        // Iniciamos la secuencia con espera
+        StartCoroutine(SecuenciaAceptarCielo());
     }
 
+    // CORRUTINA PARA LA PAUSA DRAMATICA
+    IEnumerator SecuenciaAceptarCielo()
+    {
+        Debug.Log("Veredicto: ACEPTADO. Esperando para irse...");
+
+        // 1. Ocultamos los datos inmediatamente para limpiar la mesa
+        if (uiController != null) uiController.OcultarDatos();
+
+        // 2. Registramos el punto
+        GameManager.Instance.RegistrarEntradaCielo();
+
+        // 3. El NPC habla (Typewriter effect)
+        if (reaccionActual != null) reaccionActual.ShowPositiveReaction();
+
+        // 4. PAUSA: Esperamos aqui el tiempo configurado mientras el NPC sigue quieto
+        yield return new WaitForSeconds(tiempoEsperaCielo);
+
+        // 5. Ahora si, se va caminando
+        if (movimientoActual != null) movimientoActual.IrAlCielo();
+    }
+
+    // GESTO: Pulgar Abajo (Veredicto verbal)
     public void Decidir_Rechazar_Veredicto()
     {
         if (npcActualObj == null) return;
@@ -111,8 +141,10 @@ public class NPCManager : MonoBehaviour
         if (uiController != null) uiController.OcultarDatos();
 
         if (reaccionActual != null) reaccionActual.ShowNegativeReaction();
+        // Aqui no hace falta espera, el NPC se queda quieto esperando la palanca por defecto
     }
 
+    // PALANCA: Ejecucion fisica
     public void Decidir_Rechazar_Ejecucion()
     {
         if (npcActualObj == null) return;
@@ -126,7 +158,6 @@ public class NPCManager : MonoBehaviour
         }
     }
 
-    // Esta función se llama cuando el NPC llega al cielo O cuando ha caído por la trampilla
     void LimpiarYTraerSiguiente()
     {
         if (movimientoActual != null)
@@ -137,13 +168,8 @@ public class NPCManager : MonoBehaviour
 
         if (controladorTrampilla != null) controladorTrampilla.CloseTrapdoor();
 
-        // Limpiamos referencias del objeto anterior
         npcActualObj = null;
-
-        // <--- CAMBIO CRUCIAL:
-        // Antes llamábamos a TraerSiguienteNPC() aquí. 
-        // AHORA solo liberamos la mesa para que el botón funcione de nuevo.
         mesaOcupada = false;
-        Debug.Log("Mesa libre. Pulsa el botón para el siguiente.");
+        Debug.Log("Mesa libre.");
     }
 }

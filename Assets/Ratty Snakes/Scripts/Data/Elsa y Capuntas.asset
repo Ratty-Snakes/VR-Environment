@@ -10,14 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9d746dfd5547b064384d81121ccfbbee, type: 3}
-  m_Name: Pepe
+  m_Name: Elsa y Capuntas
   m_EditorClassIdentifier: 
-  nombre: Pepe
-  edad: 67
-  hobbies: 1
-  causaMuerte: 2
-  actosBuenos: 3
-  actosMalos: 4
+  nombre: Elsa y Capuntas
+  edad: 6
+  hobbies: Hacer pulseras de gomas para sus amigos
+  causaMuerte: "Muerte infantil dados los problemas causados gen\xE9ticamente"
+  actosBuenos: Reconocer cuando sus padres estaban cansados e intentar mantener silencio
+    para que pudiesen descansar a pesar de sus necesidades.
+  actosMalos: "Tirar constantemente cualquier objeto de cristal de la mesa o estanter\xEDa"
   reaccionPositiva: "\xA1Gracias! Has sido muy amable."
   reaccionNegativa: 6
   modeloEspecifico: {fileID: 2141787177037282559, guid: ca6d3d11a64f8754490b8ac31fb034e8, type: 3}

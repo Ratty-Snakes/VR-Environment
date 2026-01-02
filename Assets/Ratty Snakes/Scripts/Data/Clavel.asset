@@ -10,14 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9d746dfd5547b064384d81121ccfbbee, type: 3}
-  m_Name: Javier
+  m_Name: Clavel
   m_EditorClassIdentifier: 
-  nombre: Javier
-  edad: 24
-  hobbies: Le gusta tocar el bajo
-  causaMuerte: Electrocutado por el bajo.
-  actosBuenos: Cada fin de semana regaba las plantas del vecindario.
-  actosMalos: 'Robar comida de supermercados. '
+  nombre: Clavel
+  edad: 43
+  hobbies: Construir muebles artesanos
+  causaMuerte: "Un vecino le martill\xF3 clavos en la cabeza"
+  actosBuenos: "De vez en cuando hac\xEDa juguetes de madera para los hijos peque\xF1os
+    de los vecinos"
+  actosMalos: "Intent\xF3 besar a la hija de su vecino de manera forzada"
   reaccionPositiva: "\xA1Gracias! Has sido muy amable."
   reaccionNegativa: "\xA1No es justo! \xA1Yo merec\xEDa entrar!"
   modeloEspecifico: {fileID: 9203730496655384520, guid: 94c6fdc82c531284a961ed6e5195a260, type: 3}

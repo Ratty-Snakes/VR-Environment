@@ -10,17 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9d746dfd5547b064384d81121ccfbbee, type: 3}
-  m_Name: Marina
+  m_Name: "Roc\xEDo"
   m_EditorClassIdentifier: 
-  nombre: Marina
-  edad: 27
-  hobbies: Ahogar moscas con agua
-  causaMuerte: "Causa de muerte: Muri\xF3 por un ictus sola en su casa y nadie revis\xF3
-    su cuerpo hasta 2 semanas despu\xE9s. "
-  actosBuenos: "Evit\xF3 que un ni\xF1o se ahogase haciendo la maniobra de Heimlich
-    en el parque. "
-  actosMalos: "No respetar el espacio personal de los dem\xE1s y llenar lugares p\xFAblicos
-    de ruido (bibliotecas, clases, cafeter\xEDas\u2026)"
+  nombre: "Roc\xEDo"
+  edad: 18
+  hobbies: "Pr\xE1ctica de deportes de riesgo"
+  causaMuerte: "Intent\xF3 pasar con un coche deportivo entre dos camiones y se cal\xF3
+    el volante. "
+  actosBuenos: El dinero que ganaba con las competiciones de Red Bull lo utilizaba
+    para ayudar a pagar la hipoteca de sus padres
+  actosMalos: 'Poner laxantes en la botella de agua a uno de sus competidores. '
   reaccionPositiva: "\xA1Gracias! Has sido muy amable."
   reaccionNegativa: "\xA1No es justo! \xA1Yo merec\xEDa entrar!"
   modeloEspecifico: {fileID: 82343500076214742, guid: 94f85a61ed0fe034e97634f9a2d56985, type: 3}

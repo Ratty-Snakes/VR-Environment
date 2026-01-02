@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9d746dfd5547b064384d81121ccfbbee, type: 3}
-  m_Name: Jose
+  m_Name: Laura
   m_EditorClassIdentifier: 
-  nombre: Sancho
-  edad: 15
-  hobbies: 1
-  causaMuerte: 2
-  actosBuenos: 3
-  actosMalos: 4
+  nombre: Laura
+  edad: 26
+  hobbies: "Hacer rituales sat\xE1nicos"
+  causaMuerte: " Vendi\xF3 su alma al diablo para ver a su kpoper favorito"
+  actosBuenos: Recoger las bandejas del McDonalds cuando acababa de comer
+  actosMalos: "Contact\xF3 con Satan\xE1s y tuvo fantas\xEDas sexuales con \xE9l"
   reaccionPositiva: "\xA1Gracias! Has sido muy amable."
   reaccionNegativa: 6
   modeloEspecifico: {fileID: 7067213188820658053, guid: 5c9d03fd5e88aa749ac5ef8addd4db9b, type: 3}

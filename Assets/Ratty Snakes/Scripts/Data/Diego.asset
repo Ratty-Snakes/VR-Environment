@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: Diego
   m_EditorClassIdentifier: 
   nombre: Diego
-  edad: 4
-  hobbies: 1
-  causaMuerte: 2
-  actosBuenos: 3
-  actosMalos: 4
+  edad: 30
+  hobbies: Coleccionar cristales del mar
+  causaMuerte: "Se electrocut\xF3 con una falla a tierra del bajo"
+  actosBuenos: Rescataba  gatos de la calle para llevarlos a una protectora de animales
+  actosMalos: "Peg\xF3 una bofetada a su novia una vez"
   reaccionPositiva: "\xA1Gracias! Has sido muy amable."
   reaccionNegativa: 6
-  modeloEspecifico: {fileID: 2772637145838309479, guid: a559d2c681fd8a54c8fbae6b957f261b, type: 3}
+  modeloEspecifico: {fileID: 919132149155446097, guid: 09da2245964285e469f5969502151ddf, type: 3}
