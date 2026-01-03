@@ -8,12 +8,12 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/SampleScene.unity
     guid: 55daccc09a3b69647bbab145b54a3ab3
-  - enabled: 0
-    path: Assets/Ratty Snakes/Scenes/Demo.unity
-    guid: d68274dc3a598604b997ee4eec4c3803
   - enabled: 1
     path: Assets/Ratty Snakes/Scenes/Scenes_Development/MainMenu.unity
     guid: ab01eb10a89471340a3ecbb89b7c29c7
+  - enabled: 1
+    path: Assets/Ratty Snakes/Scenes/Scenes_Development/TutorialScene.unity
+    guid: 74afd9f5562b4974fb9de75638eb4c11
   - enabled: 1
     path: Assets/Ratty Snakes/Scenes/Scenes_Development/GameScene.unity
     guid: d236fa267545b644588747eac80578e8

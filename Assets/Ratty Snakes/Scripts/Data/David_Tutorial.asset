@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d746dfd5547b064384d81121ccfbbee, type: 3}
+  m_Name: David_Tutorial
+  m_EditorClassIdentifier: 
+  nombre: David
+  edad: 45
+  hobbies: "Tejer gorritos de lana para ni\xF1os en invierno y alimentar palomas"
+  causaMuerte: "Paro card\xEDaco por exceso de ternura al ver tantos cachorritos"
+  actosBuenos: "- Don\xF3 su pensi\xF3n \xEDntegra a un orfanato cada mes durante
+    40 a\xF1os\r\n- Adopt\xF3 a 15 perros de tres patas que nadie quer\xEDa\r"
+  actosMalos: "Una vez se olvid\xF3 de decir \"Jes\xFAs\" cuando alguien estornud\xF3"
+  reaccionPositiva: "Bendito seas, hijo. Hablar\xE9 bien de ti al Jefe"
+  reaccionNegativa: Oh... seguro es un error administrativo. No te preocupes, yo
+    te perdono.
+  modeloEspecifico: {fileID: 919132149155446097, guid: c27554d8d16cc01478b2e7c8e112e020, type: 3}
