@@ -1,23 +1,27 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "NuevoNPC", menuName = "Juego/Datos de NPC", order = 1)]
+[CreateAssetMenu(fileName = "New NPC Data", menuName = "NPC/NPC Data")]
 public class NPCData : ScriptableObject
 {
-    [Header("Datos Personales")]
-    public string nombre = "Marina";
-    public int edad = 27;
-    [TextArea(2, 5)] public string hobbies = "Ahogar moscas con agua";
-    [TextArea(2, 5)] public string causaMuerte = "Murió por un ictus sola en su casa...";
+    [Header("Identidad")]
+    public string nombre;
+    public int edad;
+    [TextArea(2, 5)] public string hobbies;
+    public GameObject modeloEspecifico; 
 
-    [Header("Historial")]
-    [TextArea(3, 10)] public string actosBuenos = "Evitó que un niño se ahogase...";
-    [TextArea(3, 10)] public string actosMalos = "No respetar el espacio personal...";
+    [Header("Juicio")]
+    [TextArea(2, 5)] public string causaMuerte;
+    [TextArea(3, 10)] public string actosBuenos;
+    [TextArea(3, 10)] public string actosMalos;
 
-    [Header("Reacciones (Sistema de Juego)")]
-    // Mantenemos esto porque el juego necesita saber qué dicen al aceptar/rechazar
-    [TextArea(2, 3)] public string reaccionPositiva = "¡Gracias! Has sido muy amable.";
-    [TextArea(2, 3)] public string reaccionNegativa = "¡No es justo! ¡Yo merecía entrar!";
+    // --- ESTO ES LO QUE TE FALTA ---
+    [Header("Sistema de Karma")] 
+    [Tooltip("Puntos positivos suman, negativos restan (-20 a +20)")]
+    [Range(-20, 20)] 
+    public int karmaScore; 
+    // ------------------------------
 
-    [Header("Visual")]
-    public GameObject modeloEspecifico; // Opcional, por si cada NPC tiene una calavera distinta
+    [Header("Reacciones")]
+    [TextArea(2, 5)] public string reaccionPositiva; 
+    [TextArea(2, 5)] public string reaccionNegativa; 
 }
