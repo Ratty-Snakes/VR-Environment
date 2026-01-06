@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d746dfd5547b064384d81121ccfbbee, type: 3}
+  m_Name: Elsa y Capuntas
+  m_EditorClassIdentifier: 
+  nombre: Elsa y Capuntas
+  edad: 6
+  hobbies: Hacer pulseras de gomas para sus amigos
+  modeloEspecifico: {fileID: 2141787177037282559, guid: ca6d3d11a64f8754490b8ac31fb034e8, type: 3}
+  causaMuerte: "Muerte infantil dados los problemas causados gen\xE9ticamente"
+  actosBuenos: Reconocer cuando sus padres estaban cansados e intentar mantener silencio
+    para que pudiesen descansar a pesar de sus necesidades.
+  actosMalos: "Tirar constantemente cualquier objeto de cristal de la mesa o estanter\xEDa"
+  karmaScore: 14
+  reaccionPositiva: Ahora podremos jugar cuando queramos y dormir cuando queramos,
+    como dijo mami, hihihihi.
+  reaccionNegativa: "\xBFEh? \xBFQu\xE9 haces?"

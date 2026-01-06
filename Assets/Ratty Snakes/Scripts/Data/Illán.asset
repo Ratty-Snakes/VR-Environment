@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d746dfd5547b064384d81121ccfbbee, type: 3}
+  m_Name: "Ill\xE1n"
+  m_EditorClassIdentifier: 
+  nombre: "Ill\xE1n"
+  edad: 12
+  hobbies: Dibujar paisajes de memoria
+  modeloEspecifico: {fileID: 919132149155446097, guid: 25c025b5b918d3b438c31322340e3501, type: 3}
+  causaMuerte: "Unos ni\xF1os lo empujaron y cay\xF3 de cara sobre el bordillo de
+    una carretera. "
+  actosBuenos: "Compart\xEDa siempre los regalos y postres que le daba su madre con
+    sus hermanos mayores"
+  actosMalos: "Dec\xEDa palabrotas en clase para la aprobaci\xF3n de los dem\xE1s"
+  karmaScore: 15
+  reaccionPositiva: "Ay, \xBFest\xE1s seguro?... Bueno, gracias se\xF1or"
+  reaccionNegativa: "\xBFEs por lo de las palabrotas? \xA1Joder, lo siento! \xA1Ay,
+    perd\xF3n! \xA1Mierda! \xA1No quer\xEDa decirlo!"

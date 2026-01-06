@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d746dfd5547b064384d81121ccfbbee, type: 3}
+  m_Name: "Roc\xEDo"
+  m_EditorClassIdentifier: 
+  nombre: "Roc\xEDo"
+  edad: 18
+  hobbies: "Pr\xE1ctica de deportes de riesgo"
+  modeloEspecifico: {fileID: 82343500076214742, guid: 94f85a61ed0fe034e97634f9a2d56985, type: 3}
+  causaMuerte: "Intent\xF3 pasar con un coche deportivo entre dos camiones y se cal\xF3
+    el volante. "
+  actosBuenos: El dinero que ganaba con las competiciones de Red Bull lo utilizaba
+    para ayudar a pagar la hipoteca de sus padres
+  actosMalos: 'Poner laxantes en la botella de agua a uno de sus competidores. '
+  karmaScore: -1
+  reaccionPositiva: "\xA1\xA1\xA1WaSSuuup!!! Cielo, all\xE1 voy HAhaHAHa \xA1que
+    empiece la fiesta!"
+  reaccionNegativa: "\xA1EH! \xA1EH!, que no he hecho nada, t\xEDo, d\xE9jame pasar,
+    \xA1sin m\xED no hay para\xEDso, bro!"

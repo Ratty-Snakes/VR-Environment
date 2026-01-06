@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d746dfd5547b064384d81121ccfbbee, type: 3}
+  m_Name: Eric
+  m_EditorClassIdentifier: 
+  nombre: Eric
+  edad: 28
+  hobbies: Hacer skate con sus amigos por las noches
+  modeloEspecifico: {fileID: 816762600386231481, guid: 51724126dfb71664b80ce9fea38595c0, type: 3}
+  causaMuerte: "C\xE1ncer de pulm\xF3n"
+  actosBuenos: Preparaba las comidas a su abuela enferma
+  actosMalos: '- Vandalismo en los edificios y tiendas del barrio
+
+    - Vender droga
+    a menores de edad'
+  karmaScore: -12
+  reaccionPositiva: "De lujo, colega. Oye, hazme un favor... \xE9chale un ojo a mi
+    abuela desde aqu\xED, \xBFvale?"
+  reaccionNegativa: "Bah, que os den. Ya sab\xEDa que acabar\xEDa aqu\xED. Al menos
+    abajo tendr\xE9 fuego para encenderme el cigarro"
