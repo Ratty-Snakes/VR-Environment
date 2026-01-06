@@ -23,7 +23,7 @@ MonoBehaviour:
     mar. "
   actosMalos: "Hac\xEDa sus necesidades dentro de trajes de buceo compartidos."
   karmaScore: 12
-  reaccionPositiva: "\xA1Genial! Espero que teng\xE1is piscina de olas all\xED arriba.
-    Prometo aguantarme las ganas de hacer pis en el agua bendita"
-  reaccionNegativa: "\xA1Espera! \xA1Ah\xED abajo hace calor! \xA1No puedo nadar
-    en lava!"
+  reaccionPositiva: "\xA1OH! Me pregunto si hay pececillos en el para\xEDso, \xA1ay,
+    qu\xE9 ilu!\r\n"
+  reaccionNegativa: "\xA1Cagarse encima no es un crimen, joder! \xA1\xA1Fue solo
+    una vez, lo juro!!"

@@ -22,7 +22,6 @@ MonoBehaviour:
     sus hermanos mayores"
   actosMalos: "Dec\xEDa palabrotas en clase para la aprobaci\xF3n de los dem\xE1s"
   karmaScore: 15
-  reaccionPositiva: "\xA1Bien! \xBFTen\xE9is ceras de colores? Voy a dibujarle un
-    paisaje precioso a mi mam\xE1 para cuando ella venga"
+  reaccionPositiva: "Ay, \xBFest\xE1s seguro?... Bueno, gracias se\xF1or"
   reaccionNegativa: "\xBFEs por lo de las palabrotas? \xA1Joder, lo siento! \xA1Ay,
     perd\xF3n! \xA1Mierda! \xA1No quer\xEDa decirlo!"

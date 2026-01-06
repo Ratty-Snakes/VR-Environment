@@ -20,7 +20,6 @@ MonoBehaviour:
   actosBuenos: Rescataba  gatos de la calle para llevarlos a una protectora de animales
   actosMalos: "Peg\xF3 una bofetada a su novia una vez"
   karmaScore: -8
-  reaccionPositiva: "Gracias. Espero que mis gatos est\xE9n bien... Seguro que el
-    Cielo est\xE1 lleno de gatitos que me necesiten"
-  reaccionNegativa: "\xA1Fue solo una vez y ella me puso de los nervios! \xA1He salvado
-    a veinte gatos! \xA1Esto es injusto!"
+  reaccionPositiva: "\u2669 \xA1\xA1Ooh, ooh, and he's buying a stairway to Heaveeeen!!
+    \u266B"
+  reaccionNegativa: "El infierno no est\xE1 preparado para mi m\xFAsica, bro"

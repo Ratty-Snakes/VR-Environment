@@ -22,7 +22,7 @@ MonoBehaviour:
     para ayudar a pagar la hipoteca de sus padres
   actosMalos: 'Poner laxantes en la botella de agua a uno de sus competidores. '
   karmaScore: -1
-  reaccionPositiva: "\xA1Toma ya! \xA1Primer puesto! Sab\xEDa que era una ganadora.
-    \xBFSe puede hacer puenting desde las nubes?"
-  reaccionNegativa: "\xA1Solo eran laxantes! \xA1No quer\xEDa matarlo, solo que se
-    cagara encima para ganar yo!"
+  reaccionPositiva: "\xA1\xA1\xA1WaSSuuup!!! Cielo, all\xE1 voy HAhaHAHa \xA1que
+    empiece la fiesta!"
+  reaccionNegativa: "\xA1EH! \xA1EH!, que no he hecho nada, t\xEDo, d\xE9jame pasar,
+    \xA1sin m\xED no hay para\xEDso, bro!"
