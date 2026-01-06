@@ -15,12 +15,15 @@ MonoBehaviour:
   nombre: Eric
   edad: 28
   hobbies: Hacer skate con sus amigos por las noches
+  modeloEspecifico: {fileID: 816762600386231481, guid: 51724126dfb71664b80ce9fea38595c0, type: 3}
   causaMuerte: "C\xE1ncer de pulm\xF3n"
   actosBuenos: Preparaba las comidas a su abuela enferma
   actosMalos: '- Vandalismo en los edificios y tiendas del barrio
 
     - Vender droga
     a menores de edad'
-  reaccionPositiva: "\xA1Gracias! Has sido muy amable."
-  reaccionNegativa: "\xA1No es justo! \xA1Yo merec\xEDa entrar!"
-  modeloEspecifico: {fileID: 816762600386231481, guid: 51724126dfb71664b80ce9fea38595c0, type: 3}
+  karmaScore: -12
+  reaccionPositiva: "De lujo, colega. Oye, hazme un favor... \xE9chale un ojo a mi
+    abuela desde aqu\xED, \xBFvale?"
+  reaccionNegativa: "Bah, que os den. Ya sab\xEDa que acabar\xEDa aqu\xED. Al menos
+    abajo tendr\xE9 fuego para encenderme el cigarro"

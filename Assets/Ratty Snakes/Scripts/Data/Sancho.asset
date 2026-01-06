@@ -15,10 +15,13 @@ MonoBehaviour:
   nombre: Sancho
   edad: 62
   hobbies: "Disfrazarse para entretener ni\xF1os"
+  modeloEspecifico: {fileID: 919132149155446097, guid: 4619a84cb5fe2bf4188c5f6fe3e1ef23, type: 3}
   causaMuerte: "Inhalaci\xF3n excesiva de helio"
   actosBuenos: "Visitaba ni\xF1os enfermos en el hospital, interpretando a su personaje
     de payaso para entretenerlos"
   actosMalos: "Tuvo una relaci\xF3n sentimental con su prima en su adolescencia"
-  reaccionPositiva: "\xA1Gracias! Has sido muy amable."
-  reaccionNegativa: Tu puta madre
-  modeloEspecifico: {fileID: 919132149155446097, guid: 4619a84cb5fe2bf4188c5f6fe3e1ef23, type: 3}
+  karmaScore: 10
+  reaccionPositiva: "\xA1Jojojo! \xA1Qu\xE9 alegr\xEDa! Har\xE9 globoflexia para
+    los fideles"
+  reaccionNegativa: "\xBFEs por lo de mi prima? \xA1Fue hace cuarenta a\xF1os! \xA1\xC9ramos
+    adolescentes! \xBFNo cuentan todas las sonrisas que he regalado?"

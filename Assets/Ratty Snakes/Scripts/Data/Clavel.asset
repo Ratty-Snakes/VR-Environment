@@ -15,10 +15,13 @@ MonoBehaviour:
   nombre: Clavel
   edad: 43
   hobbies: Construir muebles artesanos
+  modeloEspecifico: {fileID: 9203730496655384520, guid: 94c6fdc82c531284a961ed6e5195a260, type: 3}
   causaMuerte: "Un vecino le martill\xF3 clavos en la cabeza"
   actosBuenos: "De vez en cuando hac\xEDa juguetes de madera para los hijos peque\xF1os
     de los vecinos"
   actosMalos: "Intent\xF3 besar a la hija de su vecino de manera forzada"
-  reaccionPositiva: "\xA1Gracias! Has sido muy amable."
-  reaccionNegativa: "\xA1No es justo! \xA1Yo merec\xEDa entrar!"
-  modeloEspecifico: {fileID: 9203730496655384520, guid: 94c6fdc82c531284a961ed6e5195a260, type: 3}
+  karmaScore: -18
+  reaccionPositiva: "Sab\xEDa que un hombre de oficio siempre tiene lugar. Gracias,
+    jefe. Si necesitas... 'arreglar' algo, av\xEDsame"
+  reaccionNegativa: "\xA1Mentira! \xA1Ella me provoc\xF3! \xA1Yo solo quer\xEDa ense\xF1arle
+    mi herramienta! \xA1Su\xE9ltame, no sabes qui\xE9n soy!"

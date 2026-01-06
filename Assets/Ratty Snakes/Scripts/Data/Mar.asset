@@ -15,12 +15,15 @@ MonoBehaviour:
   nombre: Mar
   edad: 21
   hobbies: Explorar el fondo submarino
+  modeloEspecifico: {fileID: 919132149155446097, guid: bc6b9a59ba93eef449fb87ce13f7cbfc, type: 3}
   causaMuerte: "Perdi\xF3 de vista el hilo de buceo durante la exploraci\xF3n de
     una cueva bajo el mar"
   actosBuenos: "Formaba parte de una asociaci\xF3n para liberar animales marinos
     de redes de pesca, bolsas de pl\xE1stico y otra clase de basura tirada en el
     mar. "
   actosMalos: "Hac\xEDa sus necesidades dentro de trajes de buceo compartidos."
-  reaccionPositiva: "\xA1Gracias! Has sido muy amable."
-  reaccionNegativa: 6
-  modeloEspecifico: {fileID: 919132149155446097, guid: bc6b9a59ba93eef449fb87ce13f7cbfc, type: 3}
+  karmaScore: 12
+  reaccionPositiva: "\xA1Genial! Espero que teng\xE1is piscina de olas all\xED arriba.
+    Prometo aguantarme las ganas de hacer pis en el agua bendita"
+  reaccionNegativa: "\xA1Espera! \xA1Ah\xED abajo hace calor! \xA1No puedo nadar
+    en lava!"

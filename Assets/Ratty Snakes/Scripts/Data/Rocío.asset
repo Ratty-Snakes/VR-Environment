@@ -15,11 +15,14 @@ MonoBehaviour:
   nombre: "Roc\xEDo"
   edad: 18
   hobbies: "Pr\xE1ctica de deportes de riesgo"
+  modeloEspecifico: {fileID: 82343500076214742, guid: 94f85a61ed0fe034e97634f9a2d56985, type: 3}
   causaMuerte: "Intent\xF3 pasar con un coche deportivo entre dos camiones y se cal\xF3
     el volante. "
   actosBuenos: El dinero que ganaba con las competiciones de Red Bull lo utilizaba
     para ayudar a pagar la hipoteca de sus padres
   actosMalos: 'Poner laxantes en la botella de agua a uno de sus competidores. '
-  reaccionPositiva: "\xA1Gracias! Has sido muy amable."
-  reaccionNegativa: "\xA1No es justo! \xA1Yo merec\xEDa entrar!"
-  modeloEspecifico: {fileID: 82343500076214742, guid: 94f85a61ed0fe034e97634f9a2d56985, type: 3}
+  karmaScore: -1
+  reaccionPositiva: "\xA1Toma ya! \xA1Primer puesto! Sab\xEDa que era una ganadora.
+    \xBFSe puede hacer puenting desde las nubes?"
+  reaccionNegativa: "\xA1Solo eran laxantes! \xA1No quer\xEDa matarlo, solo que se
+    cagara encima para ganar yo!"

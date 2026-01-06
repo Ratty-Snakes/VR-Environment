@@ -15,11 +15,14 @@ MonoBehaviour:
   nombre: Mortadelo
   edad: 15
   hobbies: "Disfrazarse para entretener ni\xF1os"
+  modeloEspecifico: {fileID: 919132149155446097, guid: 4619a84cb5fe2bf4188c5f6fe3e1ef23, type: 3}
   causaMuerte: "Ver v\xEDdeos y escuchar podcasts en YouTube sobre criminolog\xEDa."
   actosBuenos: "Devolvi\xF3 una cartera con 5000 \u20AC en efectivo a alguien que
     se le hab\xEDa ca\xEDdo"
   actosMalos: Practicaba experimentos con animales y resultaba con la muerte o discapacidad
     de los mismos
-  reaccionPositiva: "\xA1Gracias! Has sido muy amable."
-  reaccionNegativa: 6
-  modeloEspecifico: {fileID: 919132149155446097, guid: 4619a84cb5fe2bf4188c5f6fe3e1ef23, type: 3}
+  karmaScore: -18
+  reaccionPositiva: "Sabia elecci\xF3n. Veo que valoras el dinero por encima de la
+    vida de unas cuantas... ratas. Nos entenderemos bien."
+  reaccionNegativa: "Interesante... Siempre quise estudiar de cerca la anatom\xEDa
+    del sufrimiento eterno. A ver cu\xE1nto tardo en despellejar a un demonio"

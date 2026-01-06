@@ -15,9 +15,12 @@ MonoBehaviour:
   nombre: Diego
   edad: 30
   hobbies: Coleccionar cristales del mar
+  modeloEspecifico: {fileID: 919132149155446097, guid: 09da2245964285e469f5969502151ddf, type: 3}
   causaMuerte: "Se electrocut\xF3 con una falla a tierra del bajo"
   actosBuenos: Rescataba  gatos de la calle para llevarlos a una protectora de animales
   actosMalos: "Peg\xF3 una bofetada a su novia una vez"
-  reaccionPositiva: "\xA1Gracias! Has sido muy amable."
-  reaccionNegativa: 6
-  modeloEspecifico: {fileID: 919132149155446097, guid: 09da2245964285e469f5969502151ddf, type: 3}
+  karmaScore: -8
+  reaccionPositiva: "Gracias. Espero que mis gatos est\xE9n bien... Seguro que el
+    Cielo est\xE1 lleno de gatitos que me necesiten"
+  reaccionNegativa: "\xA1Fue solo una vez y ella me puso de los nervios! \xA1He salvado
+    a veinte gatos! \xA1Esto es injusto!"
