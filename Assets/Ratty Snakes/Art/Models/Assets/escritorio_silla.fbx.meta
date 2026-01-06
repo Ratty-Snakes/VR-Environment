@@ -3,7 +3,12 @@ guid: 4f5ceb2ba157dab4ab43904fadde45f5
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: silla_C
+    second: {fileID: 2800000, guid: 7dcc278793f281341836b014d343b504, type: 3}
   materials:
     materialImportMode: 2
     materialName: 0

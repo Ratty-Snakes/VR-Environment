@@ -3,7 +3,12 @@ guid: ae00db18be2cf774fae35bcabc5c292b
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: escritorio_C
+    second: {fileID: 2800000, guid: aaafb310a857977489250e9cbe0c5f5f, type: 3}
   materials:
     materialImportMode: 2
     materialName: 0
