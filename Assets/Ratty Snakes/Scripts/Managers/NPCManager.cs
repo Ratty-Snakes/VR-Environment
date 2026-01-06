@@ -1,6 +1,6 @@
 using UnityEngine;
 using System.Collections;
-using System; // Necesario para los Actions
+using System;
 
 public class NPCManager : MonoBehaviour
 {
@@ -11,9 +11,9 @@ public class NPCManager : MonoBehaviour
     public TrapdoorController controladorTrampilla;
     public Transform[] listaWaypoints;
     public NPCUIController uiController;
+    public LeverLockSystem sistemaPalanca;
 
     [Header("Configuracion de Tiempos")]
-    [Tooltip("Segundos que espera el NPC agradeciendo antes de irse al cielo")]
     public float tiempoEsperaCielo = 2.0f;
 
     [Header("Estado Actual")]
@@ -22,11 +22,16 @@ public class NPCManager : MonoBehaviour
     private NPCReactionController reaccionActual;
     private NPCData datosActuales;
 
-    // Variable para saber si la mesa esta ocupada
     private bool mesaOcupada = false;
+    private bool npcListoParaSentencia = false;
 
-    // EVENTO NUEVO: Avisa al Tutorial de la decision (true=Cielo, false=Infierno)
+    // --- NUEVO: RESTRICCIONES DE TUTORIAL ---
+    private bool tutorialBloquearAceptar = false; // Si es true, NO puedes mandarlo al cielo
+    private bool tutorialBloquearRechazar = false; // Si es true, NO puedes usar la palanca/gesto mal
+
+    // Eventos
     public Action<bool> OnDecisionTutorial;
+    public Action OnIntentoProhibido; // Se dispara si intentas hacer lo que no debes
 
     private void Awake()
     {
@@ -36,70 +41,44 @@ public class NPCManager : MonoBehaviour
 
     void Start()
     {
-        // En el juego normal, esperamos. En el tutorial, el TutorialManager manda.
         Debug.Log("Sistema NPC Listo.");
+        if (sistemaPalanca != null) sistemaPalanca.BloquearPalanca();
     }
 
-    // ---------------------------------------------------------
-    // LOGICA JUEGO NORMAL (Llamada por el Boton o GameManager)
-    // ---------------------------------------------------------
-
-    public void BotonSiguientePulsado()
+    // --- CONFIGURACIÓN PARA EL TUTORIAL ---
+    public void SetRestriccionesTutorial(bool bloquearCielo, bool bloquearInfierno)
     {
-        if (mesaOcupada)
-        {
-            Debug.Log("Todavia hay un alma en proceso.");
-            return;
-        }
-
-        TraerSiguienteNPC();
+        tutorialBloquearAceptar = bloquearCielo;
+        tutorialBloquearRechazar = bloquearInfierno;
     }
+
+    // ... (El resto de GenerarNPC y TraerSiguienteNPC es igual que antes) ...
+    // ... CÓPIALO DEL SCRIPT ANTERIOR O DÉJALO COMO ESTABA ...
+
+    public void BotonSiguientePulsado() { if (!mesaOcupada) TraerSiguienteNPC(); }
 
     public void TraerSiguienteNPC()
     {
-        // Pedimos datos al GameManager (Juego Normal)
-        if (GameManager.Instance != null)
-        {
-            datosActuales = GameManager.Instance.ObtenerSiguienteNPC();
-        }
-
-        if (datosActuales == null)
-        {
-            Debug.Log("No quedan mas NPCs en la cola (o GameManager no existe).");
-            return;
-        }
-
+        if (GameManager.Instance != null) datosActuales = GameManager.Instance.ObtenerSiguienteNPC();
+        if (datosActuales == null) return;
         GenerarNPC(datosActuales);
     }
-
-    // ---------------------------------------------------------
-    // LOGICA TUTORIAL (Llamada por TutorialManager)
-    // ---------------------------------------------------------
 
     public void SpawnNPC_Tutorial(NPCData datosTutorial)
     {
         if (mesaOcupada) return;
-
-        Debug.Log("TUTORIAL: Spawneando NPC especifico.");
-
-        // Forzamos los datos que nos pasa el tutorial
         datosActuales = datosTutorial;
-
         GenerarNPC(datosActuales);
     }
-
-    // ---------------------------------------------------------
-    // LOGICA COMUN (Generacion visual y fisica)
-    // ---------------------------------------------------------
 
     private void GenerarNPC(NPCData datos)
     {
         mesaOcupada = true;
+        npcListoParaSentencia = false;
+        if (sistemaPalanca != null) sistemaPalanca.BloquearPalanca();
 
-        // 1. Instanciar el CONTENEDOR (NPC_Base)
         npcActualObj = Instantiate(npcPrefab, listaWaypoints[0].position, listaWaypoints[0].rotation);
 
-        // 2. Logica de cambio de modelo (Visual)
         MeshRenderer baseMesh = npcActualObj.GetComponent<MeshRenderer>();
         if (baseMesh != null) baseMesh.enabled = false;
 
@@ -109,13 +88,8 @@ public class NPCManager : MonoBehaviour
             modeloVisual.transform.localPosition = Vector3.zero;
             modeloVisual.transform.localRotation = Quaternion.identity;
         }
-        else
-        {
-            // Si no hay modelo especifico, mostramos la capsula base
-            if (baseMesh != null) baseMesh.enabled = true;
-        }
+        else if (baseMesh != null) baseMesh.enabled = true;
 
-        // 3. Configurar Movimiento
         movimientoActual = npcActualObj.GetComponent<NPCWaypointMovement>();
         if (movimientoActual != null)
         {
@@ -124,104 +98,121 @@ public class NPCManager : MonoBehaviour
             movimientoActual.AlLlegarA_Cielo += LimpiarYTraerSiguiente;
         }
 
-        // 4. Configurar Reaccion (Dialogos)
         reaccionActual = npcActualObj.GetComponent<NPCReactionController>();
-        if (reaccionActual != null)
-        {
-            reaccionActual.Initialize(datos);
-        }
+        if (reaccionActual != null) reaccionActual.Initialize(datos);
     }
 
     void AlLlegarAMesa()
     {
+        npcListoParaSentencia = true;
         if (uiController != null) uiController.MostrarDatos(datosActuales);
     }
 
     // ---------------------------------------------------------
-    // TOMA DE DECISIONES
+    // TOMA DE DECISIONES CON RESTRICCIONES
     // ---------------------------------------------------------
 
-    // GESTO: Pulgar Arriba (Cielo)
-    public void Decidir_Aceptar()
+    public void RecibirGesto_Aceptar() // Pulgar Arriba
     {
-        if (npcActualObj == null) return;
+        if (npcActualObj == null || !mesaOcupada || !npcListoParaSentencia) return;
 
-        // AVISO TUTORIAL: Ha decidido CIELO (true)
+        // NUEVO: Bloqueo de Tutorial
+        if (tutorialBloquearAceptar)
+        {
+            Debug.Log("Tutorial: No puedes aceptar a este NPC.");
+            OnIntentoProhibido?.Invoke(); // Avisamos al TutorialManager para la bronca
+            return;
+        }
+
         OnDecisionTutorial?.Invoke(true);
-
-        // Iniciamos la secuencia con espera
         StartCoroutine(SecuenciaAceptarCielo());
+    }
+
+    public void RecibirGesto_Rechazar() // Pulgar Abajo
+    {
+        if (npcActualObj == null || !mesaOcupada || !npcListoParaSentencia) return;
+
+        // NUEVO: Bloqueo de Tutorial
+        if (tutorialBloquearRechazar)
+        {
+            Debug.Log("Tutorial: No puedes rechazar a este NPC.");
+            OnIntentoProhibido?.Invoke(); // Avisamos al TutorialManager para la bronca
+            return;
+        }
+
+        // Anti-repetición
+        if (sistemaPalanca != null && !sistemaPalanca.IsLocked) return;
+
+        if (sistemaPalanca != null) sistemaPalanca.DesbloquearPalanca();
+        if (uiController != null) uiController.OcultarDatos();
+        if (reaccionActual != null) reaccionActual.ShowNegativeReaction();
+    }
+
+    // 3. PALANCA: Ejecucion (Infierno - Paso 2)
+    public void RecibirInput_Palanca()
+    {
+        // Seguridad básica
+        if (npcActualObj == null || !mesaOcupada) return;
+
+        // SEGURIDAD 1: ¿La palanca dice que está bloqueada?
+        if (sistemaPalanca != null && sistemaPalanca.IsLocked)
+        {
+            Debug.Log("Intento ignorado: La palanca está bloqueada físicamente.");
+            return;
+        }
+
+        // SEGURIDAD 2: ¿El tutorial prohíbe rechazar ahora mismo? (Caso Benito)
+        if (tutorialBloquearRechazar)
+        {
+            Debug.Log("Tutorial: INTENTO BLOQUEADO. No puedes rechazar a este NPC.");
+            // Opcional: Si quieres que Dios le eche la bronca también si intenta tirar de la palanca a la fuerza
+            OnIntentoProhibido?.Invoke();
+
+            // IMPORTANTE: Si la palanca se bajó visualmente, hay que "resetearla" o bloquearla de nuevo
+            if (sistemaPalanca != null) sistemaPalanca.BloquearPalanca();
+            return;
+        }
+
+        // Si pasa todos los filtros, ejecutamos
+        Debug.Log("Palanca bajada correctamente. Al infierno.");
+
+        OnDecisionTutorial?.Invoke(false);
+        if (GameManager.Instance != null) GameManager.Instance.RegistrarRechazo();
+
+        if (movimientoActual != null)
+        {
+            movimientoActual.CaerAlInfierno();
+        }
+
+        Invoke("LimpiarYTraerSiguiente", 4f);
     }
 
     IEnumerator SecuenciaAceptarCielo()
     {
-        Debug.Log("Veredicto: ACEPTADO. Esperando...");
-
-        // 1. Ocultamos los datos
         if (uiController != null) uiController.OcultarDatos();
-
-        // 2. Registramos el punto (Solo si existe GameManager)
         if (GameManager.Instance != null) GameManager.Instance.RegistrarEntradaCielo();
-
-        // 3. El NPC habla
         if (reaccionActual != null) reaccionActual.ShowPositiveReaction();
-
-        // 4. PAUSA DRAMATICA
         yield return new WaitForSeconds(tiempoEsperaCielo);
-
-        // 5. Se va caminando
         if (movimientoActual != null) movimientoActual.IrAlCielo();
     }
 
-    // GESTO: Pulgar Abajo (Veredicto verbal negativo)
-    public void Decidir_Rechazar_Veredicto()
-    {
-        if (npcActualObj == null) return;
-
-        if (uiController != null) uiController.OcultarDatos();
-
-        if (reaccionActual != null) reaccionActual.ShowNegativeReaction();
-    }
-
-    // PALANCA: Ejecucion fisica (Infierno)
-    public void Decidir_Rechazar_Ejecucion()
-    {
-        if (npcActualObj == null) return;
-
-        if (movimientoActual.esperandoDecision)
-        {
-            // AVISO TUTORIAL: Ha decidido INFIERNO (false)
-            OnDecisionTutorial?.Invoke(false);
-
-            if (GameManager.Instance != null) GameManager.Instance.RegistrarRechazo();
-
-            movimientoActual.CaerAlInfierno();
-
-            Invoke(nameof(LimpiarYTraerSiguiente), 4f);
-        }
-    }
-
-    // ---------------------------------------------------------
-    // LIMPIEZA
-    // ---------------------------------------------------------
-
     void LimpiarYTraerSiguiente()
     {
-        // Desuscribir eventos para evitar errores de memoria
         if (movimientoActual != null)
         {
             movimientoActual.AlLlegarA_Trampilla -= AlLlegarAMesa;
             movimientoActual.AlLlegarA_Cielo -= LimpiarYTraerSiguiente;
         }
-
         if (controladorTrampilla != null) controladorTrampilla.CloseTrapdoor();
 
         npcActualObj = null;
         mesaOcupada = false;
+        npcListoParaSentencia = false;
 
-        Debug.Log("Mesa libre.");
+        // Reset de restricciones (por seguridad)
+        tutorialBloquearAceptar = false;
+        tutorialBloquearRechazar = false;
 
-        // NOTA: En el tutorial NO llamamos a TraerSiguienteNPC aqui automaticamente,
-        // dejamos que el TutorialManager decida cuando sacar al siguiente.
+        if (sistemaPalanca != null) sistemaPalanca.BloquearPalanca();
     }
 }
