@@ -1,9 +1,29 @@
 fileFormatVersion: 2
-guid: e097a2cb558a7644a9b0c3e013b6afc2
+guid: 5d0177aefa2b36a4398949cec43e981b
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: M_nube_grande
+    second: {fileID: 2100000, guid: 1d670c103fc70b647b0a331c791027d6, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: M_nube_mediana
+    second: {fileID: 2100000, guid: 017d2a797a46a374f9eedc004a5a5ba7, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: M_nube_peque
+    second: {fileID: 2100000, guid: c5f9ffadd9b47524eb0f8e2aa38be992, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: lambert13
+    second: {fileID: 2100000, guid: 701c7dc8facfe1d409c9d81f69a03959, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

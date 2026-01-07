@@ -802,22 +802,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1fc28aec810af424d88a1b5aefa3d7e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  poolCompletaNPCs:
-  - {fileID: 11400000, guid: 6281962e8133b574fbb52d0a83dc3fb3, type: 2}
-  - {fileID: 11400000, guid: 07c2e9268f26ddf408fa55a0fad1e48b, type: 2}
-  - {fileID: 11400000, guid: 7c5efc21421f635479699b6aaab05c3c, type: 2}
-  - {fileID: 11400000, guid: ffa97a2bb5a9ff84484835c605977256, type: 2}
-  - {fileID: 11400000, guid: 07c2e9268f26ddf408fa55a0fad1e48b, type: 2}
-  - {fileID: 11400000, guid: 9c328a77e4b405c44964a8171cdf401f, type: 2}
-  - {fileID: 11400000, guid: 69dcc379e7fbc9847b93aba9c4b64cf4, type: 2}
-  - {fileID: 11400000, guid: 1d15102dec5900c43b66127cfa206033, type: 2}
-  - {fileID: 11400000, guid: a065db8bfeb097b45b50b38f82a2addb, type: 2}
-  - {fileID: 11400000, guid: 888ab8c06a8946e4d990a1fd767f0d86, type: 2}
-  - {fileID: 11400000, guid: d713df8ec1efe734abd848d00acff305, type: 2}
-  npcsPorPartida: 5
-  limiteCieloDiario: 3
-  actualesEnCielo: 0
-  actualesRechazados: 0
+  telefonoDios: {fileID: 0}
+  libroRegistro: {fileID: 0}
+  npcManager: {fileID: 0}
+  poolGlobalNpcs: []
+  minClientes: 3
+  maxClientes: 6
+  porcentajeCupo: 0.5
+  nombreEscenaMenu: MainMenu
 --- !u!4 &281425605
 Transform:
   m_ObjectHideFlags: 0
@@ -1043,7 +1035,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1029819337}
   - {fileID: 730046295}
   - {fileID: 2116921272}
   - {fileID: 14308960}
@@ -1818,6 +1809,8 @@ MonoBehaviour:
   - {fileID: 292233517}
   - {fileID: 107736067}
   uiController: {fileID: 739766820}
+  sistemaPalanca: {fileID: 0}
+  tiempoEsperaCielo: 2
 --- !u!4 &653635012
 Transform:
   m_ObjectHideFlags: 0
@@ -2372,74 +2365,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 657184242161839408, guid: d6878e1999eb4b44a9f5a263af86c185, type: 3}
   m_PrefabInstance: {fileID: 1324889303}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &963976394
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 363723162}
-    m_Modifications:
-    - target: {fileID: -8679921383154817045, guid: 365907f61b8b39a48aab9aacd4588f45, type: 3}
-      propertyPath: m_RootOrder
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 365907f61b8b39a48aab9aacd4588f45, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 365907f61b8b39a48aab9aacd4588f45, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.73660004
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 365907f61b8b39a48aab9aacd4588f45, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -0.25
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 365907f61b8b39a48aab9aacd4588f45, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 365907f61b8b39a48aab9aacd4588f45, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 365907f61b8b39a48aab9aacd4588f45, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 365907f61b8b39a48aab9aacd4588f45, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 365907f61b8b39a48aab9aacd4588f45, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 365907f61b8b39a48aab9aacd4588f45, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 365907f61b8b39a48aab9aacd4588f45, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -7511558181221131132, guid: 365907f61b8b39a48aab9aacd4588f45, type: 3}
-      propertyPath: 'm_Materials.Array.data[0]'
-      value: 
-      objectReference: {fileID: 2100000, guid: 6c72d2d2ead00e54db4b71b27ffb03d4, type: 2}
-    - target: {fileID: 919132149155446097, guid: 365907f61b8b39a48aab9aacd4588f45, type: 3}
-      propertyPath: m_Name
-      value: VirtualTabletop
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 365907f61b8b39a48aab9aacd4588f45, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1029819338}
-  m_SourcePrefab: {fileID: 100100000, guid: 365907f61b8b39a48aab9aacd4588f45, type: 3}
 --- !u!1 &973491894
 GameObject:
   m_ObjectHideFlags: 0
@@ -2494,38 +2419,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!1 &1029819336 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 365907f61b8b39a48aab9aacd4588f45, type: 3}
-  m_PrefabInstance: {fileID: 963976394}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &1029819337 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 365907f61b8b39a48aab9aacd4588f45, type: 3}
-  m_PrefabInstance: {fileID: 963976394}
-  m_PrefabAsset: {fileID: 0}
---- !u!64 &1029819338
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1029819336}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 8207010926609093179, guid: 365907f61b8b39a48aab9aacd4588f45, type: 3}
 --- !u!1 &1046873149
 GameObject:
   m_ObjectHideFlags: 0
