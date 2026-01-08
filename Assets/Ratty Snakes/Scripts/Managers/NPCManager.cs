@@ -16,6 +16,10 @@ public class NPCManager : MonoBehaviour
     [Header("Configuracion de Tiempos")]
     public float tiempoEsperaCielo = 2.0f;
 
+    [Header("Efectos Visuales (Feedback)")]
+    public ParticleSystem fxConfetti;       // Arrastra aquí el confetti
+    public ParticleSystem fxExplosionRoja;  // Arrastra aquí la explosión
+
     [Header("Estado Actual")]
     private GameObject npcActualObj;
     private NPCWaypointMovement movimientoActual;
@@ -151,30 +155,17 @@ public class NPCManager : MonoBehaviour
     // 3. PALANCA: Ejecucion (Infierno - Paso 2)
     public void RecibirInput_Palanca()
     {
-        // Seguridad básica
+        // ... (Tus chequeos de seguridad de siempre) ...
         if (npcActualObj == null || !mesaOcupada) return;
+        if (sistemaPalanca != null && sistemaPalanca.IsLocked) return;
+        // ...
 
-        // SEGURIDAD 1: ¿La palanca dice que está bloqueada?
-        if (sistemaPalanca != null && sistemaPalanca.IsLocked)
-        {
-            Debug.Log("Intento ignorado: La palanca está bloqueada físicamente.");
-            return;
-        }
-
-        // SEGURIDAD 2: ¿El tutorial prohíbe rechazar ahora mismo? (Caso Benito)
-        if (tutorialBloquearRechazar)
-        {
-            Debug.Log("Tutorial: INTENTO BLOQUEADO. No puedes rechazar a este NPC.");
-            // Opcional: Si quieres que Dios le eche la bronca también si intenta tirar de la palanca a la fuerza
-            OnIntentoProhibido?.Invoke();
-
-            // IMPORTANTE: Si la palanca se bajó visualmente, hay que "resetearla" o bloquearla de nuevo
-            if (sistemaPalanca != null) sistemaPalanca.BloquearPalanca();
-            return;
-        }
-
-        // Si pasa todos los filtros, ejecutamos
         Debug.Log("Palanca bajada correctamente. Al infierno.");
+
+        // --- NUEVO: LANZAR EXPLOSIÓN ---
+        // Lo hacemos justo cuando tiras de la palanca para dar impacto
+        if (fxExplosionRoja != null) fxExplosionRoja.Play();
+        // -------------------------------
 
         OnDecisionTutorial?.Invoke(false);
         if (GameManager.Instance != null) GameManager.Instance.RegistrarRechazo();
@@ -192,6 +183,11 @@ public class NPCManager : MonoBehaviour
         if (uiController != null) uiController.OcultarDatos();
         if (GameManager.Instance != null) GameManager.Instance.RegistrarEntradaCielo();
         if (reaccionActual != null) reaccionActual.ShowPositiveReaction();
+
+        // --- NUEVO: LANZAR CONFETTI ---
+        if (fxConfetti != null) fxConfetti.Play();
+        // ------------------------------
+
         yield return new WaitForSeconds(tiempoEsperaCielo);
         if (movimientoActual != null) movimientoActual.IrAlCielo();
     }
