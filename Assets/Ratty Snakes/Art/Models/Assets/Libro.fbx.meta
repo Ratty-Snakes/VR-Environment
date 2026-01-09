@@ -1,14 +1,9 @@
 fileFormatVersion: 2
-guid: 0f6f14f31dc9a8c42b4ea425f54852f6
+guid: ace9f9c517951bf4c88f16968568c78e
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects:
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: M_Telefono1
-    second: {fileID: 2100000, guid: 77a5f7a16d45a904f8a884bf3a22497c, type: 2}
+  externalObjects: {}
   materials:
     materialImportMode: 2
     materialName: 0

@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 0f6f14f31dc9a8c42b4ea425f54852f6
+guid: ca23a06db25d41e40b98c8fe78b7a28c
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
@@ -7,8 +7,18 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: M_Telefono1
-    second: {fileID: 2100000, guid: 77a5f7a16d45a904f8a884bf3a22497c, type: 2}
+      name: M_TazaAlas
+    second: {fileID: 2100000, guid: 6f263213a9ebc5049823fe39a97dbb2e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: M_TazaBase
+    second: {fileID: 2100000, guid: 14a2989525797a440acfb032fd199ae4, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: M_TazaCafe
+    second: {fileID: 2100000, guid: 584b4c6f61d5dd84c8a2bdd31e4d2385, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
