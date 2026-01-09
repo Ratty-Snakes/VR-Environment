@@ -140,7 +140,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 1a8fe99cd26ece44c8b59c9a05398a8e, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MaskMap:
@@ -504,8 +504,8 @@ Material:
     - _Unlit_Intensity: 0
     - _UseEmissiveIntensity: 0
     - _UseShadowThreshold: 0
-    - _Use_1stAs2nd: 1
-    - _Use_BaseAs1st: 1
+    - _Use_1stAs2nd: 0
+    - _Use_BaseAs1st: 0
     - _WorkflowMode: 1
     - _ZOverDrawMode: 0
     - _ZTestDepthEqualForOpaque: 4
@@ -517,15 +517,15 @@ Material:
     - _simpleUI: 0
     - _utsTechnique: 0
     m_Colors:
-    - _1st_ShadeColor: {r: 1, g: 1, b: 1, a: 1}
+    - _1st_ShadeColor: {r: 0.5176471, g: 0.34901962, b: 0.09019608, a: 1}
     - _2nd_ShadeColor: {r: 1, g: 1, b: 1, a: 1}
     - _AngelRingMaskColor: {r: 0, g: 1, b: 0, a: 1}
     - _AngelRing_Color: {r: 1, g: 1, b: 1, a: 1}
     - _Ap_RimLightColor: {r: 1, g: 1, b: 1, a: 1}
-    - _BaseColor: {r: 0.7353569, g: 0.7353569, b: 0.7353569, a: 1}
+    - _BaseColor: {r: 0.70980394, g: 0.48627454, b: 0.13725491, a: 1}
     - _BaseColorMap_MipInfo: {r: 0, g: 0, b: 0, a: 0}
     - _BaseColorMaskColor: {r: 1, g: 1, b: 1, a: 1}
-    - _Color: {r: 0.7353569, g: 0.7353569, b: 0.7353569, a: 1}
+    - _Color: {r: 0.70980394, g: 0.48627454, b: 0.13725486, a: 1}
     - _ColorShift: {r: 0, g: 0, b: 0, a: 1}
     - _DiffusionProfileAsset: {r: 0, g: 0, b: 0, a: 0}
     - _DoubleSidedConstants: {r: 1, g: 1, b: -1, a: 0}

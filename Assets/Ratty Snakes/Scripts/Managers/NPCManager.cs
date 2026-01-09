@@ -12,20 +12,19 @@ public class NPCManager : MonoBehaviour
     public Transform[] listaWaypoints;
     public NPCUIController uiController;
     public LeverLockSystem sistemaPalanca;
+    public HeavenDoorController puertasCielo;
 
     [Header("Configuracion de Tiempos")]
     public float tiempoEsperaCielo = 2.0f;
 
     [Header("Efectos Visuales (Feedback)")]
-    public ParticleSystem fxConfetti;       // Arrastra aquí el confetti
-    public ParticleSystem fxExplosionRoja;  // Arrastra aquí la explosión
+    public ParticleSystem fxConfetti;
+    public ParticleSystem fxExplosionRoja;
 
-    // --- NUEVO: EFECTOS DE SONIDO ---
     [Header("Efectos de Sonido")]
-    public AudioSource audioSource; // El "altavoz"
-    public AudioClip sonidoAceptar; // Sonido celestial / Party
-    public AudioClip sonidoRechazar; // Sonido de explosión / Fuego
-    // --------------------------------
+    public AudioSource audioSource;
+    public AudioClip sonidoAceptar;
+    public AudioClip sonidoRechazar;
 
     [Header("Estado Actual")]
     private GameObject npcActualObj;
@@ -36,13 +35,30 @@ public class NPCManager : MonoBehaviour
     private bool mesaOcupada = false;
     private bool npcListoParaSentencia = false;
 
-    // --- NUEVO: RESTRICCIONES DE TUTORIAL ---
-    private bool tutorialBloquearAceptar = false; // Si es true, NO puedes mandarlo al cielo
-    private bool tutorialBloquearRechazar = false; // Si es true, NO puedes usar la palanca/gesto mal
+    // RESTRICCIONES DE TUTORIAL
+    private bool tutorialBloquearAceptar = false;
+    private bool tutorialBloquearRechazar = false;
 
     // Eventos
     public Action<bool> OnDecisionTutorial;
-    public Action OnIntentoProhibido; // Se dispara si intentas hacer lo que no debes
+    public Action OnIntentoProhibido;
+
+    [Header("Pool de Quejas (Físicas)")]
+    [TextArea]
+    public string[] listaQuejas = new string[] {
+        "¡Oye! ¡Más respeto a los muertos!",
+        "¡Ay! ¡Eso duele!",
+        "¿Pero qué te pasa?",
+        "¡Voy a llamar a mi abogado!",
+        "¡Cuidado con la mercancía!",
+        "¡Au! ¡Que soy de hueso frágil!"
+    };
+
+    public string GetQuejaRandom()
+    {
+        if (listaQuejas.Length == 0) return "¡Ouch!";
+        return listaQuejas[UnityEngine.Random.Range(0, listaQuejas.Length)];
+    }
 
     private void Awake()
     {
@@ -62,9 +78,6 @@ public class NPCManager : MonoBehaviour
         tutorialBloquearAceptar = bloquearCielo;
         tutorialBloquearRechazar = bloquearInfierno;
     }
-
-    // ... (El resto de GenerarNPC y TraerSiguienteNPC es igual que antes) ...
-    // ... CÓPIALO DEL SCRIPT ANTERIOR O DÉJALO COMO ESTABA ...
 
     public void BotonSiguientePulsado() { if (!mesaOcupada) TraerSiguienteNPC(); }
 
@@ -88,16 +101,27 @@ public class NPCManager : MonoBehaviour
         npcListoParaSentencia = false;
         if (sistemaPalanca != null) sistemaPalanca.BloquearPalanca();
 
+        // 1. Crear el NPC base (contenedor)
         npcActualObj = Instantiate(npcPrefab, listaWaypoints[0].position, listaWaypoints[0].rotation);
 
         MeshRenderer baseMesh = npcActualObj.GetComponent<MeshRenderer>();
         if (baseMesh != null) baseMesh.enabled = false;
 
+        // 2. Crear el modelo visual (hijo)
         if (datos.modeloEspecifico != null)
         {
             GameObject modeloVisual = Instantiate(datos.modeloEspecifico, npcActualObj.transform);
             modeloVisual.transform.localPosition = Vector3.zero;
             modeloVisual.transform.localRotation = Quaternion.identity;
+
+            // --- ¡AQUÍ ESTÁ EL CAMBIO IMPORTANTE! --- 
+            // Buscamos el script de impactos y le pasamos la cabeza nueva
+            NPCImpactReactor reactor = npcActualObj.GetComponent<NPCImpactReactor>();
+            if (reactor != null)
+            {
+                reactor.ConfigurarCabeza(modeloVisual.transform);
+            }
+            // ----------------------------------------
         }
         else if (baseMesh != null) baseMesh.enabled = true;
 
@@ -120,18 +144,17 @@ public class NPCManager : MonoBehaviour
     }
 
     // ---------------------------------------------------------
-    // TOMA DE DECISIONES CON RESTRICCIONES
+    // TOMA DE DECISIONES
     // ---------------------------------------------------------
 
     public void RecibirGesto_Aceptar() // Pulgar Arriba
     {
         if (npcActualObj == null || !mesaOcupada || !npcListoParaSentencia) return;
 
-        // NUEVO: Bloqueo de Tutorial
         if (tutorialBloquearAceptar)
         {
             Debug.Log("Tutorial: No puedes aceptar a este NPC.");
-            OnIntentoProhibido?.Invoke(); // Avisamos al TutorialManager para la bronca
+            OnIntentoProhibido?.Invoke();
             return;
         }
 
@@ -143,41 +166,33 @@ public class NPCManager : MonoBehaviour
     {
         if (npcActualObj == null || !mesaOcupada || !npcListoParaSentencia) return;
 
-        // NUEVO: Bloqueo de Tutorial
         if (tutorialBloquearRechazar)
         {
             Debug.Log("Tutorial: No puedes rechazar a este NPC.");
-            OnIntentoProhibido?.Invoke(); // Avisamos al TutorialManager para la bronca
+            OnIntentoProhibido?.Invoke();
             return;
         }
 
-        // Anti-repetición
         if (sistemaPalanca != null && !sistemaPalanca.IsLocked) return;
 
-        // --- NUEVO: LANZAR EXPLOSIÓN ---
-        // Lo hacemos justo cuando tiras de la palanca para dar impacto
+        // Feedback Visual
         if (fxExplosionRoja != null) fxExplosionRoja.Play();
-        // -------------------------------
 
-        // --- NUEVO: SONIDO EXPLOSIÓN ---
+        // Feedback Sonoro
         if (audioSource != null && sonidoRechazar != null)
         {
             audioSource.PlayOneShot(sonidoRechazar);
         }
-        // -------------------------------
 
         if (sistemaPalanca != null) sistemaPalanca.DesbloquearPalanca();
         if (uiController != null) uiController.OcultarDatos();
         if (reaccionActual != null) reaccionActual.ShowNegativeReaction();
     }
 
-    // 3. PALANCA: Ejecucion (Infierno - Paso 2)
     public void RecibirInput_Palanca()
     {
-        // ... (Tus chequeos de seguridad de siempre) ...
         if (npcActualObj == null || !mesaOcupada) return;
         if (sistemaPalanca != null && sistemaPalanca.IsLocked) return;
-        // ...
 
         Debug.Log("Palanca bajada correctamente. Al infierno.");
 
@@ -198,16 +213,18 @@ public class NPCManager : MonoBehaviour
         if (GameManager.Instance != null) GameManager.Instance.RegistrarEntradaCielo();
         if (reaccionActual != null) reaccionActual.ShowPositiveReaction();
 
-        // --- NUEVO: LANZAR CONFETTI ---
         if (fxConfetti != null) fxConfetti.Play();
-        // ------------------------------
 
-        // --- NUEVO: SONIDO ACEPTAR ---
         if (audioSource != null && sonidoAceptar != null)
         {
             audioSource.PlayOneShot(sonidoAceptar);
         }
-        // -----------------------------
+
+        if (puertasCielo != null)
+        {
+            puertasCielo.AbrirPuertas();
+            puertasCielo.Invoke("CerrarPuertas", 10f);
+        }
 
         yield return new WaitForSeconds(tiempoEsperaCielo);
         if (movimientoActual != null) movimientoActual.IrAlCielo();
@@ -226,7 +243,6 @@ public class NPCManager : MonoBehaviour
         mesaOcupada = false;
         npcListoParaSentencia = false;
 
-        // Reset de restricciones (por seguridad)
         tutorialBloquearAceptar = false;
         tutorialBloquearRechazar = false;
 

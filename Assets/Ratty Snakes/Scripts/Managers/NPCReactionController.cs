@@ -99,4 +99,11 @@ public class NPCReactionController : MonoBehaviour
         dialogueBubble.SetActive(false);
         activeCoroutine = null;
     }
+
+    // Añade esto para poder llamarlo desde el script de golpes
+    public void MostrarQueja(string textoQueja)
+    {
+        // Reutilizamos tu rutina de máquina de escribir
+        StartReaction(textoQueja);
+    }
 }
