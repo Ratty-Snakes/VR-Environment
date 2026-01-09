@@ -20,6 +20,13 @@ public class NPCManager : MonoBehaviour
     public ParticleSystem fxConfetti;       // Arrastra aquí el confetti
     public ParticleSystem fxExplosionRoja;  // Arrastra aquí la explosión
 
+    // --- NUEVO: EFECTOS DE SONIDO ---
+    [Header("Efectos de Sonido")]
+    public AudioSource audioSource; // El "altavoz"
+    public AudioClip sonidoAceptar; // Sonido celestial / Party
+    public AudioClip sonidoRechazar; // Sonido de explosión / Fuego
+    // --------------------------------
+
     [Header("Estado Actual")]
     private GameObject npcActualObj;
     private NPCWaypointMovement movimientoActual;
@@ -147,6 +154,18 @@ public class NPCManager : MonoBehaviour
         // Anti-repetición
         if (sistemaPalanca != null && !sistemaPalanca.IsLocked) return;
 
+        // --- NUEVO: LANZAR EXPLOSIÓN ---
+        // Lo hacemos justo cuando tiras de la palanca para dar impacto
+        if (fxExplosionRoja != null) fxExplosionRoja.Play();
+        // -------------------------------
+
+        // --- NUEVO: SONIDO EXPLOSIÓN ---
+        if (audioSource != null && sonidoRechazar != null)
+        {
+            audioSource.PlayOneShot(sonidoRechazar);
+        }
+        // -------------------------------
+
         if (sistemaPalanca != null) sistemaPalanca.DesbloquearPalanca();
         if (uiController != null) uiController.OcultarDatos();
         if (reaccionActual != null) reaccionActual.ShowNegativeReaction();
@@ -161,11 +180,6 @@ public class NPCManager : MonoBehaviour
         // ...
 
         Debug.Log("Palanca bajada correctamente. Al infierno.");
-
-        // --- NUEVO: LANZAR EXPLOSIÓN ---
-        // Lo hacemos justo cuando tiras de la palanca para dar impacto
-        if (fxExplosionRoja != null) fxExplosionRoja.Play();
-        // -------------------------------
 
         OnDecisionTutorial?.Invoke(false);
         if (GameManager.Instance != null) GameManager.Instance.RegistrarRechazo();
@@ -187,6 +201,13 @@ public class NPCManager : MonoBehaviour
         // --- NUEVO: LANZAR CONFETTI ---
         if (fxConfetti != null) fxConfetti.Play();
         // ------------------------------
+
+        // --- NUEVO: SONIDO ACEPTAR ---
+        if (audioSource != null && sonidoAceptar != null)
+        {
+            audioSource.PlayOneShot(sonidoAceptar);
+        }
+        // -----------------------------
 
         yield return new WaitForSeconds(tiempoEsperaCielo);
         if (movimientoActual != null) movimientoActual.IrAlCielo();

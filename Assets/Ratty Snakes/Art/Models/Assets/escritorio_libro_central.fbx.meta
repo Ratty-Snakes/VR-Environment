@@ -3,7 +3,32 @@ guid: 6cc423582d357674b9527649638043cd
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: M_elementodeco
+    second: {fileID: 2100000, guid: 1050a204ee1f79240890231430759e6a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: M_hojas
+    second: {fileID: 2100000, guid: 3829a54c0a3a96a48979f53a70e4719b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: M_portada
+    second: {fileID: 2100000, guid: 3863ecfbfc32768438ea81346af70682, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: M_punto_de_libro
+    second: {fileID: 2100000, guid: 0807687b92dc8e049bb840714a7e37ca, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: lambert5
+    second: {fileID: 2100000, guid: b6cbb7c1d26c7af478a1077d14fe73a4, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

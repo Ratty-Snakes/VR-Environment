@@ -3,7 +3,97 @@ guid: a9156e2581c4b1e4ea2f5f359800f721
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: M_lapiz
+    second: {fileID: 2100000, guid: be3da8fb33f2bb645bc401aec1c9e747, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: M_lapiz1
+    second: {fileID: 2100000, guid: a485197580146d84eaf726eff0a68732, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: M_lapiz2
+    second: {fileID: 2100000, guid: 84d3b455ce1316b4da262114d94d6a7e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: M_lapiz3
+    second: {fileID: 2100000, guid: 10ebc8d61404f604f96db450a756e204, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: M_lapiz_partepunta
+    second: {fileID: 2100000, guid: 8a8478b5da6fd0740ae404142617b44f, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: M_lapiz_partepunto
+    second: {fileID: 2100000, guid: cacd209203b7b5246a0ebfc98d3b2932, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: M_partetrasera_lapiz
+    second: {fileID: 2100000, guid: 2270c310611f9c340892a8b19deeb675, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: M_partetrasera_lapiz1
+    second: {fileID: 2100000, guid: 37ca114258b079844859d630a853a084, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: M_portalapices
+    second: {fileID: 2100000, guid: 9934e6711e791264384ba2f52fd7ebdc, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: M_punta
+    second: {fileID: 2100000, guid: 5c1910a8fa0000543a10121c7e686b16, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: M_punta1
+    second: {fileID: 2100000, guid: 0ef5fe9884c8c754d9b295fea28077c0, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: M_punta_lapiz
+    second: {fileID: 2100000, guid: 1678e9894324efb43b5c1179ccae8959, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: M_regla
+    second: {fileID: 2100000, guid: 55546061f51cf114597c99d2fcabead4, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: lambert1
+    second: {fileID: 2100000, guid: defb7972ac2707449bb74419228a0664, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: lambert15
+    second: {fileID: 2100000, guid: 2f8ecbd3991f590439afab3c4b872141, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: lambert23
+    second: {fileID: 2100000, guid: e09ce375fa321e44eb38a4a71399bb68, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: lambert25
+    second: {fileID: 2100000, guid: 6d33bda326dcf984590bdb340ca6fe8e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: lambert29
+    second: {fileID: 2100000, guid: bf5db4444a3fb364c9dd3d384aa1b924, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
