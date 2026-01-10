@@ -61,8 +61,6 @@ public class HeavenDoorController : MonoBehaviour
         Quaternion destinoIzq = rotInicialIzq * Quaternion.Euler(0, -anguloApertura, 0);
         Quaternion destinoDer = rotInicialDer * Quaternion.Euler(0, anguloApertura, 0);
 
-        float tiempo = 0;
-
         // Bucle de movimiento
         while (Quaternion.Angle(pivotePuertaIzq.localRotation, destinoIzq) > 0.1f)
         {

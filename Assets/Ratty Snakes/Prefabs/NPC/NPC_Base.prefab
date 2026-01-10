@@ -468,7 +468,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.7
+  m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &6892651882506057054
 Rigidbody:
@@ -543,7 +543,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   modeloCabeza: {fileID: 0}
-  sonidoOof: {fileID: 8300000, guid: c9bd75e2f11579f4aa15c113f1cc1987, type: 3}
+  sonidoOof: {fileID: 8300000, guid: 61d040a207b291841a82ff7f6e0ea7fa, type: 3}
   fuerzaGolpeMinima: 0.5
   anguloRetroceso: -45
   velocidadRebote: 5

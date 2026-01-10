@@ -1,4 +1,4 @@
-using UnityEngine;
+Ôªøusing UnityEngine;
 using TMPro;
 using System.Collections;
 
@@ -11,26 +11,31 @@ public class GodPhoneController : MonoBehaviour
 
     [Header("Assets")]
     public AudioClip sonidoRing;
+    public AudioClip sonidoColgar; // El sonido "Clack" mec√°nico
 
-    [Header("Efecto VibraciÛn")]
-    public Transform modeloVisualAuricular; // <--- ARRASTRA AQUÕ LA MALLA (HIJO) DEL AURICULAR
-    public float velocidadVibracion = 20f;  // QuÈ tan r·pido tiembla
-    public float anguloMaximo = 5f;         // Cu·nto gira (5 a -5 grados)
+    [Header("Efecto Vibraci√≥n")]
+    public Transform modeloVisualAuricular;
+    public float velocidadVibracion = 20f;
+    public float anguloMaximo = 5f;
 
+    [Header("Estado F√≠sico")]
+    public bool estaColgado = true; // Variable clave para el TutorialManager
+
+    // Estado interno
     private bool estaSonando = false;
     private bool llamadaEnCurso = false;
     private Coroutine rutinaLlamada;
-    private Quaternion rotacionOriginalVisual; // Para recordar cÛmo estaba antes de temblar
+    private Quaternion rotacionOriginalVisual;
 
     void Start()
     {
-        // 1. Guardamos la rotaciÛn original para restaurarla luego
+        // 1. Guardamos la rotaci√≥n original
         if (modeloVisualAuricular != null)
         {
             rotacionOriginalVisual = modeloVisualAuricular.localRotation;
         }
 
-        // 2. Ocultamos subtÌtulos
+        // 2. Ocultamos subt√≠tulos
         if (canvasSubtitulos != null)
         {
             canvasSubtitulos.SetActive(false);
@@ -39,18 +44,48 @@ public class GodPhoneController : MonoBehaviour
 
     void Update()
     {
-        // SI EST¡ SONANDO -> HACEMOS EL EFECTO DE VIBRACI”N
+        // Efecto de vibraci√≥n
         if (estaSonando && modeloVisualAuricular != null)
         {
-            // Calculamos el ·ngulo usando Seno (va de -1 a 1 suavemente)
             float anguloZ = Mathf.Sin(Time.time * velocidadVibracion) * anguloMaximo;
-
-            // Aplicamos la rotaciÛn SOLO en el eje Z local
             modeloVisualAuricular.localRotation = Quaternion.Euler(0, 0, anguloZ);
         }
     }
 
-    // --- M…TODOS P⁄BLICOS ---
+    // ====================================================================
+    // üîå M√âTODOS PARA EL SOCKET INTERACTOR (LA BASE F√çSICA)
+    // ====================================================================
+    // Conecta estos al XR Socket Interactor de la base del tel√©fono.
+
+    // Evento: Select Entered (Al ponerlo en la base)
+    public void PonerEnBase()
+    {
+        estaColgado = true;
+        Debug.Log("üìû F√≠sicas: Tel√©fono puesto en la base.");
+
+        // Feedback sonoro mec√°nico (Clack)
+        if (audioSource && sonidoColgar) audioSource.PlayOneShot(sonidoColgar);
+
+        // Llamamos a la l√≥gica original del juego
+        AlColgarTelefono();
+
+        // Restauramos rotaci√≥n por si acaso
+        RestaurarRotacion();
+    }
+
+    // Evento: Select Exited (Al cogerlo de la base)
+    public void QuitarDeBase()
+    {
+        estaColgado = false;
+        Debug.Log("üìû F√≠sicas: Tel√©fono levantado.");
+
+        // Llamamos a la l√≥gica original del juego
+        AlDescolgarTelefono();
+    }
+
+    // ====================================================================
+    // üß† L√ìGICA ORIGINAL (COMPATIBILIDAD CON GAME MANAGER)
+    // ====================================================================
 
     public void AlDescolgarTelefono()
     {
@@ -60,9 +95,9 @@ public class GodPhoneController : MonoBehaviour
         }
         else
         {
-            // Si lo coges sin que suene, nos aseguramos de que el visual estÈ recto
+            // Si lo coges sin que suene
             RestaurarRotacion();
-            Debug.Log("Has descolgado, pero nadie llamaba.");
+            // Debug.Log("Has descolgado, pero nadie llamaba.");
         }
     }
 
@@ -72,9 +107,10 @@ public class GodPhoneController : MonoBehaviour
         {
             Colgar();
         }
+        // Aqu√≠ podr√≠as a√±adir l√≥gica extra si el GameManager necesita saber que has colgado aunque no hubiera llamada
     }
 
-    // --- L”GICA INTERNA ---
+    // --- L√ìGICA INTERNA ---
 
     public void EmpezarA_Sonar()
     {
@@ -91,15 +127,34 @@ public class GodPhoneController : MonoBehaviour
         estaSonando = false;
         llamadaEnCurso = true;
 
-        // PARAMOS EL RING Y LA VIBRACI”N
         audioSource.Stop();
         audioSource.loop = false;
-        RestaurarRotacion(); // <--- IMPORTANTE: Que deje de estar torcido al cogerlo
+        RestaurarRotacion();
 
+        // 1. Notificar al Tutorial
         if (TutorialManager.Instance != null)
         {
             TutorialManager.Instance.JugadorContestoTelefono();
         }
+
+        // 2. Notificar al GameManager (Si existe en la escena)
+        // Descomenta esto cuando est√©s en la escena del juego real
+        /*
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.JugadorContestoTelefono();
+        }
+        */
+    }
+
+    public void Colgar()
+    {
+        llamadaEnCurso = false;
+        if (canvasSubtitulos != null) canvasSubtitulos.SetActive(false);
+        audioSource.Stop();
+        RestaurarRotacion();
+
+        // Aqu√≠ podr√≠as notificar al GameManager si hiciera falta
     }
 
     public void ReproducirFraseDios(string texto, AudioClip audioVoz = null)
@@ -121,15 +176,6 @@ public class GodPhoneController : MonoBehaviour
         }
     }
 
-    public void Colgar()
-    {
-        llamadaEnCurso = false;
-        if (canvasSubtitulos != null) canvasSubtitulos.SetActive(false);
-        audioSource.Stop();
-        RestaurarRotacion();
-    }
-
-    // FunciÛn auxiliar para dejar el telÈfono quieto
     void RestaurarRotacion()
     {
         if (modeloVisualAuricular != null)
