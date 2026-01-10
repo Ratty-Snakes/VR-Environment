@@ -26,5 +26,4 @@ MonoBehaviour:
   fraseEntrada: "Blub... blub... \xBFhola?"
   reaccionPositiva: "\xA1OH! Me pregunto si hay pececillos en el para\xEDso, \xA1ay,
     qu\xE9 ilu!\r\n"
-  reaccionNegativa: "\xA1Cagarse encima no es un crimen, joder! \xA1\xA1Fue solo
-    una vez, lo juro!!"
+  reaccionNegativa: "\xA1Cagarse encima no es un crimen! \xA1\xA1Fue solo una vez!!"

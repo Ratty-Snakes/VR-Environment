@@ -23,7 +23,7 @@ MonoBehaviour:
   actosMalos: 'Poner laxantes en la botella de agua a uno de sus competidores. '
   karmaScore: -1
   fraseEntrada: "\xA1Qu\xE9 pasa loco!"
-  reaccionPositiva: "\xA1\xA1\xA1WaSSuuup!!! Cielo, all\xE1 voy HAhaHAHa \xA1que
-    empiece la fiesta!"
+  reaccionPositiva: "\xA1\xA1\xA1WaSSuuup!!! Cielo, all\xE1 voy \xA1que empiece la
+    fiesta!"
   reaccionNegativa: "\xA1EH! \xA1EH!, que no he hecho nada, t\xEDo, d\xE9jame pasar,
     \xA1sin m\xED no hay para\xEDso, bro!"

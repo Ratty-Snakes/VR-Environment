@@ -23,8 +23,5 @@ MonoBehaviour:
     de los mismos
   karmaScore: -18
   fraseEntrada: Hola brother
-  reaccionPositiva: "Eres el m\xE1s sigma, tete, haha, t\xFA s\xED que le sabes.
-    \xA1\xA1AUUUUUUUU!!!"
-  reaccionNegativa: "NoNoNooo\u2026T\xCDO T\xCDO, hear me out, t\xEDo, tengo demasiado
-    flow como para ir al infierno, creo en Dios, lo juro, \xBFpor qu\xE9 me haces
-    esto? \xA1\xA1Pens\xE9 que est\xE1bamos de chill!!"
+  reaccionPositiva: "Eres el m\xE1s sigma, tete, \xA1\xA1AUUUUUUUU!!!"
+  reaccionNegativa: "Hear me out t\xEDo, pens\xE9 que est\xE1bamos de chill."
