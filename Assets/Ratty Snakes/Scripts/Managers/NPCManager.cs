@@ -114,6 +114,9 @@ public class NPCManager : MonoBehaviour
             modeloVisual.transform.localPosition = Vector3.zero;
             modeloVisual.transform.localRotation = Quaternion.identity;
 
+            // Cambia 0.5f por el tamaño que quieras (1f es el original)
+            modeloVisual.transform.localScale = Vector3.one;
+
             // --- ¡AQUÍ ESTÁ EL CAMBIO IMPORTANTE! --- 
             // Buscamos el script de impactos y le pasamos la cabeza nueva
             NPCImpactReactor reactor = npcActualObj.GetComponent<NPCImpactReactor>();
