@@ -24,5 +24,4 @@ MonoBehaviour:
   karmaScore: -5
   fraseEntrada: Saludos
   reaccionPositiva: "\xA1\xA1Eureka!! \xA1Dios siempre ha estado de mi lado! "
-  reaccionNegativa: Le voy a dar una paliza a un pintor austriaco muy conocido. Gracias
-    por la oportunidad, compatriota.
+  reaccionNegativa: "Voy a aprovechar para pegar un par de dictadores\u2026"
