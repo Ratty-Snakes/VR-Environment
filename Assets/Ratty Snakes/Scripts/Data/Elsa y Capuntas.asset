@@ -21,6 +21,7 @@ MonoBehaviour:
     para que pudiesen descansar a pesar de sus necesidades.
   actosMalos: "Tirar constantemente cualquier objeto de cristal de la mesa o estanter\xEDa"
   karmaScore: 14
+  fraseEntrada: Holi
   reaccionPositiva: Ahora podremos jugar cuando queramos y dormir cuando queramos,
     como dijo mami, hihihihi.
   reaccionNegativa: "\xBFEh? \xBFQu\xE9 haces?"

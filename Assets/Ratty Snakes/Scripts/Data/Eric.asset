@@ -23,6 +23,7 @@ MonoBehaviour:
     - Vender droga
     a menores de edad'
   karmaScore: -12
+  fraseEntrada: "\xBFQu\xE9 pasa tronco?"
   reaccionPositiva: "De lujo, colega. Oye, hazme un favor... \xE9chale un ojo a mi
     abuela desde aqu\xED, \xBFvale?"
   reaccionNegativa: "Bah, que os den. Ya sab\xEDa que acabar\xEDa aqu\xED. Al menos

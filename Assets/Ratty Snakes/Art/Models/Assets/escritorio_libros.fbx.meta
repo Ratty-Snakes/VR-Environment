@@ -3,7 +3,37 @@ guid: 490e26b5e08ac7a4c9be6dd714918124
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: M_hojas2
+    second: {fileID: 2100000, guid: b403c15a52ca21448b71ddbed8b76158, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: M_hojas3
+    second: {fileID: 2100000, guid: dba244e17d7e36f4582de7e5784ab80a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: M_hojas4
+    second: {fileID: 2100000, guid: 0014020b1bf4e9d47b821304b5e10aaa, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: M_portada1
+    second: {fileID: 2100000, guid: 923d0ab57acf532429da3dd5e8780540, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: M_portada2
+    second: {fileID: 2100000, guid: 80e9b6d0f9afc114ea761be38c12a59d, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: M_portada3
+    second: {fileID: 2100000, guid: 4073504ca09112c4692b47da59a429c8, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

@@ -21,6 +21,7 @@ MonoBehaviour:
     de los vecinos"
   actosMalos: "Intent\xF3 besar a la hija de su vecino de manera forzada"
   karmaScore: -18
+  fraseEntrada: Hola
   reaccionPositiva: "Que?? LA OSTIA, toma eso, hijo de puta, soy una v\xEDctima m\xE1s,
     \xA1\xA1lo sab\xEDa!! HAHAHA, cabronazos todos."
   reaccionNegativa: "Pi\xE9nsatelo otra vez, no tiene ni puta gracia, he ido a misa

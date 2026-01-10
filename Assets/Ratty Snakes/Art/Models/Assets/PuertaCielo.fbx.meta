@@ -3,7 +3,17 @@ guid: bc673bfc6af50794087b094a470a7aac
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: M_PilarPuerta
+    second: {fileID: 2100000, guid: 4ce8bb69db5e4c04288745ecb5e68e49, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: M_Puerta
+    second: {fileID: 2100000, guid: 2223f0cb523ac3a49a719d8db16cdc66, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

@@ -34,6 +34,17 @@ public class NPCReactionController : MonoBehaviour
         currentData = data;
     }
 
+    // --- NUEVO: Llamado por NPCWaypointMovement al llegar al punto 1 ---
+    public void MostrarFraseEntrada()
+    {
+        // Solo mostramos si hay datos y si la frase no está vacía
+        if (currentData != null && !string.IsNullOrEmpty(currentData.fraseEntrada))
+        {
+            StartReaction(currentData.fraseEntrada);
+        }
+    }
+    // ------------------------------------------------------------------
+
     // Llamado al ACEPTAR
     public void ShowPositiveReaction()
     {
@@ -87,5 +98,12 @@ public class NPCReactionController : MonoBehaviour
         // 4. Ocultar
         dialogueBubble.SetActive(false);
         activeCoroutine = null;
+    }
+
+    // Añade esto para poder llamarlo desde el script de golpes
+    public void MostrarQueja(string textoQueja)
+    {
+        // Reutilizamos tu rutina de máquina de escribir
+        StartReaction(textoQueja);
     }
 }
