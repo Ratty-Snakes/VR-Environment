@@ -5,105 +5,116 @@ using System.Collections;
 public class NPCReactionController : MonoBehaviour
 {
     [Header("Configuración de la Burbuja")]
-    [Tooltip("El objeto Canvas o Panel que contiene el gráfico del bocadillo")]
     public GameObject dialogueBubble;
-
-    [Tooltip("El componente de texto donde escribiremos la frase")]
     public TextMeshProUGUI dialogueText;
-
-    [Tooltip("Tiempo que el texto permanece en pantalla DESPUÉS de terminar de escribirse")]
     public float displayTime = 3f;
 
     [Header("Efecto Máquina de Escribir")]
-    [Tooltip("Velocidad de escritura (segundos por letra). Menor es más rápido.")]
     public float typingSpeed = 0.05f;
+
+    [Header("Configuración de Audio (Sistema)")]
+    public AudioSource audioSource;
+    public AudioClip sonidoVoz; // El sonido "blip" genérico
+
+    [Tooltip("Variación aleatoria para que parezca que habla y no sea un robot")]
+    public float variacionTono = 0.1f;
 
     // Datos del NPC actual
     private NPCData currentData;
-    // Guardamos la corrutina activa para poder pararla si cambiamos de frase rápido
     private Coroutine activeCoroutine;
+
+    // Variable interna para guardar el tono de este NPC concreto
+    private float tonoActualNPC = 1f;
 
     void Start()
     {
         if (dialogueBubble != null)
             dialogueBubble.SetActive(false);
+
+        if (audioSource == null) audioSource = GetComponent<AudioSource>();
     }
 
+    // --- AQUÍ RECIBIMOS LOS DATOS ---
     public void Initialize(NPCData data)
     {
         currentData = data;
+
+        // Leemos el tono de voz del Scriptable Object
+        if (currentData != null)
+        {
+            tonoActualNPC = currentData.tonoVoz;
+        }
+        else
+        {
+            tonoActualNPC = 1f; // Valor por defecto si no hay datos
+        }
     }
 
-    // --- NUEVO: Llamado por NPCWaypointMovement al llegar al punto 1 ---
+    // --- MÉTODOS DE REACCIÓN ---
+
     public void MostrarFraseEntrada()
     {
-        // Solo mostramos si hay datos y si la frase no está vacía
         if (currentData != null && !string.IsNullOrEmpty(currentData.fraseEntrada))
         {
             StartReaction(currentData.fraseEntrada);
         }
     }
-    // ------------------------------------------------------------------
 
-    // Llamado al ACEPTAR
     public void ShowPositiveReaction()
     {
-        if (currentData != null)
-        {
-            StartReaction(currentData.reaccionPositiva);
-        }
+        if (currentData != null) StartReaction(currentData.reaccionPositiva);
     }
 
-    // Llamado al RECHAZAR
     public void ShowNegativeReaction()
     {
-        if (currentData != null)
-        {
-            StartReaction(currentData.reaccionNegativa);
-        }
+        if (currentData != null) StartReaction(currentData.reaccionNegativa);
     }
 
-    // Función auxiliar para reiniciar el proceso limpiamente
+    public void MostrarQueja(string textoQueja)
+    {
+        StartReaction(textoQueja);
+    }
+
+    // --- LÓGICA INTERNA ---
+
     private void StartReaction(string message)
     {
-        // Si ya estaba hablando, le cortamos la frase anterior
         if (activeCoroutine != null) StopCoroutine(activeCoroutine);
-
         activeCoroutine = StartCoroutine(TypewriterRoutine(message));
     }
 
-    // La Corrutina con el efecto Typewriter
     private IEnumerator TypewriterRoutine(string message)
     {
         if (dialogueBubble == null || dialogueText == null) yield break;
 
         // 1. Limpiar y Mostrar
-        dialogueText.text = ""; // Empezamos vacíos
+        dialogueText.text = "";
         dialogueBubble.SetActive(true);
 
-        // 2. Bucle de escritura (Letra a letra)
+        // 2. Bucle de escritura
         foreach (char letter in message.ToCharArray())
         {
             dialogueText.text += letter;
 
-            // Aquí podrías añadir sonido de "blip" si quisieras:
-            // audioSource.PlayOneShot(blipSound);
+            // --- LÓGICA DE SONIDO ---
+            if (!char.IsWhiteSpace(letter) && audioSource != null && sonidoVoz != null)
+            {
+                // Usamos el tono del NPC + la variación aleatoria
+                float tonoFinal = tonoActualNPC + Random.Range(-variacionTono, variacionTono);
+
+                audioSource.pitch = tonoFinal;
+                audioSource.PlayOneShot(sonidoVoz);
+            }
+            // ------------------------
 
             yield return new WaitForSeconds(typingSpeed);
         }
 
-        // 3. Esperar para leer
+        // 3. Esperar
         yield return new WaitForSeconds(displayTime);
 
         // 4. Ocultar
         dialogueBubble.SetActive(false);
         activeCoroutine = null;
-    }
-
-    // Añade esto para poder llamarlo desde el script de golpes
-    public void MostrarQueja(string textoQueja)
-    {
-        // Reutilizamos tu rutina de máquina de escribir
-        StartReaction(textoQueja);
     }
 }

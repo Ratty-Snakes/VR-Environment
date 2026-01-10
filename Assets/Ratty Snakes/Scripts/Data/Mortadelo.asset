@@ -16,6 +16,7 @@ MonoBehaviour:
   edad: 15
   hobbies: "Disfrazarse para entretener ni\xF1os"
   modeloEspecifico: {fileID: 919132149155446097, guid: 4619a84cb5fe2bf4188c5f6fe3e1ef23, type: 3}
+  tonoVoz: 1.2
   causaMuerte: "Ver v\xEDdeos y escuchar podcasts en YouTube sobre criminolog\xEDa."
   actosBuenos: "Devolvi\xF3 una cartera con 5000 \u20AC en efectivo a alguien que
     se le hab\xEDa ca\xEDdo"

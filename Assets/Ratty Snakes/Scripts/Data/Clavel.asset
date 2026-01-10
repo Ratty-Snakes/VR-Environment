@@ -16,7 +16,8 @@ MonoBehaviour:
   edad: 43
   hobbies: Construir muebles artesanos
   modeloEspecifico: {fileID: 9203730496655384520, guid: 94c6fdc82c531284a961ed6e5195a260, type: 3}
-  causaMuerte: "Un vecino le martill\xF3 clavos en la cabeza"
+  tonoVoz: 0.9
+  causaMuerte: "Un vecino le amartill\xF3 clavos en la cabeza"
   actosBuenos: "De vez en cuando hac\xEDa juguetes de madera para los hijos peque\xF1os
     de los vecinos"
   actosMalos: "Intent\xF3 besar a la hija de su vecino de manera forzada"

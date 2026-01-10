@@ -16,6 +16,7 @@ MonoBehaviour:
   edad: 18
   hobbies: "Pr\xE1ctica de deportes de riesgo"
   modeloEspecifico: {fileID: 82343500076214742, guid: 94f85a61ed0fe034e97634f9a2d56985, type: 3}
+  tonoVoz: 1.2
   causaMuerte: "Intent\xF3 pasar con un coche deportivo entre dos camiones y se cal\xF3
     el volante. "
   actosBuenos: El dinero que ganaba con las competiciones de Red Bull lo utilizaba

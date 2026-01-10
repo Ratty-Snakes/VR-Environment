@@ -513,6 +513,9 @@ MonoBehaviour:
   dialogueText: {fileID: 5879233109227849285}
   displayTime: 5
   typingSpeed: 0.05
+  audioSource: {fileID: 1619284595544964297}
+  sonidoVoz: {fileID: 8300000, guid: 621d918552fa5054c9577bf13c011706, type: 3}
+  variacionTono: 0.2
 --- !u!114 &3911129476344059290
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -559,7 +562,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 4945388231551957676, guid: 0c6a1d3f7f7a11b4ca4c7c339e9bd269, type: 2}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -568,7 +571,7 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
-  MinDistance: 1
+  MinDistance: 5
   MaxDistance: 500
   Pan2D: 0
   rolloffMode: 0
@@ -604,7 +607,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 1
+      value: 0.8
       inSlope: 0
       outSlope: 0
       tangentMode: 0

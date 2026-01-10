@@ -16,6 +16,7 @@ MonoBehaviour:
   edad: 24
   hobbies: Fotografiar aves
   modeloEspecifico: {fileID: 919132149155446097, guid: 7d6bd198cc2717e41a112cb2b08be9b1, type: 3}
+  tonoVoz: 0.8
   causaMuerte: "Pis\xF3 una mina durante una expedici\xF3n"
   actosBuenos: "Participaba activamente en manifestaciones para los derechos de los
     m\xE1s necesitados"
