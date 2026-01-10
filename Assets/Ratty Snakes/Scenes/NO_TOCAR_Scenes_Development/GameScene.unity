@@ -31268,6 +31268,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: -0.0395
       objectReference: {fileID: 0}
+    - target: {fileID: 2596858491621282837, guid: 55a3821848ae15e41844e00463933a40, type: 3}
+      propertyPath: OutputAudioMixerGroup
+      value: 
+      objectReference: {fileID: 4945388231551957676, guid: 0c6a1d3f7f7a11b4ca4c7c339e9bd269, type: 2}
     - target: {fileID: 2618993570248555743, guid: 55a3821848ae15e41844e00463933a40, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
@@ -31284,6 +31288,10 @@ PrefabInstance:
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: 77a5f7a16d45a904f8a884bf3a22497c, type: 2}
+    - target: {fileID: 4823817528369076205, guid: 55a3821848ae15e41844e00463933a40, type: 3}
+      propertyPath: sonidoColgar
+      value: 
+      objectReference: {fileID: 8300000, guid: bfbfc848ad0662344a4b4203e6151fbb, type: 3}
     - target: {fileID: 5531266248255851349, guid: 55a3821848ae15e41844e00463933a40, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
