@@ -1,7 +1,6 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using static UnityEngine.Rendering.STP;
 
 public class TutorialManager : MonoBehaviour
 {
@@ -10,6 +9,9 @@ public class TutorialManager : MonoBehaviour
     [Header("Referencias")]
     public GodPhoneController telefono;
     public NPCManager npcManager;
+
+    [Header("UI Gestos")]
+    public TutorialGestureUI uiGestos; // <--- NUEVA REFERENCIA
 
     [Header("NPCs de Prueba")]
     public NPCData benitoBueno; // Asigna aquí el SO de David
@@ -25,7 +27,7 @@ public class TutorialManager : MonoBehaviour
 
     // Control de audios/broncas
     private bool reproduciendoBronca = false;
-    private string fraseBroncaActual = "¡No! ¡Eso no es lo que te he dicho!"; // Frase por defecto
+    private string fraseBroncaActual = "¡No! ¡Eso no es lo que te he dicho!";
 
     private void Awake()
     {
@@ -123,7 +125,6 @@ public class TutorialManager : MonoBehaviour
 
         // REGLA: Prohibido rechazar (Infierno bloqueado)
         npcManager.SetRestriccionesTutorial(false, true);
-        // Configuramos la bronca específica por si el jugador intenta rechazarlo
         fraseBroncaActual = "¡No! ¡David es bueno! ¡Lee los papeles!";
 
         npcManager.SpawnNPC_Tutorial(benitoBueno);
@@ -135,10 +136,17 @@ public class TutorialManager : MonoBehaviour
         yield return Hablar("Madre mía. Mira su ficha en la pantalla.");
         yield return Hablar("Adoptó perros de tres patas y donó su pensión. Un blando, pero buena gente.");
         yield return Hablar("A este lo queremos.");
+
+        // ---> UI GESTOS: MOSTRAR PULGAR ARRIBA <---
+        if (uiGestos != null) uiGestos.MostrarModoAceptar();
+
         yield return Hablar("Para aceptarlo al cielo, haz el gesto de PULGAR ARRIBA.");
 
-        // Esperamos a que el jugador acierte. Si falla, saltará la bronca automática.
+        // Esperamos a que el jugador acierte.
         yield return new WaitUntil(() => decisionTomada);
+
+        // ---> UI GESTOS: OCULTAR TODO <---
+        if (uiGestos != null) uiGestos.OcultarTodo();
 
         yield return Hablar("¡Exacto! Bienvenido al Paraíso, David.");
         yield return new WaitForSeconds(1f);
@@ -157,7 +165,6 @@ public class TutorialManager : MonoBehaviour
 
         // REGLA: Prohibido aceptar (Cielo bloqueado)
         npcManager.SetRestriccionesTutorial(true, false);
-        // Configuramos la bronca específica por si intenta aceptarlo
         fraseBroncaActual = "¿Estás loco? ¡Es un impostor! ¡Pulgar abajo!";
 
         npcManager.SpawnNPC_Tutorial(jesusMalo);
@@ -169,10 +176,17 @@ public class TutorialManager : MonoBehaviour
         yield return Hablar("Se hace llamar 'Jesús'. Dice que es mi hijo. ¡Ja!");
         yield return Hablar("Dice que multiplica panes, pero los roba del Mercadona.");
         yield return Hablar("Es un estafador.");
+
+        // ---> UI GESTOS: MOSTRAR RECHAZAR (PULGAR ABAJO, ETC) <---
+        if (uiGestos != null) uiGestos.MostrarModoRechazar();
+
         yield return Hablar("A este no lo quiero ni ver. Haz el gesto de PULGAR ABAJO.");
 
         // Esperamos a que la palanca se desbloquee (significa que hizo el gesto bien)
         yield return new WaitUntil(() => !npcManager.sistemaPalanca.IsLocked);
+
+        // ---> UI GESTOS: OCULTAR TODO PARA QUE VEA LA PALANCA <---
+        if (uiGestos != null) uiGestos.OcultarTodo();
 
         yield return Hablar("¡Bien hecho! ¿Ves esa palanca a tu derecha?");
         yield return Hablar("Ahora se ha desbloqueado. TIRA DE ELLA y mándalo al Infierno.");
@@ -194,12 +208,13 @@ public class TutorialManager : MonoBehaviour
         yield return Hablar("Cada mañana te llamaré y te daré un LÍMITE DIARIO de difuntos que pueden ser aceptados.");
         yield return Hablar("Si dejas entrar a más gente de la cuenta... tú y yo tendremos problemas.");
 
-        // --- NUEVO: Explicación Calidad (Sin decir Karma explícitamente) ---
+        // --- Explicación Calidad ---
         yield return Hablar("Y ojo: no metas a cualquiera para llenar el cupo. No quiero basura en mi cielo.");
         yield return Hablar("Léete bien sus fichas. Asegúrate de que sus actos buenos compensen los malos.");
+
+        // --- Explicación Incertidumbre ---
         yield return Hablar("El cupo es limitado y el destino es ciego. Quizás el siguiente sea un santo... o quizás sea peor que este.");
         yield return Hablar("Tendrás que confiar en tu instinto, porque no hay vuelta atrás.");
-       
 
         yield return Hablar("Al final del día revisaré tu trabajo personalmente.");
         yield return Hablar("Si el balance es positivo, tienes el puesto. Si no... estás despedido.");
@@ -211,20 +226,17 @@ public class TutorialManager : MonoBehaviour
 
         // 2. LÓGICA DE FINALIZACIÓN
 
-        // CASO A: El jugador ya lo había colgado mientras Dios hablaba (Impaciente)
+        // CASO A: El jugador ya lo había colgado
         if (telefono.estaColgado)
         {
             Debug.Log("El jugador ya había colgado. Esperando un momento dramático...");
-            yield return new WaitForSeconds(3f); // Pausa para asimilar
+            yield return new WaitForSeconds(3f);
         }
-        // CASO B: El jugador lo tiene en la mano o está en el suelo
+        // CASO B: El jugador lo tiene en la mano
         else
         {
             Debug.Log("Esperando a que el jugador cuelgue...");
-            // El tutorial se PAUSA aquí hasta que la variable cambie a true
             yield return new WaitUntil(() => telefono.estaColgado);
-
-            // Una vez colgado, damos un respiro de 1 segundo (el "Clack")
             yield return new WaitForSeconds(1f);
         }
 
@@ -234,11 +246,10 @@ public class TutorialManager : MonoBehaviour
         PlayerPrefs.SetInt("TutorialCompletado", 1);
         PlayerPrefs.Save();
 
-        // Opción: Si tienes un fader, úsalo aquí. Si no, carga directa.
         SceneManager.LoadScene(nombreEscenaJuego);
     }
 
-        IEnumerator Hablar(string texto)
+    IEnumerator Hablar(string texto)
     {
         telefono.ReproducirFraseDios(texto);
         // Esperamos un tiempo base (2s) + un poco extra según lo largo que sea el texto

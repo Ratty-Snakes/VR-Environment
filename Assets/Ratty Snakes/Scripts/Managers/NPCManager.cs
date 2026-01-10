@@ -102,6 +102,7 @@ public class NPCManager : MonoBehaviour
         if (sistemaPalanca != null) sistemaPalanca.BloquearPalanca();
 
         // 1. Crear el NPC base (contenedor)
+        // Usamos el primer waypoint (índice 0) para el spawn
         npcActualObj = Instantiate(npcPrefab, listaWaypoints[0].position, listaWaypoints[0].rotation);
 
         MeshRenderer baseMesh = npcActualObj.GetComponent<MeshRenderer>();
@@ -114,17 +115,16 @@ public class NPCManager : MonoBehaviour
             modeloVisual.transform.localPosition = Vector3.zero;
             modeloVisual.transform.localRotation = Quaternion.identity;
 
-            // Cambia 0.5f por el tamaño que quieras (1f es el original)
-            modeloVisual.transform.localScale = Vector3.one;
+            // --- CAMBIO APLICADO: ---
+            // He quitado la línea de escala manual (modeloVisual.transform.localScale = Vector3.one).
+            // Ahora respetará el tamaño que hayas configurado en el Prefab del editor.
 
-            // --- ¡AQUÍ ESTÁ EL CAMBIO IMPORTANTE! --- 
-            // Buscamos el script de impactos y le pasamos la cabeza nueva
+            // Configuración de impactos (Cabeza)
             NPCImpactReactor reactor = npcActualObj.GetComponent<NPCImpactReactor>();
             if (reactor != null)
             {
                 reactor.ConfigurarCabeza(modeloVisual.transform);
             }
-            // ----------------------------------------
         }
         else if (baseMesh != null) baseMesh.enabled = true;
 
