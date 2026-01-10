@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -13,11 +14,9 @@ public class TutorialManager : MonoBehaviour
     [Header("UI Gestos")]
     public TutorialGestureUI uiGestos;
 
-    // --- ¡AQUÍ ES DONDE FALTABAN ESTAS LÍNEAS! ---
     [Header("Guías Visuales (Flechas)")]
     public GameObject flechaBoton;
     public GameObject flechaPalanca;
-    // ---------------------------------------------
 
     [Header("NPCs de Prueba")]
     public NPCData benitoBueno;
@@ -50,10 +49,8 @@ public class TutorialManager : MonoBehaviour
         }
 
         // --- INICIALIZACIÓN DE SEGURIDAD ---
-        // Ahora sí funcionará porque las variables están declaradas arriba
         if (flechaBoton != null) flechaBoton.SetActive(false);
         if (flechaPalanca != null) flechaPalanca.SetActive(false);
-        // ---------------------------------------
 
         StartCoroutine(RutinaTutorial());
     }
@@ -116,13 +113,13 @@ public class TutorialManager : MonoBehaviour
         yield return new WaitUntil(() => telefonoDescolgado);
         yield return new WaitForSeconds(0.5f);
 
-        yield return Hablar("¿Hola? Aquí el Jefe. Sí, Dios. El de la barba no, el original.");
+        yield return Hablar("¿Hola? Aquí el Jefe. Sí, Dios.");
         yield return Hablar("Escucha, he tenido que despedir a San Pedro.");
         yield return Hablar("El muy borracho no dejaba de beber 'agua' en el trabajo.");
-        yield return Hablar("Ahora estás al cargo. No lo estropees.");
+        yield return Hablar("Ahora tú estás al cargo.");
         yield return Hablar("Te encargarás de decidir quién se merece entrar al cielo y quien no.");
 
-        yield return Hablar("Empecemos tu entrenamiento.");
+        yield return Hablar("Empecemos tu entrenamiento, becario.");
         botonPulsado = false;
 
         // ---> ENCENDER FLECHA BOTÓN <---
@@ -148,10 +145,22 @@ public class TutorialManager : MonoBehaviour
 
         decisionTomada = false;
 
-        yield return Hablar("Vaya... este es David. Murió de... ¿ternura?");
-        yield return Hablar("Madre mía. Mira su ficha en la pantalla.");
-        yield return Hablar("Adoptó perros de tres patas y donó su pensión. Un blando, pero buena gente.");
-        yield return Hablar("A este lo queremos.");
+        yield return Hablar("¿Quién tenemos aquí? Ajá, este es David.");
+        yield return Hablar("Mira su biografía en la pantalla.");
+
+        // --- PAUSA LECTURA ---
+        // 1. Dejamos 2 segundos para leer "Mira su biografía..."
+        yield return new WaitForSeconds(2f);
+
+        // 2. Borramos el texto del teléfono para dejar espacio visual
+        telefono.ReproducirFraseDios("");
+
+        // 3. Dejamos 8 segundos de silencio para que el jugador lea la UI del NPC
+        yield return new WaitForSeconds(10f);
+        // ------------------------
+
+        yield return Hablar("Adoptó 15 perritos con tres patas y donó su pensión. Murió de... ¿ternura ?");
+        yield return Hablar("Un blando, pero buena gente. A este lo queremos.");
 
         if (uiGestos != null) uiGestos.MostrarModoAceptar();
 
@@ -192,7 +201,14 @@ public class TutorialManager : MonoBehaviour
         decisionTomada = false;
 
         yield return Hablar("¡Ay, no! ¡Otra vez este pesado!");
-        yield return Hablar("Se hace llamar 'Jesús'. Dice que es mi hijo. ¡Ja!");
+
+        // --- PAUSA LECTURA ---
+        yield return new WaitForSeconds(2f); // Espera breve
+        telefono.ReproducirFraseDios("");    // Limpia texto
+        yield return new WaitForSeconds(10f); // Tiempo para ver al NPC feo
+        // ------------------------
+
+        yield return Hablar("Se hace llamar 'Jesús'. Pero ese no es mi chico.");
         yield return Hablar("Dice que multiplica panes, pero los roba del Mercadona.");
         yield return Hablar("Es un estafador.");
 
@@ -209,7 +225,7 @@ public class TutorialManager : MonoBehaviour
         // ---> ENCENDER FLECHA PALANCA <---
         if (flechaPalanca != null) flechaPalanca.SetActive(true);
 
-        yield return Hablar("Ahora se ha desbloqueado. TIRA DE ELLA y mándalo al Infierno.");
+        yield return Hablar("TIRA DE LA PALANCA y mándalo al Infierno.");
 
         yield return new WaitUntil(() => decisionTomada);
 
@@ -223,7 +239,7 @@ public class TutorialManager : MonoBehaviour
 
         yield return Hablar("Perfecto. Que se pudra ese impostor.");
 
-        yield return Hablar("Escucha, novato. El trabajo real no es tan fácil.");
+        yield return Hablar("Escucha, novato. El trabajo real no será tan fácil.");
         yield return Hablar("Tenemos un problema de overbooking. El cielo está a reventar.");
         yield return Hablar("No caben todos. Tendrás que elegir quién entra y quién se queda fuera.");
 
@@ -232,9 +248,6 @@ public class TutorialManager : MonoBehaviour
 
         yield return Hablar("Y ojo: no metas a cualquiera para llenar el cupo. No quiero basura en mi cielo.");
         yield return Hablar("Léete bien sus fichas. Asegúrate de que sus actos buenos compensen los malos.");
-
-        yield return Hablar("El cupo es limitado y el destino es ciego. Quizás el siguiente sea un santo... o quizás sea peor que este.");
-        yield return Hablar("Tendrás que confiar en tu instinto, porque no hay vuelta atrás.");
 
         yield return Hablar("Al final del día revisaré tu trabajo personalmente.");
         yield return Hablar("Si el balance es positivo, tienes el puesto. Si no... estás despedido.");
@@ -246,7 +259,7 @@ public class TutorialManager : MonoBehaviour
         if (telefono.estaColgado)
         {
             Debug.Log("El jugador ya había colgado. Esperando un momento dramático...");
-            yield return new WaitForSeconds(3f);
+            yield return new WaitForSeconds(2f);
         }
         else
         {

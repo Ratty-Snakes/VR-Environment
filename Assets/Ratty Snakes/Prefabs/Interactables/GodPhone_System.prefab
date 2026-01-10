@@ -403,7 +403,10 @@ MonoBehaviour:
   canvasSubtitulos: {fileID: 8040885139009036130}
   textoSubtitulos: {fileID: 1160619277235095919}
   sonidoRing: {fileID: 8300000, guid: 4311ce5f37461334d8dbe067883c6e66, type: 3}
-  sonidoColgar: {fileID: 0}
+  sonidoColgar: {fileID: 8300000, guid: bfbfc848ad0662344a4b4203e6151fbb, type: 3}
+  sonidoVoz: {fileID: 8300000, guid: fe1bfcf6aab757d48843f3bae87e28ce, type: 3}
+  velocidadEscritura: 0.05
+  variacionTono: 1.2
   modeloVisualAuricular: {fileID: 4896522509125562615}
   velocidadVibracion: 20
   anguloMaximo: 5

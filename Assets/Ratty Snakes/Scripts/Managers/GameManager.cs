@@ -104,12 +104,12 @@ public class GameManager : MonoBehaviour
 
             // 4. El Libro (La herramienta)
             ActualizarLibro(); // Nos aseguramos de que esté actualizado visualmente aquí
-            yield return Hablar("Por cierto, si pierdes la cuenta o quieres revisar cuántos difuntos faltan");
-            yield return Hablar("Consulta el Libro de Registro que tienes en la mesa.");
+            yield return Hablar("Por cierto, si pierdes la cuenta o quieres revisar cuántos difuntos faltan.");
+            yield return Hablar("Consulta el Libro de Registro Diario que tienes en la mesa.");
             yield return Hablar("Ahí se apunta todo automáticamente. Úsalo.");
 
             // 5. Despedida
-            yield return Hablar("Eso es todo. Suerte");
+            yield return Hablar("Eso es todo. Suerte.");
         }
 
         yield return new WaitForSeconds(1f);
@@ -206,10 +206,10 @@ public class GameManager : MonoBehaviour
         else
         {
             yield return Hablar("Veamos el registro...");
-            yield return Hablar("El cupo es correcto. Bien hecho.");
+            yield return Hablar("Has cumplido el límite. Bien hecho.");
             yield return Hablar("Y la calidad de las almas... Vaya, excelente.");
             yield return Hablar("Has filtrado a la gentuza y nos has traido a gente decente.");
-            yield return Hablar("No es facil mantener el equilibrio, pero tu lo has clavado hoy.");
+            yield return Hablar("No es fácil mantener el equilibrio, pero tu lo has clavado hoy.");
             yield return Hablar("Estás CONTRATADO, te has ganado el sueldo. Nos vemos mañana.");
         }
 
