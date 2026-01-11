@@ -31,7 +31,7 @@ public class FloatingArrow : MonoBehaviour
 
             // SEGUNDO: CORRECCIÓN MANUAL (El giro de 180 en Z)
             // Esto obliga a la flecha a ponerse boca abajo justo después de mirar a la cámara
-            transform.Rotate(0, 0, 180);
+            //transform.Rotate(0, 0, 180);
         }
 
         // 2. HOVER (Flotar arriba y abajo)
