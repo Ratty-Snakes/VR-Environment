@@ -38,11 +38,12 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         GenerarDiaAleatorio();
-        // Actualizamos el libro al inicio en silencio para que tenga datos
+        // Actualizamos el libro al inicio en silencio para que tenga datos visuales
         ActualizarLibro();
         StartCoroutine(RutinaInicioDia());
     }
 
+    // --- CORRECCIÓN 1: Generación Inteligente para evitar días imposibles ---
     void GenerarDiaAleatorio()
     {
         if (poolGlobalNpcs == null || poolGlobalNpcs.Count == 0)
@@ -51,21 +52,58 @@ public class GameManager : MonoBehaviour
             return;
         }
 
+        // Limpiamos listas anteriores
+        listaNpcsHoy.Clear();
+
+        // Creamos copias de listas para filtrar
+        List<NPCData> copiaPool = new List<NPCData>(poolGlobalNpcs);
+        List<NPCData> buenos = copiaPool.FindAll(x => x.karmaScore > 0);
+
         int maxPosible = Mathf.Min(maxClientes, poolGlobalNpcs.Count);
         int cantidadHoy = Random.Range(minClientes, maxPosible + 1);
 
-        List<NPCData> copiaPool = new List<NPCData>(poolGlobalNpcs);
-        listaNpcsHoy.Clear();
+        // PASO A: Aseguramos al menos 1 bueno (si existen en la base de datos)
+        if (buenos.Count > 0)
+        {
+            int r = Random.Range(0, buenos.Count);
+            NPCData npcBueno = buenos[r];
 
-        for (int i = 0; i < cantidadHoy; i++)
+            listaNpcsHoy.Add(npcBueno);
+
+            // Lo quitamos de la copiaPool para que no salga repetido en el relleno
+            copiaPool.Remove(npcBueno);
+        }
+
+        // PASO B: Rellenamos el resto de huecos con cualquiera (buenos o malos)
+        while (listaNpcsHoy.Count < cantidadHoy && copiaPool.Count > 0)
         {
             int indexAleatorio = Random.Range(0, copiaPool.Count);
             listaNpcsHoy.Add(copiaPool[indexAleatorio]);
             copiaPool.RemoveAt(indexAleatorio);
         }
 
-        cupoDiario = Mathf.RoundToInt(listaNpcsHoy.Count * porcentajeCupo);
+        // PASO C: Barajamos la lista para que el bueno no salga siempre el primero
+        Shuffle(listaNpcsHoy);
+
+        // PASO D: Calculamos cupo. Usamos CeilToInt (redondeo hacia arriba) para ser más amables.
+        cupoDiario = Mathf.CeilToInt(listaNpcsHoy.Count * porcentajeCupo);
+
+        // Seguridad mínima
         if (cupoDiario < 1 && listaNpcsHoy.Count > 0) cupoDiario = 1;
+    }
+
+    // --- CORRECCIÓN 2: Algoritmo de Barajado (Fisher-Yates) ---
+    void Shuffle<T>(List<T> list)
+    {
+        int n = list.Count;
+        while (n > 1)
+        {
+            n--;
+            int k = Random.Range(0, n + 1);
+            T value = list[k];
+            list[k] = list[n];
+            list[n] = value;
+        }
     }
 
     IEnumerator RutinaInicioDia()
@@ -83,45 +121,33 @@ public class GameManager : MonoBehaviour
 
         if (total == 0)
         {
-            // Caso raro: No hay nadie (Día libre)
             yield return Hablar("¿Sabes qué? Hoy no ha muerto nadie. Tómate el día libre.");
             yield return Hablar("Vuelve a casa.");
             SceneManager.LoadScene(nombreEscenaMenu);
         }
         else
         {
-            // --- NUEVO DIÁLOGO CON PERSONALIDAD ---
-
-            // 1. El despiste
+            // Diálogos del día
             yield return Hablar("Soy yo otra vez. Casi se me olvida darte los números de hoy...");
-
-            // 2. El Límite (La restricción)
             yield return Hablar("A ver, hoy andamos cortos de espacio. Las nubes están a reventar.");
             yield return Hablar("El LÍMITE DE HOY es de " + cupoDiario + " personas. Ni una más.");
-
-            // 3. La Cola (La presión)
             yield return Hablar("Y no te duermas, porque tienes a " + total + " almas esperando ahí en la cola.");
 
-            // 4. El Libro (La herramienta)
-            ActualizarLibro(); // Nos aseguramos de que esté actualizado visualmente aquí
+            ActualizarLibro();
             yield return Hablar("Por cierto, si pierdes la cuenta o quieres revisar cuántos difuntos faltan.");
             yield return Hablar("Consulta el Libro de Registro Diario que tienes en la mesa.");
             yield return Hablar("Ahí se apunta todo automáticamente. Úsalo.");
 
-            // 5. Despedida
             yield return Hablar("Eso es todo. Suerte.");
         }
 
         yield return new WaitForSeconds(1f);
-
-        // Esperamos a que cuelgue para desbloquear el botón (opcional, pero queda mejor)
-        // O simplemente colgamos nosotros si tarda mucho
         telefonoDios.Colgar();
 
         if (total > 0) botonDesbloqueado = true;
     }
 
-    // --- LOGICA DE JUEGO (Igual que antes) ---
+    // --- LOGICA DE JUEGO ---
 
     public void IntentarTraerSiguiente()
     {
@@ -145,6 +171,7 @@ public class GameManager : MonoBehaviour
     {
         if (indiceActual > 0)
         {
+            // indiceActual ya avanzó, así que el NPC juzgado es el (indice - 1)
             NPCData npcJuzgado = listaNpcsHoy[indiceActual - 1];
             karmaAcumulado += npcJuzgado.karmaScore;
             Debug.Log("Karma actual: " + karmaAcumulado);
@@ -169,7 +196,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    // --- FINAL DEL JUEGO (Igual que antes) ---
+    // --- FINAL DEL JUEGO (Juicio Final) ---
 
     IEnumerator SecuenciaFinalDia()
     {
@@ -182,6 +209,7 @@ public class GameManager : MonoBehaviour
         yield return new WaitUntil(() => !telefonoDios.audioSource.loop);
         yield return new WaitForSeconds(0.5f);
 
+        // 1. CASO OVERBOOKING (Prioridad máxima)
         if (almasAceptadas > cupoDiario)
         {
             yield return Hablar("... ¿Sabes contar?");
@@ -189,6 +217,7 @@ public class GameManager : MonoBehaviour
             yield return Hablar("Has dejado entrar a " + almasAceptadas + ". Ahora tengo los fieles durmiendo en el suelo.");
             yield return Hablar("Esto es un desastre administrativo. Estás DESPEDIDO.");
         }
+        // 2. CASO VAGO (No trabajó)
         else if (almasAceptadas == 0)
         {
             yield return Hablar("¿Hola? ¿Hay alguien ahi?");
@@ -196,19 +225,33 @@ public class GameManager : MonoBehaviour
             yield return Hablar("Entiendo que seas exigente, pero necesitamos llenar cuota.");
             yield return Hablar("No me sirves si no trabajas. Estás DESPEDIDO.");
         }
-        else if (karmaAcumulado <= 0)
+        // 3. CASO KARMA NEGATIVO (Mala calidad)
+        // CORRECCIÓN 3: Cambiado de <= 0 a < 0. Si el karma es 0, te salva.
+        else if (karmaAcumulado < 0)
         {
             yield return Hablar("Mmm... los numeros cuadran. Has respetado el límite.");
             yield return Hablar("Pero estoy mirando la lista de invitados y... uff.");
             yield return Hablar("Has llenado el Cielo de basura.");
+            yield return Hablar("Tu balance de Karma es negativo (" + karmaAcumulado + ").");
             yield return Hablar("Lo siento, chico. No tienes criterio moral. Estás DESPEDIDO.");
         }
+        // 4. CASO ÉXITO (Cupo OK y Karma >= 0)
         else
         {
             yield return Hablar("Veamos el registro...");
             yield return Hablar("Has cumplido el límite. Bien hecho.");
-            yield return Hablar("Y la calidad de las almas... Vaya, excelente.");
-            yield return Hablar("Has filtrado a la gentuza y nos has traido a gente decente.");
+
+            if (karmaAcumulado == 0)
+            {
+                // Diálogo especial si pasó por los pelos
+                yield return Hablar("La calidad de las almas es... justa. Pero aceptable.");
+            }
+            else
+            {
+                yield return Hablar("Y la calidad de las almas... Vaya, excelente.");
+                yield return Hablar("Has filtrado a la gentuza y nos has traido a gente decente.");
+            }
+
             yield return Hablar("No es fácil mantener el equilibrio, pero tu lo has clavado hoy.");
             yield return Hablar("Estás CONTRATADO, te has ganado el sueldo. Nos vemos mañana.");
         }

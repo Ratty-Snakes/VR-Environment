@@ -1027,6 +1027,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: ae9ed3fec85adbf4e96b750e2f5060fd, type: 2}
   - {fileID: 11400000, guid: 6281962e8133b574fbb52d0a83dc3fb3, type: 2}
   - {fileID: 11400000, guid: a065db8bfeb097b45b50b38f82a2addb, type: 2}
+  - {fileID: 11400000, guid: 0204d14a9dc899b46ac5e88d6076ccf2, type: 2}
+  - {fileID: 11400000, guid: ac7e7108f68599d4a8fdc5fcd1260875, type: 2}
+  - {fileID: 11400000, guid: 8c6c82e6155b86b41b6ede6515173339, type: 2}
   minClientes: 5
   maxClientes: 7
   porcentajeCupo: 0.4

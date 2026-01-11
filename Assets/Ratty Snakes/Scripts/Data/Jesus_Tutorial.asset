@@ -15,7 +15,7 @@ MonoBehaviour:
   nombre: "Jes\xFAs"
   edad: 33
   hobbies: "Carpinter\xEDa y beber \"agua\""
-  modeloEspecifico: {fileID: 919132149155446097, guid: c27554d8d16cc01478b2e7c8e112e020, type: 3}
+  modeloEspecifico: {fileID: 919132149155446097, guid: d3dc540e20d6f6b4da184a57775249f2, type: 3}
   tonoVoz: 0.95
   causaMuerte: "Intent\xF3 caminar sobre el agua... Lo intent\xF3, no sab\xEDa nadar"
   actosBuenos: "Reparti\xF3 panes y peces a quienes lo necesitaban... pero eran todos

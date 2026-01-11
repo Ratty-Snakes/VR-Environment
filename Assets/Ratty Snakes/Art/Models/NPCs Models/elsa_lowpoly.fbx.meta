@@ -3,7 +3,12 @@ guid: e1bb86cf39e597e4bb15c20c447fc793
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: elsa_skull
+    second: {fileID: 2100000, guid: 209fbc4cfe42da041b05e9c772918f64, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
