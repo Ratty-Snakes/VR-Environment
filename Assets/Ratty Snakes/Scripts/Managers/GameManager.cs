@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine.SceneManagement; // Necesario para cambiar de escena
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -20,13 +20,13 @@ public class GameManager : MonoBehaviour
     public int maxClientes = 6;
     [Range(0.1f, 1f)]
     public float porcentajeCupo = 0.5f;
-    public string nombreEscenaMenu = "MainMenu"; // Pon aqui el nombre EXACTO de tu Menu
+    public string nombreEscenaMenu = "MainMenu";
 
     // Variables de Estado
     private List<NPCData> listaNpcsHoy = new List<NPCData>();
     private int cupoDiario;
     private int almasAceptadas = 0;
-    private int karmaAcumulado = 0; // Puntos de bondad/maldad
+    private int karmaAcumulado = 0;
     private int indiceActual = 0;
     private bool botonDesbloqueado = false;
 
@@ -38,6 +38,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         GenerarDiaAleatorio();
+        // Actualizamos el libro al inicio en silencio para que tenga datos
         ActualizarLibro();
         StartCoroutine(RutinaInicioDia());
     }
@@ -74,6 +75,7 @@ public class GameManager : MonoBehaviour
 
         telefonoDios.EmpezarA_Sonar();
 
+        // Esperamos a que el jugador descuelgue
         yield return new WaitUntil(() => !telefonoDios.audioSource.loop);
         yield return new WaitForSeconds(0.5f);
 
@@ -81,26 +83,45 @@ public class GameManager : MonoBehaviour
 
         if (total == 0)
         {
-            yield return Hablar("Hoy no hay trabajo. Vuelve a casa.");
+            // Caso raro: No hay nadie (Día libre)
+            yield return Hablar("¿Sabes qué? Hoy no ha muerto nadie. Tómate el día libre.");
+            yield return Hablar("Vuelve a casa.");
             SceneManager.LoadScene(nombreEscenaMenu);
         }
         else
         {
-            yield return Hablar("Buenos dias. Vamos al lio.");
-            yield return Hablar("Hoy tenemos a " + total + " almas en la puerta.");
-            yield return Hablar("El limite estricto es de " + cupoDiario + " personas.");
-            ActualizarLibro();
-            yield return Hablar("Fijate bien en lo que han hecho en vida. No quiero errores.");
-            yield return Hablar("Pulsa el boton rojo cuando estes listo.");
+            // --- NUEVO DIÁLOGO CON PERSONALIDAD ---
+
+            // 1. El despiste
+            yield return Hablar("Soy yo otra vez. Casi se me olvida darte los números de hoy...");
+
+            // 2. El Límite (La restricción)
+            yield return Hablar("A ver, hoy andamos cortos de espacio. Las nubes están a reventar.");
+            yield return Hablar("El LÍMITE DE HOY es de " + cupoDiario + " personas. Ni una más.");
+
+            // 3. La Cola (La presión)
+            yield return Hablar("Y no te duermas, porque tienes a " + total + " almas esperando ahí en la cola.");
+
+            // 4. El Libro (La herramienta)
+            ActualizarLibro(); // Nos aseguramos de que esté actualizado visualmente aquí
+            yield return Hablar("Por cierto, si pierdes la cuenta o quieres revisar cuántos difuntos faltan.");
+            yield return Hablar("Consulta el Libro de Registro Diario que tienes en la mesa.");
+            yield return Hablar("Ahí se apunta todo automáticamente. Úsalo.");
+
+            // 5. Despedida
+            yield return Hablar("Eso es todo. Suerte.");
         }
 
         yield return new WaitForSeconds(1f);
+
+        // Esperamos a que cuelgue para desbloquear el botón (opcional, pero queda mejor)
+        // O simplemente colgamos nosotros si tarda mucho
         telefonoDios.Colgar();
 
         if (total > 0) botonDesbloqueado = true;
     }
 
-    // --- LOGICA DE JUEGO ---
+    // --- LOGICA DE JUEGO (Igual que antes) ---
 
     public void IntentarTraerSiguiente()
     {
@@ -122,11 +143,9 @@ public class GameManager : MonoBehaviour
 
     public void RegistrarEntradaCielo()
     {
-        // Recuperamos al NPC que acabamos de juzgar (el anterior al indice actual)
         if (indiceActual > 0)
         {
             NPCData npcJuzgado = listaNpcsHoy[indiceActual - 1];
-            // Sumamos su puntuacion (puede ser negativa si es malo)
             karmaAcumulado += npcJuzgado.karmaScore;
             Debug.Log("Karma actual: " + karmaAcumulado);
         }
@@ -138,7 +157,6 @@ public class GameManager : MonoBehaviour
 
     public void RegistrarRechazo()
     {
-        // Al rechazar, no sumamos ni restamos karma (oportunidad perdida)
         ActualizarLibro();
         VerificarFinJornada();
     }
@@ -151,65 +169,54 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    // --- FINAL DEL JUEGO ---
+    // --- FINAL DEL JUEGO (Igual que antes) ---
 
     IEnumerator SecuenciaFinalDia()
     {
         botonDesbloqueado = false;
         Debug.Log("Fin del dia. Iniciando juicio...");
 
-        // 1. Pausa dramatica antes de la llamada
         yield return new WaitForSeconds(3f);
 
-        // 2. Llamada final
         telefonoDios.EmpezarA_Sonar();
         yield return new WaitUntil(() => !telefonoDios.audioSource.loop);
         yield return new WaitForSeconds(0.5f);
 
-        // 3. Evaluacion de resultados
-
-        // CASO A: TE HAS PASADO DEL CUPO (OVERCROWD)
         if (almasAceptadas > cupoDiario)
         {
             yield return Hablar("... ¿Sabes contar?");
             yield return Hablar("Te dije claramente que el limite era de " + cupoDiario + " personas.");
-            yield return Hablar("Has dejado entrar a " + almasAceptadas + ". Ahora tengo angeles durmiendo en el suelo.");
-            yield return Hablar("Esto es un desastre administrativo. Estas DESPEDIDO.");
+            yield return Hablar("Has dejado entrar a " + almasAceptadas + ". Ahora tengo los fieles durmiendo en el suelo.");
+            yield return Hablar("Esto es un desastre administrativo. Estás DESPEDIDO.");
         }
-        // CASO B: NO HAS METIDO A NADIE (VAGO)
         else if (almasAceptadas == 0)
         {
             yield return Hablar("¿Hola? ¿Hay alguien ahi?");
-            yield return Hablar("He revisado el registro y esta vacio. Cero entradas.");
+            yield return Hablar("He revisado el registro y esta vacío. Cero entradas.");
             yield return Hablar("Entiendo que seas exigente, pero necesitamos llenar cuota.");
-            yield return Hablar("No me sirves si no trabajas. Estas DESPEDIDO.");
+            yield return Hablar("No me sirves si no trabajas. Estás DESPEDIDO.");
         }
-        // CASO C: CUPO BIEN, PERO KARMA MALO (MAL CRITERIO)
         else if (karmaAcumulado <= 0)
         {
-            yield return Hablar("Mmm... los numeros cuadran. Has respetado el cupo.");
+            yield return Hablar("Mmm... los numeros cuadran. Has respetado el límite.");
             yield return Hablar("Pero estoy mirando la lista de invitados y... uff.");
-            yield return Hablar("Gente corrupta, mentirosos, ladrones de perritos...");
-            yield return Hablar("Tu puntuacion de Karma es negativa. Has llenado el Cielo de basura.");
-            yield return Hablar("Lo siento, chico. No tienes criterio moral. Estas DESPEDIDO.");
+            yield return Hablar("Has llenado el Cielo de basura.");
+            yield return Hablar("Lo siento, chico. No tienes criterio moral. Estás DESPEDIDO.");
         }
-        // CASO D: VICTORIA (TODO BIEN)
         else
         {
             yield return Hablar("Veamos el registro...");
-            yield return Hablar("El cupo es correcto. Bien hecho.");
+            yield return Hablar("Has cumplido el límite. Bien hecho.");
             yield return Hablar("Y la calidad de las almas... Vaya, excelente.");
             yield return Hablar("Has filtrado a la gentuza y nos has traido a gente decente.");
-            yield return Hablar("No es facil mantener el equilibrio, pero tu lo has clavado hoy.");
-            yield return Hablar("Descansa, te has ganado el sueldo. Nos vemos mañana.");
+            yield return Hablar("No es fácil mantener el equilibrio, pero tu lo has clavado hoy.");
+            yield return Hablar("Estás CONTRATADO, te has ganado el sueldo. Nos vemos mañana.");
         }
 
         yield return new WaitForSeconds(2f);
         telefonoDios.Colgar();
 
         yield return new WaitForSeconds(2f);
-
-        // 4. Volver al Menu
         Debug.Log("Cargando Menu...");
         SceneManager.LoadScene(nombreEscenaMenu);
     }

@@ -12,9 +12,19 @@ public class NPCManager : MonoBehaviour
     public Transform[] listaWaypoints;
     public NPCUIController uiController;
     public LeverLockSystem sistemaPalanca;
+    public HeavenDoorController puertasCielo;
 
     [Header("Configuracion de Tiempos")]
     public float tiempoEsperaCielo = 2.0f;
+
+    [Header("Efectos Visuales (Feedback)")]
+    public ParticleSystem fxConfetti;
+    public ParticleSystem fxExplosionRoja;
+
+    [Header("Efectos de Sonido")]
+    public AudioSource audioSource;
+    public AudioClip sonidoAceptar;
+    public AudioClip sonidoRechazar;
 
     [Header("Estado Actual")]
     private GameObject npcActualObj;
@@ -25,13 +35,30 @@ public class NPCManager : MonoBehaviour
     private bool mesaOcupada = false;
     private bool npcListoParaSentencia = false;
 
-    // --- NUEVO: RESTRICCIONES DE TUTORIAL ---
-    private bool tutorialBloquearAceptar = false; // Si es true, NO puedes mandarlo al cielo
-    private bool tutorialBloquearRechazar = false; // Si es true, NO puedes usar la palanca/gesto mal
+    // RESTRICCIONES DE TUTORIAL
+    private bool tutorialBloquearAceptar = false;
+    private bool tutorialBloquearRechazar = false;
 
     // Eventos
     public Action<bool> OnDecisionTutorial;
-    public Action OnIntentoProhibido; // Se dispara si intentas hacer lo que no debes
+    public Action OnIntentoProhibido;
+
+    [Header("Pool de Quejas (Físicas)")]
+    [TextArea]
+    public string[] listaQuejas = new string[] {
+        "¡Oye! ¡Más respeto a los muertos!",
+        "¡Ay! ¡Eso duele!",
+        "¿Pero qué te pasa?",
+        "¡Voy a llamar a mi abogado!",
+        "¡Cuidado con la mercancía!",
+        "¡Au! ¡Que soy de hueso frágil!"
+    };
+
+    public string GetQuejaRandom()
+    {
+        if (listaQuejas.Length == 0) return "¡Ouch!";
+        return listaQuejas[UnityEngine.Random.Range(0, listaQuejas.Length)];
+    }
 
     private void Awake()
     {
@@ -51,9 +78,6 @@ public class NPCManager : MonoBehaviour
         tutorialBloquearAceptar = bloquearCielo;
         tutorialBloquearRechazar = bloquearInfierno;
     }
-
-    // ... (El resto de GenerarNPC y TraerSiguienteNPC es igual que antes) ...
-    // ... CÓPIALO DEL SCRIPT ANTERIOR O DÉJALO COMO ESTABA ...
 
     public void BotonSiguientePulsado() { if (!mesaOcupada) TraerSiguienteNPC(); }
 
@@ -77,16 +101,30 @@ public class NPCManager : MonoBehaviour
         npcListoParaSentencia = false;
         if (sistemaPalanca != null) sistemaPalanca.BloquearPalanca();
 
+        // 1. Crear el NPC base (contenedor)
+        // Usamos el primer waypoint (índice 0) para el spawn
         npcActualObj = Instantiate(npcPrefab, listaWaypoints[0].position, listaWaypoints[0].rotation);
 
         MeshRenderer baseMesh = npcActualObj.GetComponent<MeshRenderer>();
         if (baseMesh != null) baseMesh.enabled = false;
 
+        // 2. Crear el modelo visual (hijo)
         if (datos.modeloEspecifico != null)
         {
             GameObject modeloVisual = Instantiate(datos.modeloEspecifico, npcActualObj.transform);
             modeloVisual.transform.localPosition = Vector3.zero;
             modeloVisual.transform.localRotation = Quaternion.identity;
+
+            // --- CAMBIO APLICADO: ---
+            // He quitado la línea de escala manual (modeloVisual.transform.localScale = Vector3.one).
+            // Ahora respetará el tamaño que hayas configurado en el Prefab del editor.
+
+            // Configuración de impactos (Cabeza)
+            NPCImpactReactor reactor = npcActualObj.GetComponent<NPCImpactReactor>();
+            if (reactor != null)
+            {
+                reactor.ConfigurarCabeza(modeloVisual.transform);
+            }
         }
         else if (baseMesh != null) baseMesh.enabled = true;
 
@@ -109,18 +147,17 @@ public class NPCManager : MonoBehaviour
     }
 
     // ---------------------------------------------------------
-    // TOMA DE DECISIONES CON RESTRICCIONES
+    // TOMA DE DECISIONES
     // ---------------------------------------------------------
 
     public void RecibirGesto_Aceptar() // Pulgar Arriba
     {
         if (npcActualObj == null || !mesaOcupada || !npcListoParaSentencia) return;
 
-        // NUEVO: Bloqueo de Tutorial
         if (tutorialBloquearAceptar)
         {
             Debug.Log("Tutorial: No puedes aceptar a este NPC.");
-            OnIntentoProhibido?.Invoke(); // Avisamos al TutorialManager para la bronca
+            OnIntentoProhibido?.Invoke();
             return;
         }
 
@@ -132,48 +169,34 @@ public class NPCManager : MonoBehaviour
     {
         if (npcActualObj == null || !mesaOcupada || !npcListoParaSentencia) return;
 
-        // NUEVO: Bloqueo de Tutorial
         if (tutorialBloquearRechazar)
         {
             Debug.Log("Tutorial: No puedes rechazar a este NPC.");
-            OnIntentoProhibido?.Invoke(); // Avisamos al TutorialManager para la bronca
+            OnIntentoProhibido?.Invoke();
             return;
         }
 
-        // Anti-repetición
         if (sistemaPalanca != null && !sistemaPalanca.IsLocked) return;
+
+        // Feedback Visual
+        if (fxExplosionRoja != null) fxExplosionRoja.Play();
+
+        // Feedback Sonoro
+        if (audioSource != null && sonidoRechazar != null)
+        {
+            audioSource.PlayOneShot(sonidoRechazar);
+        }
 
         if (sistemaPalanca != null) sistemaPalanca.DesbloquearPalanca();
         if (uiController != null) uiController.OcultarDatos();
         if (reaccionActual != null) reaccionActual.ShowNegativeReaction();
     }
 
-    // 3. PALANCA: Ejecucion (Infierno - Paso 2)
     public void RecibirInput_Palanca()
     {
-        // Seguridad básica
         if (npcActualObj == null || !mesaOcupada) return;
+        if (sistemaPalanca != null && sistemaPalanca.IsLocked) return;
 
-        // SEGURIDAD 1: ¿La palanca dice que está bloqueada?
-        if (sistemaPalanca != null && sistemaPalanca.IsLocked)
-        {
-            Debug.Log("Intento ignorado: La palanca está bloqueada físicamente.");
-            return;
-        }
-
-        // SEGURIDAD 2: ¿El tutorial prohíbe rechazar ahora mismo? (Caso Benito)
-        if (tutorialBloquearRechazar)
-        {
-            Debug.Log("Tutorial: INTENTO BLOQUEADO. No puedes rechazar a este NPC.");
-            // Opcional: Si quieres que Dios le eche la bronca también si intenta tirar de la palanca a la fuerza
-            OnIntentoProhibido?.Invoke();
-
-            // IMPORTANTE: Si la palanca se bajó visualmente, hay que "resetearla" o bloquearla de nuevo
-            if (sistemaPalanca != null) sistemaPalanca.BloquearPalanca();
-            return;
-        }
-
-        // Si pasa todos los filtros, ejecutamos
         Debug.Log("Palanca bajada correctamente. Al infierno.");
 
         OnDecisionTutorial?.Invoke(false);
@@ -192,6 +215,20 @@ public class NPCManager : MonoBehaviour
         if (uiController != null) uiController.OcultarDatos();
         if (GameManager.Instance != null) GameManager.Instance.RegistrarEntradaCielo();
         if (reaccionActual != null) reaccionActual.ShowPositiveReaction();
+
+        if (fxConfetti != null) fxConfetti.Play();
+
+        if (audioSource != null && sonidoAceptar != null)
+        {
+            audioSource.PlayOneShot(sonidoAceptar);
+        }
+
+        if (puertasCielo != null)
+        {
+            puertasCielo.AbrirPuertas();
+            puertasCielo.Invoke("CerrarPuertas", 10f);
+        }
+
         yield return new WaitForSeconds(tiempoEsperaCielo);
         if (movimientoActual != null) movimientoActual.IrAlCielo();
     }
@@ -209,7 +246,6 @@ public class NPCManager : MonoBehaviour
         mesaOcupada = false;
         npcListoParaSentencia = false;
 
-        // Reset de restricciones (por seguridad)
         tutorialBloquearAceptar = false;
         tutorialBloquearRechazar = false;
 

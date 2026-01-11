@@ -16,6 +16,7 @@ MonoBehaviour:
   edad: 28
   hobbies: Hacer skate con sus amigos por las noches
   modeloEspecifico: {fileID: 816762600386231481, guid: 51724126dfb71664b80ce9fea38595c0, type: 3}
+  tonoVoz: 1.1
   causaMuerte: "C\xE1ncer de pulm\xF3n"
   actosBuenos: Preparaba las comidas a su abuela enferma
   actosMalos: '- Vandalismo en los edificios y tiendas del barrio
@@ -26,5 +27,5 @@ MonoBehaviour:
   fraseEntrada: "\xBFQu\xE9 pasa tronco?"
   reaccionPositiva: "De lujo, colega. Oye, hazme un favor... \xE9chale un ojo a mi
     abuela desde aqu\xED, \xBFvale?"
-  reaccionNegativa: "Bah, que os den. Ya sab\xEDa que acabar\xEDa aqu\xED. Al menos
-    abajo tendr\xE9 fuego para encenderme el cigarro"
+  reaccionNegativa: "Bah, que os den. Al menos abajo tendr\xE9 fuego para encenderme
+    el cigarro"

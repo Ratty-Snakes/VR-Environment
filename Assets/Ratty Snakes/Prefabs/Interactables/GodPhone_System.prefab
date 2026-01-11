@@ -56,12 +56,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1037476780577199816}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.8829243, y: 0.8829243, z: 0.8829243}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 191116648878664969}
+  m_Father: {fileID: 4304038388129084902}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!82 &2596858491621282837
 AudioSource:
@@ -72,11 +72,11 @@ AudioSource:
   m_GameObject: {fileID: 1037476780577199816}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 4945388231551957676, guid: 0c6a1d3f7f7a11b4ca4c7c339e9bd269, type: 2}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.9
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -195,6 +195,7 @@ Transform:
   - {fileID: 8303660226590730081}
   - {fileID: 4988036583518811579}
   - {fileID: 6494191850449175196}
+  - {fileID: 6024733334076233441}
   m_Father: {fileID: 191116648878664969}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &2614837765152845361
@@ -384,7 +385,6 @@ Transform:
   - {fileID: 2312401058414898840}
   - {fileID: 4304038388129084902}
   - {fileID: 2112201230589224520}
-  - {fileID: 6024733334076233441}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: -39.302, z: 0}
 --- !u!114 &4823817528369076205
@@ -403,9 +403,14 @@ MonoBehaviour:
   canvasSubtitulos: {fileID: 8040885139009036130}
   textoSubtitulos: {fileID: 1160619277235095919}
   sonidoRing: {fileID: 8300000, guid: 4311ce5f37461334d8dbe067883c6e66, type: 3}
+  sonidoColgar: {fileID: 8300000, guid: bfbfc848ad0662344a4b4203e6151fbb, type: 3}
+  sonidoVoz: {fileID: 8300000, guid: fe1bfcf6aab757d48843f3bae87e28ce, type: 3}
+  velocidadEscritura: 0.05
+  variacionTono: 1.2
   modeloVisualAuricular: {fileID: 4896522509125562615}
   velocidadVibracion: 20
   anguloMaximo: 5
+  estaColgado: 1
 --- !u!1 &3312810625401175792
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,4 +1,4 @@
-using UnityEngine;
+Ôªøusing UnityEngine;
 using TMPro;
 using System.Collections;
 
@@ -9,28 +9,40 @@ public class GodPhoneController : MonoBehaviour
     public GameObject canvasSubtitulos;
     public TextMeshProUGUI textoSubtitulos;
 
-    [Header("Assets")]
+    [Header("Audio General")]
     public AudioClip sonidoRing;
+    public AudioClip sonidoColgar; // El sonido "Clack" mec√°nico cuando lo pones en la base
 
-    [Header("Efecto VibraciÛn")]
-    public Transform modeloVisualAuricular; // <--- ARRASTRA AQUÕ LA MALLA (HIJO) DEL AURICULAR
-    public float velocidadVibracion = 20f;  // QuÈ tan r·pido tiembla
-    public float anguloMaximo = 5f;         // Cu·nto gira (5 a -5 grados)
+    [Header("Audio Voz (Efecto Undertale)")]
+    public AudioClip sonidoVoz; // <--- ARRASTRA AQU√ç EL SONIDO "BLIP" CORTO
+    [Range(0.01f, 0.2f)]
+    public float velocidadEscritura = 0.05f; // Velocidad del texto
+    [Range(0.8f, 1.2f)]
+    public float variacionTono = 1.1f;       // Cu√°nto desafina (Personalidad)
 
+    [Header("Efecto Vibraci√≥n")]
+    public Transform modeloVisualAuricular;
+    public float velocidadVibracion = 20f;
+    public float anguloMaximo = 5f;
+
+    [Header("Estado F√≠sico")]
+    public bool estaColgado = true; // Variable clave para el TutorialManager
+
+    // Estado interno
     private bool estaSonando = false;
     private bool llamadaEnCurso = false;
     private Coroutine rutinaLlamada;
-    private Quaternion rotacionOriginalVisual; // Para recordar cÛmo estaba antes de temblar
+    private Quaternion rotacionOriginalVisual;
 
     void Start()
     {
-        // 1. Guardamos la rotaciÛn original para restaurarla luego
+        // 1. Guardamos la rotaci√≥n original
         if (modeloVisualAuricular != null)
         {
             rotacionOriginalVisual = modeloVisualAuricular.localRotation;
         }
 
-        // 2. Ocultamos subtÌtulos
+        // 2. Ocultamos subt√≠tulos
         if (canvasSubtitulos != null)
         {
             canvasSubtitulos.SetActive(false);
@@ -39,18 +51,46 @@ public class GodPhoneController : MonoBehaviour
 
     void Update()
     {
-        // SI EST¡ SONANDO -> HACEMOS EL EFECTO DE VIBRACI”N
+        // Efecto de vibraci√≥n
         if (estaSonando && modeloVisualAuricular != null)
         {
-            // Calculamos el ·ngulo usando Seno (va de -1 a 1 suavemente)
             float anguloZ = Mathf.Sin(Time.time * velocidadVibracion) * anguloMaximo;
-
-            // Aplicamos la rotaciÛn SOLO en el eje Z local
             modeloVisualAuricular.localRotation = Quaternion.Euler(0, 0, anguloZ);
         }
     }
 
-    // --- M…TODOS P⁄BLICOS ---
+    // ====================================================================
+    // M√âTODOS PARA EL SOCKET INTERACTOR (LA BASE F√çSICA)
+    // ====================================================================
+
+    public void PonerEnBase()
+    {
+        estaColgado = true;
+        Debug.Log("F√≠sicas: Tel√©fono puesto en la base.");
+
+        // Feedback sonoro mec√°nico (Clack)
+        if (audioSource && sonidoColgar)
+        {
+            audioSource.pitch = 1f; // Reseteamos pitch por si acaso
+            audioSource.PlayOneShot(sonidoColgar);
+        }
+
+        // Llamamos a la l√≥gica original del juego
+        AlColgarTelefono();
+
+        RestaurarRotacion();
+    }
+
+    public void QuitarDeBase()
+    {
+        estaColgado = false;
+        Debug.Log("F√≠sicas: Tel√©fono levantado.");
+        AlDescolgarTelefono();
+    }
+
+    // ====================================================================
+    // L√ìGICA DE JUEGO
+    // ====================================================================
 
     public void AlDescolgarTelefono()
     {
@@ -60,9 +100,7 @@ public class GodPhoneController : MonoBehaviour
         }
         else
         {
-            // Si lo coges sin que suene, nos aseguramos de que el visual estÈ recto
             RestaurarRotacion();
-            Debug.Log("Has descolgado, pero nadie llamaba.");
         }
     }
 
@@ -74,13 +112,14 @@ public class GodPhoneController : MonoBehaviour
         }
     }
 
-    // --- L”GICA INTERNA ---
+    // --- L√ìGICA INTERNA ---
 
     public void EmpezarA_Sonar()
     {
         if (llamadaEnCurso || estaSonando) return;
 
         estaSonando = true;
+        audioSource.pitch = 1f; // Pitch normal para el Ring
         audioSource.clip = sonidoRing;
         audioSource.loop = true;
         audioSource.Play();
@@ -91,33 +130,14 @@ public class GodPhoneController : MonoBehaviour
         estaSonando = false;
         llamadaEnCurso = true;
 
-        // PARAMOS EL RING Y LA VIBRACI”N
         audioSource.Stop();
         audioSource.loop = false;
-        RestaurarRotacion(); // <--- IMPORTANTE: Que deje de estar torcido al cogerlo
+        RestaurarRotacion();
 
+        // 1. Notificar al Tutorial
         if (TutorialManager.Instance != null)
         {
             TutorialManager.Instance.JugadorContestoTelefono();
-        }
-    }
-
-    public void ReproducirFraseDios(string texto, AudioClip audioVoz = null)
-    {
-        if (rutinaLlamada != null) StopCoroutine(rutinaLlamada);
-        rutinaLlamada = StartCoroutine(RutinaHablar(texto, audioVoz));
-    }
-
-    IEnumerator RutinaHablar(string texto, AudioClip audioVoz)
-    {
-        if (canvasSubtitulos != null) canvasSubtitulos.SetActive(true);
-        textoSubtitulos.text = "";
-        if (audioVoz != null) audioSource.PlayOneShot(audioVoz);
-
-        foreach (char letra in texto.ToCharArray())
-        {
-            textoSubtitulos.text += letra;
-            yield return new WaitForSeconds(0.03f);
         }
     }
 
@@ -125,11 +145,42 @@ public class GodPhoneController : MonoBehaviour
     {
         llamadaEnCurso = false;
         if (canvasSubtitulos != null) canvasSubtitulos.SetActive(false);
+
         audioSource.Stop();
         RestaurarRotacion();
     }
 
-    // FunciÛn auxiliar para dejar el telÈfono quieto
+    public void ReproducirFraseDios(string texto)
+    {
+        if (rutinaLlamada != null) StopCoroutine(rutinaLlamada);
+        rutinaLlamada = StartCoroutine(RutinaHablar(texto));
+    }
+
+    // --- LA CORRUTINA MAGICA TIPO UNDERTALE ---
+    IEnumerator RutinaHablar(string texto)
+    {
+        if (canvasSubtitulos != null) canvasSubtitulos.SetActive(true);
+        textoSubtitulos.text = "";
+
+        foreach (char letra in texto.ToCharArray())
+        {
+            textoSubtitulos.text += letra;
+
+            // L√≥gica de sonido por letra
+            if (!char.IsWhiteSpace(letra) && audioSource != null && sonidoVoz != null)
+            {
+                // Variamos el tono aleatoriamente
+                audioSource.pitch = Random.Range(1f - (variacionTono - 1f), variacionTono);
+                audioSource.PlayOneShot(sonidoVoz);
+            }
+
+            yield return new WaitForSeconds(velocidadEscritura);
+        }
+
+        // Al terminar la frase, reseteamos el pitch para el futuro
+        if (audioSource != null) audioSource.pitch = 1f;
+    }
+
     void RestaurarRotacion()
     {
         if (modeloVisualAuricular != null)

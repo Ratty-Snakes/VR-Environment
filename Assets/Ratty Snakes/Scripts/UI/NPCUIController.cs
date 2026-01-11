@@ -1,5 +1,7 @@
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI; // <--- NECESARIO para LayoutRebuilder
+using System.Collections; // <--- NECESARIO para las Corrutinas
 
 public class NPCUIController : MonoBehaviour
 {
@@ -23,23 +25,20 @@ public class NPCUIController : MonoBehaviour
     {
         if (datos == null) return;
 
-        // Activamos todo el canvas primero
+        // 1. Activamos todo el canvas primero para que los cálculos funcionen
         panelCompleto.SetActive(true);
 
-        // Rellenamos campo a campo.
-        // La función se encarga de: Poner el texto Y apagar la caja si está vacío.
-
+        // 2. Rellenamos campo a campo.
         ActualizarCampo(txtNombre, datos.nombre);
         ActualizarCampo(txtEdad, datos.edad.ToString() + " años");
         ActualizarCampo(txtHobbies, "Hobbies:\n\n" + datos.hobbies);
         ActualizarCampo(txtCausaMuerte, "Causa de muerte:\n\n" + datos.causaMuerte);
-
-        // Para historiales largos
         ActualizarCampo(txtActosBuenos, "Actos Buenos:\n\n" + datos.actosBuenos);
         ActualizarCampo(txtActosMalos, "Actos Malos:\n\n" + datos.actosMalos);
 
-        // Forzamos a Unity a recalcular el layout inmediatamente (a veces tarda un frame)
-        UnityEngine.UI.LayoutRebuilder.ForceRebuildLayoutImmediate(panelCompleto.GetComponent<RectTransform>());
+        // 3. INICIAMOS LA REPARACIÓN DEL LAYOUT
+        // En lugar de hacerlo inmediato, llamamos a la corrutina que espera un frame.
+        StartCoroutine(ForzarActualizacionLayout());
     }
 
     public void OcultarDatos()
@@ -47,8 +46,28 @@ public class NPCUIController : MonoBehaviour
         panelCompleto.SetActive(false);
     }
 
+    // --- CORRUTINA PARA ARREGLAR EL "DIRTY LAYOUT" ---
+    IEnumerator ForzarActualizacionLayout()
+    {
+        // Esperamos al final del frame. Esto da tiempo a TextMeshPro a calcular
+        // cuánto espacio ocupa el texto nuevo.
+        yield return new WaitForEndOfFrame();
+
+        RectTransform rectTransformPanel = panelCompleto.GetComponent<RectTransform>();
+
+        if (rectTransformPanel != null)
+        {
+            // Forzamos la reconstrucción dos veces por seguridad (a veces los layouts anidados fallan a la primera)
+            LayoutRebuilder.ForceRebuildLayoutImmediate(rectTransformPanel);
+
+            // Opcional: Si sigue fallando, descomenta la siguiente línea para esperar otro frame extra
+            // yield return null; 
+
+            LayoutRebuilder.ForceRebuildLayoutImmediate(rectTransformPanel);
+        }
+    }
+
     // --- Función Mágica ---
-    // Si el texto está vacío, apaga al PADRE (la caja negra) para que no ocupe espacio.
     void ActualizarCampo(TextMeshProUGUI campoTexto, string contenido)
     {
         if (campoTexto == null) return;
@@ -67,7 +86,6 @@ public class NPCUIController : MonoBehaviour
         else
         {
             // Si está vacío, apagamos la caja entera. 
-            // El Vertical Layout Group del abuelo reordenará todo hacia arriba.
             cajaNegraPadre.SetActive(false);
         }
     }

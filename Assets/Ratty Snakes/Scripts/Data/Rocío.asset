@@ -16,6 +16,7 @@ MonoBehaviour:
   edad: 18
   hobbies: "Pr\xE1ctica de deportes de riesgo"
   modeloEspecifico: {fileID: 82343500076214742, guid: 94f85a61ed0fe034e97634f9a2d56985, type: 3}
+  tonoVoz: 1.2
   causaMuerte: "Intent\xF3 pasar con un coche deportivo entre dos camiones y se cal\xF3
     el volante. "
   actosBuenos: El dinero que ganaba con las competiciones de Red Bull lo utilizaba
@@ -23,7 +24,7 @@ MonoBehaviour:
   actosMalos: 'Poner laxantes en la botella de agua a uno de sus competidores. '
   karmaScore: -1
   fraseEntrada: "\xA1Qu\xE9 pasa loco!"
-  reaccionPositiva: "\xA1\xA1\xA1WaSSuuup!!! Cielo, all\xE1 voy HAhaHAHa \xA1que
-    empiece la fiesta!"
-  reaccionNegativa: "\xA1EH! \xA1EH!, que no he hecho nada, t\xEDo, d\xE9jame pasar,
-    \xA1sin m\xED no hay para\xEDso, bro!"
+  reaccionPositiva: "\xA1\xA1\xA1WaSSuuup!!! Cielo, all\xE1 voy \xA1que empiece la
+    fiesta!"
+  reaccionNegativa: "\xA1EH! \xA1EH!, que no he hecho nada, t\xEDo, \xA1d\xE9jame
+    pasar!"
