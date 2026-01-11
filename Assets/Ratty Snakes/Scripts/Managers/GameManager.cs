@@ -134,8 +134,7 @@ public class GameManager : MonoBehaviour
             yield return Hablar("Y no te duermas, porque tienes a " + total + " almas esperando ahí en la cola.");
 
             ActualizarLibro();
-            yield return Hablar("Por cierto, si pierdes la cuenta o quieres revisar cuántos difuntos faltan.");
-            yield return Hablar("Consulta el Libro de Registro Diario que tienes en la mesa.");
+            yield return Hablar("Por cierto, si pierdes la cuenta o quieres revisar cuántos difuntos faltan.Consulta el Libro de Registro Diario que tienes en la mesa.");
             yield return Hablar("Ahí se apunta todo automáticamente. Úsalo.");
 
             yield return Hablar("Eso es todo. Suerte.");
@@ -253,7 +252,8 @@ public class GameManager : MonoBehaviour
             }
 
             yield return Hablar("No es fácil mantener el equilibrio, pero tu lo has clavado hoy.");
-            yield return Hablar("Estás CONTRATADO, te has ganado el sueldo. Nos vemos mañana.");
+            yield return Hablar("Estás CONTRATADO, te has ganado el sueldo. Que Dios te lo pague.");
+            yield return Hablar("Nos vemos mañana.");
         }
 
         yield return new WaitForSeconds(2f);

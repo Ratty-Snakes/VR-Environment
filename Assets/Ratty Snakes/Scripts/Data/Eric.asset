@@ -15,7 +15,7 @@ MonoBehaviour:
   nombre: Eric
   edad: 28
   hobbies: Hacer skate con sus amigos por las noches
-  modeloEspecifico: {fileID: 816762600386231481, guid: 51724126dfb71664b80ce9fea38595c0, type: 3}
+  modeloEspecifico: {fileID: 919132149155446097, guid: 7b9748156407b924ebd8662de3a3c2a1, type: 3}
   tonoVoz: 1.1
   causaMuerte: "C\xE1ncer de pulm\xF3n"
   actosBuenos: Preparaba las comidas a su abuela enferma

@@ -117,15 +117,16 @@ public class TutorialManager : MonoBehaviour
         yield return Hablar("Escucha, he tenido que despedir a San Pedro.");
         yield return Hablar("El muy borracho no dejaba de beber 'agua' en el trabajo.");
         yield return Hablar("Ahora tú estás al cargo.");
-        yield return Hablar("Te encargarás de decidir quién se merece entrar al cielo y quien no.");
+        yield return Hablar("Te encargarás de decidir quién se merece entrar al cielo y quién no.");
 
         yield return Hablar("Empecemos tu entrenamiento, becario.");
         botonPulsado = false;
 
+        yield return Hablar("Pulsa el BOTÓN rojo de la mesa para llamar al primer difunto de la fila.");
+
         // ---> ENCENDER FLECHA BOTÓN <---
         if (flechaBoton != null) flechaBoton.SetActive(true);
 
-        yield return Hablar("Pulsa el BOTÓN rojo de la mesa para llamar al primer difunto de la fila.");
 
         yield return new WaitUntil(() => botonPulsado);
 
@@ -156,7 +157,7 @@ public class TutorialManager : MonoBehaviour
         telefono.ReproducirFraseDios("");
 
         // 3. Dejamos 8 segundos de silencio para que el jugador lea la UI del NPC
-        yield return new WaitForSeconds(10f);
+        yield return new WaitForSeconds(15f);
         // ------------------------
 
         yield return Hablar("Adoptó 15 perritos con tres patas y donó su pensión. Murió de... ¿ternura ?");
@@ -205,10 +206,10 @@ public class TutorialManager : MonoBehaviour
         // --- PAUSA LECTURA ---
         yield return new WaitForSeconds(2f); // Espera breve
         telefono.ReproducirFraseDios("");    // Limpia texto
-        yield return new WaitForSeconds(10f); // Tiempo para ver al NPC feo
+        yield return new WaitForSeconds(15f); // Tiempo para ver al NPC feo
         // ------------------------
 
-        yield return Hablar("Se hace llamar 'Jesús'. Pero ese no es mi chico.");
+        yield return Hablar("Se hace llamar 'Jesús'. Pero no, ese no es mi chico.");
         yield return Hablar("Dice que multiplica panes, pero los roba del Mercadona.");
         yield return Hablar("Es un estafador.");
 
@@ -241,7 +242,7 @@ public class TutorialManager : MonoBehaviour
 
         yield return Hablar("Escucha, novato. El trabajo real no será tan fácil.");
         yield return Hablar("Tenemos un problema de overbooking. El cielo está a reventar.");
-        yield return Hablar("No caben todos. Tendrás que elegir quién entra y quién se queda fuera.");
+        yield return Hablar("Tendrás que elegir quién entra y quién se queda fuera.");
 
         yield return Hablar("Cada mañana te llamaré y te daré un LÍMITE DIARIO de difuntos que pueden ser aceptados.");
         yield return Hablar("Si dejas entrar a más gente de la cuenta... tú y yo tendremos problemas.");
@@ -277,6 +278,6 @@ public class TutorialManager : MonoBehaviour
     IEnumerator Hablar(string texto)
     {
         telefono.ReproducirFraseDios(texto);
-        yield return new WaitForSeconds(2f + texto.Length * 0.06f);
+        yield return new WaitForSeconds(2.5f + texto.Length * 0.06f);
     }
 }

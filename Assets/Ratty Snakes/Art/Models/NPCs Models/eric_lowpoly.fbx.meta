@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: e1bb86cf39e597e4bb15c20c447fc793
+guid: 7b9748156407b924ebd8662de3a3c2a1
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
@@ -7,7 +7,22 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: elsa_skull
+      name: m_eric_cigar
+    second: {fileID: 2100000, guid: 43a7e2a6318fb744c8f91b51858cad30, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: m_eric_glasses
+    second: {fileID: 2100000, guid: 386734c7d3e283e46aab545a7dfd6147, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: m_eric_hat
+    second: {fileID: 2100000, guid: 6ad118b5af7b94c4ba760d5752e61823, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: m_eric_skull
     second: {fileID: 2100000, guid: 4d6569692b3bb314eb527c4565d73e63, type: 2}
   materials:
     materialImportMode: 2
