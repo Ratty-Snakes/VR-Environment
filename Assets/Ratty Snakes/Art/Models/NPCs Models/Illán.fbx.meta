@@ -1,9 +1,24 @@
 fileFormatVersion: 2
-guid: d0ae442b478500a428f79ecbf50c22c9
+guid: c76295c998aed6c4589140eb268bf581
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: m_jan_glasses
+    second: {fileID: 2100000, guid: f462af0973bf6cf49976e7eefac91ba3, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: m_jan_postit
+    second: {fileID: 2100000, guid: 54486e9b8f08d83448e45bf90297e4fd, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: m_jan_skull
+    second: {fileID: 2100000, guid: 4d6569692b3bb314eb527c4565d73e63, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

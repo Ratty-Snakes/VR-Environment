@@ -2606,8 +2606,7 @@ PrefabInstance:
       propertyPath: m_ManipulationInput.m_InputSourceMode
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 5712664876877111600, guid: b200f6587d118224eba8467281481800, type: 3}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 3234853630605623997, guid: b200f6587d118224eba8467281481800, type: 3}
@@ -2751,8 +2750,7 @@ PrefabInstance:
       propertyPath: m_CastOrigin
       value: 
       objectReference: {fileID: 2577301593842775501}
-    m_RemovedComponents:
-    - {fileID: 3179295312718945089, guid: 3df3e1220f2164f448701a6de8084f92, type: 3}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 5745700813747042508, guid: 3df3e1220f2164f448701a6de8084f92, type: 3}

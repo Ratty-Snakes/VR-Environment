@@ -15,7 +15,7 @@ MonoBehaviour:
   nombre: "Ill\xE1n"
   edad: 12
   hobbies: Dibujar paisajes de memoria
-  modeloEspecifico: {fileID: 919132149155446097, guid: d0ae442b478500a428f79ecbf50c22c9, type: 3}
+  modeloEspecifico: {fileID: 919132149155446097, guid: c76295c998aed6c4589140eb268bf581, type: 3}
   tonoVoz: 1.4
   causaMuerte: "Unos ni\xF1os lo empujaron y cay\xF3 de cara sobre el bordillo de
     una carretera. "

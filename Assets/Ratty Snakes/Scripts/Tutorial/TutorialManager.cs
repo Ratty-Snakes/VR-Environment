@@ -157,7 +157,7 @@ public class TutorialManager : MonoBehaviour
         telefono.ReproducirFraseDios("");
 
         // 3. Dejamos 8 segundos de silencio para que el jugador lea la UI del NPC
-        yield return new WaitForSeconds(15f);
+        yield return new WaitForSeconds(12f);
         // ------------------------
 
         yield return Hablar("Adoptó 15 perritos con tres patas y donó su pensión. Murió de... ¿ternura ?");
@@ -206,7 +206,7 @@ public class TutorialManager : MonoBehaviour
         // --- PAUSA LECTURA ---
         yield return new WaitForSeconds(2f); // Espera breve
         telefono.ReproducirFraseDios("");    // Limpia texto
-        yield return new WaitForSeconds(15f); // Tiempo para ver al NPC feo
+        yield return new WaitForSeconds(12f); // Tiempo para ver al NPC feo
         // ------------------------
 
         yield return Hablar("Se hace llamar 'Jesús'. Pero no, ese no es mi chico.");
