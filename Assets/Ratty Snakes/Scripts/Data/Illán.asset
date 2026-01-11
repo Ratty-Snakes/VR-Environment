@@ -15,14 +15,15 @@ MonoBehaviour:
   nombre: "Ill\xE1n"
   edad: 12
   hobbies: Dibujar paisajes de memoria
-  modeloEspecifico: {fileID: 919132149155446097, guid: 25c025b5b918d3b438c31322340e3501, type: 3}
+  modeloEspecifico: {fileID: 919132149155446097, guid: c76295c998aed6c4589140eb268bf581, type: 3}
+  tonoVoz: 1.4
   causaMuerte: "Unos ni\xF1os lo empujaron y cay\xF3 de cara sobre el bordillo de
     una carretera. "
   actosBuenos: "Compart\xEDa siempre los regalos y postres que le daba su madre con
     sus hermanos mayores"
   actosMalos: "Dec\xEDa palabrotas en clase para la aprobaci\xF3n de los dem\xE1s"
-  karmaScore: 15
+  karmaScore: 18
   fraseEntrada: "\xA1Hala! \xA1Qu\xE9 alto!"
-  reaccionPositiva: "Ay, \xBFest\xE1s seguro?... Bueno, gracias se\xF1or"
+  reaccionPositiva: "Ay, \xBFest\xE1s seguro?... Bueno, gracias se\xF1or."
   reaccionNegativa: "\xBFEs por lo de las palabrotas? \xA1Joder, lo siento! \xA1Ay,
-    perd\xF3n! \xA1Mierda! \xA1No quer\xEDa decirlo!"
+    perd\xF3n!"

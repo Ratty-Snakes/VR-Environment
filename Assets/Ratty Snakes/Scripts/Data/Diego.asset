@@ -16,11 +16,11 @@ MonoBehaviour:
   edad: 30
   hobbies: Coleccionar cristales del mar
   modeloEspecifico: {fileID: 919132149155446097, guid: 09da2245964285e469f5969502151ddf, type: 3}
+  tonoVoz: 1
   causaMuerte: "Se electrocut\xF3 con una falla a tierra del bajo"
   actosBuenos: Rescataba  gatos de la calle para llevarlos a una protectora de animales
   actosMalos: "Peg\xF3 una bofetada a su novia una vez"
-  karmaScore: -8
+  karmaScore: -5
   fraseEntrada: "\xBFQu\xE9 hay?"
-  reaccionPositiva: "\u2669 \xA1\xA1Ooh, ooh, and he's buying a stairway to Heaveeeen!!
-    \u266B"
+  reaccionPositiva: "\xA1\xA1Ooh, ooh, and he's buying a stairway to Heaveeeen!!"
   reaccionNegativa: "El infierno no est\xE1 preparado para mi m\xFAsica, bro"

@@ -15,16 +15,14 @@ MonoBehaviour:
   nombre: Mortadelo
   edad: 15
   hobbies: "Disfrazarse para entretener ni\xF1os"
-  modeloEspecifico: {fileID: 919132149155446097, guid: 4619a84cb5fe2bf4188c5f6fe3e1ef23, type: 3}
+  modeloEspecifico: {fileID: 919132149155446097, guid: 6e5aacb190cf7df40ac6ab681a390b6b, type: 3}
+  tonoVoz: 1.2
   causaMuerte: "Ver v\xEDdeos y escuchar podcasts en YouTube sobre criminolog\xEDa."
   actosBuenos: "Devolvi\xF3 una cartera con 5000 \u20AC en efectivo a alguien que
     se le hab\xEDa ca\xEDdo"
-  actosMalos: Practicaba experimentos con animales y resultaba con la muerte o discapacidad
-    de los mismos
+  actosMalos: Realizaba experimentos con animales que a menudo terminaban en su muerte
+    o les causaban discapacidades
   karmaScore: -18
   fraseEntrada: Hola brother
-  reaccionPositiva: "Eres el m\xE1s sigma, tete, haha, t\xFA s\xED que le sabes.
-    \xA1\xA1AUUUUUUUU!!!"
-  reaccionNegativa: "NoNoNooo\u2026T\xCDO T\xCDO, hear me out, t\xEDo, tengo demasiado
-    flow como para ir al infierno, creo en Dios, lo juro, \xBFpor qu\xE9 me haces
-    esto? \xA1\xA1Pens\xE9 que est\xE1bamos de chill!!"
+  reaccionPositiva: "Eres el m\xE1s sigma, tete, \xA1\xA1AUUUUUUUU!!!"
+  reaccionNegativa: "Hear me out t\xEDo, pens\xE9 que est\xE1bamos de chill."

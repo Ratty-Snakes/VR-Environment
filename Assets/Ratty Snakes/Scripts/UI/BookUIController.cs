@@ -17,7 +17,7 @@ public class BookUIController : MonoBehaviour
         // 1. Actualizamos el Cupo
         if (textoCupo != null)
         {
-            textoCupo.text = $"CUPO: {aceptados} / {limiteDiario}";
+            textoCupo.text = $"Límite: {aceptados} / {limiteDiario}";
 
             // Feedback visual: Si te pasas, se pone rojo
             if (aceptados > limiteDiario) textoCupo.color = colorPeligro;
@@ -27,7 +27,7 @@ public class BookUIController : MonoBehaviour
         // 2. Actualizamos la Cola
         if (textoRestantes != null)
         {
-            textoRestantes.text = $"Pendientes: {enCola}";
+            textoRestantes.text = $"En cola: {enCola}";
         }
     }
 }

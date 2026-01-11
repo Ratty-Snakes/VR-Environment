@@ -65,31 +65,29 @@ public class NPCWaypointMovement : MonoBehaviour
 
     void GestionarLlegadaPunto(int indice)
     {
-        // CASO A: Llegamos al WP_1 (La Trampilla / Decisión)
-        if (indice == 1)
+        // CAMBIO AQUÍ: Ahora la mesa es el índice 2 (porque el 1 es el pasillo intermedio)
+        if (indice == 2)
         {
             estaMoviendose = false;
             esperandoDecision = true;
             Debug.Log("NPC: He llegado a la mesa. Esperando juicio.");
 
-            // --- NUEVO: SOLTAR LA FRASE DE ENTRADA ---
             if (reactionController != null)
             {
                 reactionController.MostrarFraseEntrada();
             }
-            // -----------------------------------------
 
-            // Avisamos al Manager para que muestre la UI
             AlLlegarA_Trampilla?.Invoke();
         }
         // CASO B: Llegamos al final (Cielo)
+        // Esto sigue funcionando igual porque usa .Length (el último)
         else if (indice == listaWaypoints.Length - 1)
         {
             Debug.Log("NPC: ¡Estoy en el cielo! Adiós.");
             AlLlegarA_Cielo?.Invoke();
             Destroy(gameObject);
         }
-        // CASO C: Punto intermedio
+        // CASO C: Punto intermedio (Spawn o Pasillo)
         else
         {
             indiceActual++;

@@ -1,7 +1,7 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using static UnityEngine.Rendering.STP;
 
 public class TutorialManager : MonoBehaviour
 {
@@ -11,9 +11,16 @@ public class TutorialManager : MonoBehaviour
     public GodPhoneController telefono;
     public NPCManager npcManager;
 
+    [Header("UI Gestos")]
+    public TutorialGestureUI uiGestos;
+
+    [Header("Guías Visuales (Flechas)")]
+    public GameObject flechaBoton;
+    public GameObject flechaPalanca;
+
     [Header("NPCs de Prueba")]
-    public NPCData benitoBueno; // Asigna aquí el SO de David
-    public NPCData jesusMalo;   // Asigna aquí el SO del Falso Jesús
+    public NPCData benitoBueno;
+    public NPCData jesusMalo;
 
     [Header("Configuración")]
     public string nombreEscenaJuego = "GameScene";
@@ -25,7 +32,7 @@ public class TutorialManager : MonoBehaviour
 
     // Control de audios/broncas
     private bool reproduciendoBronca = false;
-    private string fraseBroncaActual = "¡No! ¡Eso no es lo que te he dicho!"; // Frase por defecto
+    private string fraseBroncaActual = "¡No! ¡Eso no es lo que te he dicho!";
 
     private void Awake()
     {
@@ -41,6 +48,10 @@ public class TutorialManager : MonoBehaviour
             npcManager.OnIntentoProhibido += AlIntentarAccionProhibida;
         }
 
+        // --- INICIALIZACIÓN DE SEGURIDAD ---
+        if (flechaBoton != null) flechaBoton.SetActive(false);
+        if (flechaPalanca != null) flechaPalanca.SetActive(false);
+
         StartCoroutine(RutinaTutorial());
     }
 
@@ -53,7 +64,7 @@ public class TutorialManager : MonoBehaviour
         }
     }
 
-    // --- MÉTODOS PÚBLICOS (Conectados a eventos físicos) ---
+    // --- MÉTODOS PÚBLICOS ---
 
     public void JugadorContestoTelefono()
     {
@@ -74,7 +85,6 @@ public class TutorialManager : MonoBehaviour
 
     void AlIntentarAccionProhibida()
     {
-        // Si el jugador intenta hacer lo contrario a lo permitido
         if (!reproduciendoBronca)
         {
             StartCoroutine(RutinaBronca());
@@ -84,7 +94,6 @@ public class TutorialManager : MonoBehaviour
     IEnumerator RutinaBronca()
     {
         reproduciendoBronca = true;
-        // Reproduce la bronca específica del momento actual
         telefono.ReproducirFraseDios(fraseBroncaActual);
         yield return new WaitForSeconds(3f);
         reproduciendoBronca = false;
@@ -104,41 +113,63 @@ public class TutorialManager : MonoBehaviour
         yield return new WaitUntil(() => telefonoDescolgado);
         yield return new WaitForSeconds(0.5f);
 
-        yield return Hablar("¿Hola? Aquí el Jefe. Sí, Dios. El de la barba no, el original.");
+        yield return Hablar("¿Hola? Aquí el Jefe. Sí, Dios.");
         yield return Hablar("Escucha, he tenido que despedir a San Pedro.");
         yield return Hablar("El muy borracho no dejaba de beber 'agua' en el trabajo.");
-        yield return Hablar("Ahora estás al cargo. No lo estropees.");
-        yield return Hablar("Te encargarás de decidir quién se merece entrar al cielo y quien no.");
+        yield return Hablar("Ahora tú estás al cargo.");
+        yield return Hablar("Te encargarás de decidir quién se merece entrar al cielo y quién no.");
 
-        yield return Hablar("Empecemos tu entrenamiento.");
-        botonPulsado = false; // Reset botón
+        yield return Hablar("Empecemos tu entrenamiento, becario.");
+        botonPulsado = false;
+
         yield return Hablar("Pulsa el BOTÓN rojo de la mesa para llamar al primer difunto de la fila.");
 
+        // ---> ENCENDER FLECHA BOTÓN <---
+        if (flechaBoton != null) flechaBoton.SetActive(true);
+
+
         yield return new WaitUntil(() => botonPulsado);
+
+        // ---> APAGAR FLECHA BOTÓN <---
+        if (flechaBoton != null) flechaBoton.SetActive(false);
 
 
         // =================================================================
         // FASE 2: BENITO (DAVID) - EL BUENO
         // =================================================================
 
-        // REGLA: Prohibido rechazar (Infierno bloqueado)
         npcManager.SetRestriccionesTutorial(false, true);
-        // Configuramos la bronca específica por si el jugador intenta rechazarlo
         fraseBroncaActual = "¡No! ¡David es bueno! ¡Lee los papeles!";
 
         npcManager.SpawnNPC_Tutorial(benitoBueno);
         yield return new WaitForSeconds(1f);
 
-        decisionTomada = false; // Reset decisión
+        decisionTomada = false;
 
-        yield return Hablar("Vaya... este es David. Murió de... ¿ternura?");
-        yield return Hablar("Madre mía. Mira su ficha en la pantalla.");
-        yield return Hablar("Adoptó perros de tres patas y donó su pensión. Un blando, pero buena gente.");
-        yield return Hablar("A este lo queremos.");
+        yield return Hablar("¿Quién tenemos aquí? Ajá, este es David.");
+        yield return Hablar("Mira su biografía en la pantalla.");
+
+        // --- PAUSA LECTURA ---
+        // 1. Dejamos 2 segundos para leer "Mira su biografía..."
+        yield return new WaitForSeconds(2f);
+
+        // 2. Borramos el texto del teléfono para dejar espacio visual
+        telefono.ReproducirFraseDios("");
+
+        // 3. Dejamos 8 segundos de silencio para que el jugador lea la UI del NPC
+        yield return new WaitForSeconds(12f);
+        // ------------------------
+
+        yield return Hablar("Adoptó 15 perritos con tres patas y donó su pensión. Murió de... ¿ternura ?");
+        yield return Hablar("Un blando, pero buena gente. A este lo queremos.");
+
+        if (uiGestos != null) uiGestos.MostrarModoAceptar();
+
         yield return Hablar("Para aceptarlo al cielo, haz el gesto de PULGAR ARRIBA.");
 
-        // Esperamos a que el jugador acierte. Si falla, saltará la bronca automática.
         yield return new WaitUntil(() => decisionTomada);
+
+        if (uiGestos != null) uiGestos.OcultarTodo();
 
         yield return Hablar("¡Exacto! Bienvenido al Paraíso, David.");
         yield return new WaitForSeconds(1f);
@@ -150,35 +181,57 @@ public class TutorialManager : MonoBehaviour
 
         yield return Hablar("Bien hecho. Fácil, ¿eh? Vamos con el siguiente.");
 
-        botonPulsado = false; // Reset botón
+        botonPulsado = false;
+
+        // ---> ENCENDER FLECHA BOTÓN (OTRA VEZ) <---
+        if (flechaBoton != null) flechaBoton.SetActive(true);
+
         yield return Hablar("Dale al botón otra vez para llamar al siguiente.");
 
         yield return new WaitUntil(() => botonPulsado);
 
-        // REGLA: Prohibido aceptar (Cielo bloqueado)
+        // ---> APAGAR FLECHA BOTÓN <---
+        if (flechaBoton != null) flechaBoton.SetActive(false);
+
         npcManager.SetRestriccionesTutorial(true, false);
-        // Configuramos la bronca específica por si intenta aceptarlo
         fraseBroncaActual = "¿Estás loco? ¡Es un impostor! ¡Pulgar abajo!";
 
         npcManager.SpawnNPC_Tutorial(jesusMalo);
         yield return new WaitForSeconds(1f);
 
-        decisionTomada = false; // Reset decisión
+        decisionTomada = false;
 
         yield return Hablar("¡Ay, no! ¡Otra vez este pesado!");
-        yield return Hablar("Se hace llamar 'Jesús'. Dice que es mi hijo. ¡Ja!");
+
+        // --- PAUSA LECTURA ---
+        yield return new WaitForSeconds(2f); // Espera breve
+        telefono.ReproducirFraseDios("");    // Limpia texto
+        yield return new WaitForSeconds(12f); // Tiempo para ver al NPC feo
+        // ------------------------
+
+        yield return Hablar("Se hace llamar 'Jesús'. Pero no, ese no es mi chico.");
         yield return Hablar("Dice que multiplica panes, pero los roba del Mercadona.");
         yield return Hablar("Es un estafador.");
+
+        if (uiGestos != null) uiGestos.MostrarModoRechazar();
+
         yield return Hablar("A este no lo quiero ni ver. Haz el gesto de PULGAR ABAJO.");
 
-        // Esperamos a que la palanca se desbloquee (significa que hizo el gesto bien)
         yield return new WaitUntil(() => !npcManager.sistemaPalanca.IsLocked);
 
-        yield return Hablar("¡Bien hecho! ¿Ves esa palanca a tu derecha?");
-        yield return Hablar("Ahora se ha desbloqueado. TIRA DE ELLA y mándalo al Infierno.");
+        if (uiGestos != null) uiGestos.OcultarTodo();
 
-        // Esperamos a que baje la palanca físicamente
+        yield return Hablar("¡Bien hecho! ¿Ves esa palanca a tu derecha?");
+
+        // ---> ENCENDER FLECHA PALANCA <---
+        if (flechaPalanca != null) flechaPalanca.SetActive(true);
+
+        yield return Hablar("TIRA DE LA PALANCA y mándalo al Infierno.");
+
         yield return new WaitUntil(() => decisionTomada);
+
+        // ---> APAGAR FLECHA PALANCA <---
+        if (flechaPalanca != null) flechaPalanca.SetActive(false);
 
 
         // =================================================================
@@ -187,61 +240,44 @@ public class TutorialManager : MonoBehaviour
 
         yield return Hablar("Perfecto. Que se pudra ese impostor.");
 
-        yield return Hablar("Escucha, novato. El trabajo real no es tan fácil.");
+        yield return Hablar("Escucha, novato. El trabajo real no será tan fácil.");
         yield return Hablar("Tenemos un problema de overbooking. El cielo está a reventar.");
-        yield return Hablar("No caben todos. Tendrás que elegir quién entra y quién se queda fuera.");
+        yield return Hablar("Tendrás que elegir quién entra y quién se queda fuera.");
 
         yield return Hablar("Cada mañana te llamaré y te daré un LÍMITE DIARIO de difuntos que pueden ser aceptados.");
         yield return Hablar("Si dejas entrar a más gente de la cuenta... tú y yo tendremos problemas.");
 
-        // --- NUEVO: Explicación Calidad (Sin decir Karma explícitamente) ---
         yield return Hablar("Y ojo: no metas a cualquiera para llenar el cupo. No quiero basura en mi cielo.");
         yield return Hablar("Léete bien sus fichas. Asegúrate de que sus actos buenos compensen los malos.");
-        yield return Hablar("El cupo es limitado y el destino es ciego. Quizás el siguiente sea un santo... o quizás sea peor que este.");
-        yield return Hablar("Tendrás que confiar en tu instinto, porque no hay vuelta atrás.");
-       
 
         yield return Hablar("Al final del día revisaré tu trabajo personalmente.");
         yield return Hablar("Si el balance es positivo, tienes el puesto. Si no... estás despedido.");
 
         yield return Hablar("Venga, cuelga el teléfono. Tu turno empieza... ¡YA!");
 
-        // 1. Esperamos a que termine de decir la frase
         yield return new WaitForSeconds(1f);
 
-        // 2. LÓGICA DE FINALIZACIÓN
-
-        // CASO A: El jugador ya lo había colgado mientras Dios hablaba (Impaciente)
         if (telefono.estaColgado)
         {
             Debug.Log("El jugador ya había colgado. Esperando un momento dramático...");
-            yield return new WaitForSeconds(3f); // Pausa para asimilar
+            yield return new WaitForSeconds(2f);
         }
-        // CASO B: El jugador lo tiene en la mano o está en el suelo
         else
         {
             Debug.Log("Esperando a que el jugador cuelgue...");
-            // El tutorial se PAUSA aquí hasta que la variable cambie a true
             yield return new WaitUntil(() => telefono.estaColgado);
-
-            // Una vez colgado, damos un respiro de 1 segundo (el "Clack")
             yield return new WaitForSeconds(1f);
         }
 
-        // --- GUARDADO Y CAMBIO DE ESCENA ---
         Debug.Log("Tutorial completado. Guardando y saliendo.");
-
         PlayerPrefs.SetInt("TutorialCompletado", 1);
         PlayerPrefs.Save();
-
-        // Opción: Si tienes un fader, úsalo aquí. Si no, carga directa.
         SceneManager.LoadScene(nombreEscenaJuego);
     }
 
-        IEnumerator Hablar(string texto)
+    IEnumerator Hablar(string texto)
     {
         telefono.ReproducirFraseDios(texto);
-        // Esperamos un tiempo base (2s) + un poco extra según lo largo que sea el texto
-        yield return new WaitForSeconds(2f + texto.Length * 0.06f);
+        yield return new WaitForSeconds(2.5f + texto.Length * 0.06f);
     }
 }

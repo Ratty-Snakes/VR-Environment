@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d746dfd5547b064384d81121ccfbbee, type: 3}
+  m_Name: "Ra\xFAl"
+  m_EditorClassIdentifier: 
+  nombre: "Ra\xFAl"
+  edad: 19
+  hobbies: Dibujar coches
+  modeloEspecifico: {fileID: 919132149155446097, guid: e364b46900eba374c88e8b0928a9fe7c, type: 3}
+  tonoVoz: 1.1
+  causaMuerte: "En un juego de tiro de hachas, esta sali\xF3 rebotada de la pared
+    hacia su cabeza"
+  actosBuenos: "Siempre le tra\xEDa flores a su novia cuando estaba triste y le ataba
+    las bambas cuando lo necesitaba"
+  actosMalos: "Dej\xF3 embarazada a su novia porque no quer\xEDa usar preservativo
+    porque dec\xEDa que le incomodaban"
+  karmaScore: -4
+  fraseEntrada: "\xBFQu\xE9 pasa tronco? Jajja... \xBFLo pillas?"
+  reaccionPositiva: Si es que soy buena gente
+  reaccionNegativa: "Decepcionante, y a m\xED que me parec\xEDas buen t\xEDo\u2026"

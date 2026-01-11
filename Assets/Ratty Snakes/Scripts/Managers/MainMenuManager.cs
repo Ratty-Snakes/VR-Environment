@@ -13,6 +13,11 @@ public class MainMenuManager : MonoBehaviour
 
     void Start()
     {
+        // --- LÍNEA DE PRUEBAS (BORRAR AL TERMINAR EL DESARROLLO) ---
+        // Esto fuerza a que el juego olvide que ya jugaste cada vez que inicias el menú.
+        PlayerPrefs.DeleteKey("TutorialCompletado");
+        // -----------------------------------------------------------
+
         // Al empezar, nos aseguramos de ver el menú principal y no las opciones
         VolverAlMenuPrincipal();
     }

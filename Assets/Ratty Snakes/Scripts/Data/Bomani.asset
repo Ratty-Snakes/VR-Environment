@@ -16,13 +16,13 @@ MonoBehaviour:
   edad: 24
   hobbies: Fotografiar aves
   modeloEspecifico: {fileID: 919132149155446097, guid: 7d6bd198cc2717e41a112cb2b08be9b1, type: 3}
-  causaMuerte: "Pis\xF3  una mina durante una expedici\xF3n"
+  tonoVoz: 0.8
+  causaMuerte: "Pis\xF3 una mina durante una expedici\xF3n"
   actosBuenos: "Participaba activamente en manifestaciones para los derechos de los
     m\xE1s necesitados"
   actosMalos: "Ignor\xF3 la agresi\xF3n sexual de sus compa\xF1eros hacia otras mujeres
     militares, a pesar de no participar en ellas"
-  karmaScore: -5
-  fraseEntrada: Saludos
+  karmaScore: -2
+  fraseEntrada: Saludos comandante
   reaccionPositiva: "\xA1\xA1Eureka!! \xA1Dios siempre ha estado de mi lado! "
-  reaccionNegativa: "Pues sabes qu\xE9, tengo una misi\xF3n: le voy a dar una paliza
-    a un pintor austriaco muy conocido. Gracias por la oportunidad, compatriota."
+  reaccionNegativa: "Voy a aprovechar para pegar un par de dictadores\u2026"

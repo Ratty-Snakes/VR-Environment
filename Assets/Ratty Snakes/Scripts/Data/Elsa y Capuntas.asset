@@ -15,13 +15,13 @@ MonoBehaviour:
   nombre: Elsa y Capuntas
   edad: 6
   hobbies: Hacer pulseras de gomas para sus amigos
-  modeloEspecifico: {fileID: 2141787177037282559, guid: ca6d3d11a64f8754490b8ac31fb034e8, type: 3}
+  modeloEspecifico: {fileID: 919132149155446097, guid: e1bb86cf39e597e4bb15c20c447fc793, type: 3}
+  tonoVoz: 1.5
   causaMuerte: "Muerte infantil dados los problemas causados gen\xE9ticamente"
   actosBuenos: Reconocer cuando sus padres estaban cansados e intentar mantener silencio
     para que pudiesen descansar a pesar de sus necesidades.
   actosMalos: "Tirar constantemente cualquier objeto de cristal de la mesa o estanter\xEDa"
-  karmaScore: 14
+  karmaScore: 20
   fraseEntrada: Holi
-  reaccionPositiva: Ahora podremos jugar cuando queramos y dormir cuando queramos,
-    como dijo mami, hihihihi.
+  reaccionPositiva: Ahora podremos jugar y dormir cuando queramos, hihihihi.
   reaccionNegativa: "\xBFEh? \xBFQu\xE9 haces?"

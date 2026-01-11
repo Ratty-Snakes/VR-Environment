@@ -9,9 +9,16 @@ public class GodPhoneController : MonoBehaviour
     public GameObject canvasSubtitulos;
     public TextMeshProUGUI textoSubtitulos;
 
-    [Header("Assets")]
+    [Header("Audio General")]
     public AudioClip sonidoRing;
-    public AudioClip sonidoColgar; // El sonido "Clack" mecánico
+    public AudioClip sonidoColgar; // El sonido "Clack" mecánico cuando lo pones en la base
+
+    [Header("Audio Voz (Efecto Undertale)")]
+    public AudioClip sonidoVoz; // <--- ARRASTRA AQUÍ EL SONIDO "BLIP" CORTO
+    [Range(0.01f, 0.2f)]
+    public float velocidadEscritura = 0.05f; // Velocidad del texto
+    [Range(0.8f, 1.2f)]
+    public float variacionTono = 1.1f;       // Cuánto desafina (Personalidad)
 
     [Header("Efecto Vibración")]
     public Transform modeloVisualAuricular;
@@ -53,38 +60,36 @@ public class GodPhoneController : MonoBehaviour
     }
 
     // ====================================================================
-    // 🔌 MÉTODOS PARA EL SOCKET INTERACTOR (LA BASE FÍSICA)
+    // MÉTODOS PARA EL SOCKET INTERACTOR (LA BASE FÍSICA)
     // ====================================================================
-    // Conecta estos al XR Socket Interactor de la base del teléfono.
 
-    // Evento: Select Entered (Al ponerlo en la base)
     public void PonerEnBase()
     {
         estaColgado = true;
-        Debug.Log("📞 Físicas: Teléfono puesto en la base.");
+        Debug.Log("Físicas: Teléfono puesto en la base.");
 
         // Feedback sonoro mecánico (Clack)
-        if (audioSource && sonidoColgar) audioSource.PlayOneShot(sonidoColgar);
+        if (audioSource && sonidoColgar)
+        {
+            audioSource.pitch = 1f; // Reseteamos pitch por si acaso
+            audioSource.PlayOneShot(sonidoColgar);
+        }
 
         // Llamamos a la lógica original del juego
         AlColgarTelefono();
 
-        // Restauramos rotación por si acaso
         RestaurarRotacion();
     }
 
-    // Evento: Select Exited (Al cogerlo de la base)
     public void QuitarDeBase()
     {
         estaColgado = false;
-        Debug.Log("📞 Físicas: Teléfono levantado.");
-
-        // Llamamos a la lógica original del juego
+        Debug.Log("Físicas: Teléfono levantado.");
         AlDescolgarTelefono();
     }
 
     // ====================================================================
-    // 🧠 LÓGICA ORIGINAL (COMPATIBILIDAD CON GAME MANAGER)
+    // LÓGICA DE JUEGO
     // ====================================================================
 
     public void AlDescolgarTelefono()
@@ -95,9 +100,7 @@ public class GodPhoneController : MonoBehaviour
         }
         else
         {
-            // Si lo coges sin que suene
             RestaurarRotacion();
-            // Debug.Log("Has descolgado, pero nadie llamaba.");
         }
     }
 
@@ -107,7 +110,6 @@ public class GodPhoneController : MonoBehaviour
         {
             Colgar();
         }
-        // Aquí podrías añadir lógica extra si el GameManager necesita saber que has colgado aunque no hubiera llamada
     }
 
     // --- LÓGICA INTERNA ---
@@ -117,6 +119,7 @@ public class GodPhoneController : MonoBehaviour
         if (llamadaEnCurso || estaSonando) return;
 
         estaSonando = true;
+        audioSource.pitch = 1f; // Pitch normal para el Ring
         audioSource.clip = sonidoRing;
         audioSource.loop = true;
         audioSource.Play();
@@ -136,44 +139,46 @@ public class GodPhoneController : MonoBehaviour
         {
             TutorialManager.Instance.JugadorContestoTelefono();
         }
-
-        // 2. Notificar al GameManager (Si existe en la escena)
-        // Descomenta esto cuando estés en la escena del juego real
-        /*
-        if (GameManager.Instance != null)
-        {
-            GameManager.Instance.JugadorContestoTelefono();
-        }
-        */
     }
 
     public void Colgar()
     {
         llamadaEnCurso = false;
         if (canvasSubtitulos != null) canvasSubtitulos.SetActive(false);
+
         audioSource.Stop();
         RestaurarRotacion();
-
-        // Aquí podrías notificar al GameManager si hiciera falta
     }
 
-    public void ReproducirFraseDios(string texto, AudioClip audioVoz = null)
+    public void ReproducirFraseDios(string texto)
     {
         if (rutinaLlamada != null) StopCoroutine(rutinaLlamada);
-        rutinaLlamada = StartCoroutine(RutinaHablar(texto, audioVoz));
+        rutinaLlamada = StartCoroutine(RutinaHablar(texto));
     }
 
-    IEnumerator RutinaHablar(string texto, AudioClip audioVoz)
+    // --- LA CORRUTINA MAGICA TIPO UNDERTALE ---
+    IEnumerator RutinaHablar(string texto)
     {
         if (canvasSubtitulos != null) canvasSubtitulos.SetActive(true);
         textoSubtitulos.text = "";
-        if (audioVoz != null) audioSource.PlayOneShot(audioVoz);
 
         foreach (char letra in texto.ToCharArray())
         {
             textoSubtitulos.text += letra;
-            yield return new WaitForSeconds(0.03f);
+
+            // Lógica de sonido por letra
+            if (!char.IsWhiteSpace(letra) && audioSource != null && sonidoVoz != null)
+            {
+                // Variamos el tono aleatoriamente
+                audioSource.pitch = Random.Range(1f - (variacionTono - 1f), variacionTono);
+                audioSource.PlayOneShot(sonidoVoz);
+            }
+
+            yield return new WaitForSeconds(velocidadEscritura);
         }
+
+        // Al terminar la frase, reseteamos el pitch para el futuro
+        if (audioSource != null) audioSource.pitch = 1f;
     }
 
     void RestaurarRotacion()
