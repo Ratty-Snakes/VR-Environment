@@ -140,7 +140,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 511039d757bd4e541a93e5cc8e707f52, type: 3}
+        m_Texture: {fileID: 2800000, guid: 19bc77d437678ce4bbabdbec31edaee7, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MaskMap:
@@ -517,7 +517,7 @@ Material:
     - _simpleUI: 0
     - _utsTechnique: 0
     m_Colors:
-    - _1st_ShadeColor: {r: 0.4245283, g: 0.4245283, b: 0.4245283, a: 1}
+    - _1st_ShadeColor: {r: 0.3962264, g: 0.3962264, b: 0.3962264, a: 1}
     - _2nd_ShadeColor: {r: 1, g: 1, b: 1, a: 1}
     - _AngelRingMaskColor: {r: 0, g: 1, b: 0, a: 1}
     - _AngelRing_Color: {r: 1, g: 1, b: 1, a: 1}

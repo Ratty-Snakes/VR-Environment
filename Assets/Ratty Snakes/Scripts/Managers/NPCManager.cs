@@ -25,7 +25,6 @@ public class NPCManager : MonoBehaviour
     public ParticleSystem fxFuegoInfierno;
     public Light luzInfierno;
     public AudioClip sonidoFuego;
-    // ----------------------------------------------
 
     [Header("Efectos de Sonido (General)")]
     public AudioSource audioSource;
@@ -36,12 +35,11 @@ public class NPCManager : MonoBehaviour
     private GameObject npcActualObj;
     private NPCWaypointMovement movimientoActual;
     private NPCReactionController reaccionActual;
+    private NPCHoverEffect hoverActual; // <--- NUEVA REFERENCIA
     private NPCData datosActuales;
 
     private bool mesaOcupada = false;
     private bool npcListoParaSentencia = false;
-
-    // CORRECCIÓN BUG MÚLTIPLES DECISIONES
     private bool decisionTomadaConActual = false;
 
     // RESTRICCIONES DE TUTORIAL
@@ -55,12 +53,7 @@ public class NPCManager : MonoBehaviour
     [Header("Pool de Quejas (Físicas)")]
     [TextArea]
     public string[] listaQuejas = new string[] {
-        "¡Oye! ¡Más respeto a los muertos!",
-        "¡Ay! ¡Eso duele!",
-        "¿Pero qué te pasa?",
-        "¡Voy a llamar a mi abogado!",
-        "¡Cuidado con la mercancía!",
-        "¡Au! ¡Que soy de hueso frágil!"
+        "¡Oye! ¡Más respeto a los muertos!", "¡Ay! ¡Eso duele!", "¿Pero qué te pasa?", "¡Cuidado con la mercancía!"
     };
 
     public string GetQuejaRandom()
@@ -80,23 +73,17 @@ public class NPCManager : MonoBehaviour
         Debug.Log("Sistema NPC Listo.");
         if (sistemaPalanca != null) sistemaPalanca.BloquearPalanca();
 
-        // --- SEGURIDAD INICIAL ---
-        // Esto asegura que si dejaste la luz encendida en el editor, se apague al dar Play.
         if (fxFuegoInfierno != null) fxFuegoInfierno.Stop();
         if (luzInfierno != null) luzInfierno.enabled = false;
     }
 
-    // --- CONFIGURACIÓN PARA EL TUTORIAL ---
     public void SetRestriccionesTutorial(bool bloquearCielo, bool bloquearInfierno)
     {
         tutorialBloquearAceptar = bloquearCielo;
         tutorialBloquearRechazar = bloquearInfierno;
     }
 
-    public void BotonSiguientePulsado()
-    {
-        if (!mesaOcupada) TraerSiguienteNPC();
-    }
+    public void BotonSiguientePulsado() { if (!mesaOcupada) TraerSiguienteNPC(); }
 
     public void TraerSiguienteNPC()
     {
@@ -116,14 +103,12 @@ public class NPCManager : MonoBehaviour
     {
         mesaOcupada = true;
         npcListoParaSentencia = false;
-
         decisionTomadaConActual = false;
 
         if (sistemaPalanca != null) sistemaPalanca.BloquearPalanca();
 
         // 1. Crear el NPC base
         npcActualObj = Instantiate(npcPrefab, listaWaypoints[0].position, listaWaypoints[0].rotation);
-
         MeshRenderer baseMesh = npcActualObj.GetComponent<MeshRenderer>();
         if (baseMesh != null) baseMesh.enabled = false;
 
@@ -134,11 +119,15 @@ public class NPCManager : MonoBehaviour
             modeloVisual.transform.localPosition = Vector3.zero;
             modeloVisual.transform.localRotation = Quaternion.identity;
 
+            // --- AÑADIR SCRIPT DE LEVITACIÓN AL MODELO VISUAL ---
+            hoverActual = modeloVisual.AddComponent<NPCHoverEffect>();
+            // Configuración opcional si quieres tocarla desde aquí:
+            hoverActual.amplitud = 0.05f; // Flota 5cm arriba y abajo
+            hoverActual.velocidad = 2.0f;
+            // ----------------------------------------------------
+
             NPCImpactReactor reactor = npcActualObj.GetComponent<NPCImpactReactor>();
-            if (reactor != null)
-            {
-                reactor.ConfigurarCabeza(modeloVisual.transform);
-            }
+            if (reactor != null) reactor.ConfigurarCabeza(modeloVisual.transform);
         }
         else if (baseMesh != null) baseMesh.enabled = true;
 
@@ -158,54 +147,42 @@ public class NPCManager : MonoBehaviour
     {
         npcListoParaSentencia = true;
         if (uiController != null) uiController.MostrarDatos(datosActuales);
+        if (reaccionActual != null) reaccionActual.MostrarFraseEntrada();
 
-        if (reaccionActual != null)
-        {
-            reaccionActual.MostrarFraseEntrada();
-        }
+        // --- ACTIVAR LEVITACIÓN ---
+        if (hoverActual != null) hoverActual.ActivarLevitacion();
     }
 
     // ---------------------------------------------------------
     // TOMA DE DECISIONES
     // ---------------------------------------------------------
 
-    public void RecibirGesto_Aceptar() // Pulgar Arriba
+    public void RecibirGesto_Aceptar()
     {
         if (decisionTomadaConActual) return;
         if (npcActualObj == null || !mesaOcupada || !npcListoParaSentencia) return;
 
-        if (tutorialBloquearAceptar)
-        {
-            Debug.Log("Tutorial: No puedes aceptar a este NPC.");
-            OnIntentoProhibido?.Invoke();
-            return;
-        }
+        if (tutorialBloquearAceptar) { OnIntentoProhibido?.Invoke(); return; }
 
         decisionTomadaConActual = true;
+
+        // --- DESACTIVAR LEVITACIÓN (Para que suba al cielo recto) ---
+        if (hoverActual != null) hoverActual.DesactivarLevitacion();
+
         OnDecisionTutorial?.Invoke(true);
         StartCoroutine(SecuenciaAceptarCielo());
     }
 
-    public void RecibirGesto_Rechazar() // Pulgar Abajo
+    public void RecibirGesto_Rechazar()
     {
         if (decisionTomadaConActual) return;
         if (npcActualObj == null || !mesaOcupada || !npcListoParaSentencia) return;
 
-        if (tutorialBloquearRechazar)
-        {
-            Debug.Log("Tutorial: No puedes rechazar a este NPC.");
-            OnIntentoProhibido?.Invoke();
-            return;
-        }
-
+        if (tutorialBloquearRechazar) { OnIntentoProhibido?.Invoke(); return; }
         if (sistemaPalanca != null && !sistemaPalanca.IsLocked) return;
 
         if (fxExplosionRoja != null) fxExplosionRoja.Play();
-
-        if (audioSource != null && sonidoRechazar != null)
-        {
-            audioSource.PlayOneShot(sonidoRechazar);
-        }
+        if (audioSource != null && sonidoRechazar != null) audioSource.PlayOneShot(sonidoRechazar);
 
         if (sistemaPalanca != null) sistemaPalanca.DesbloquearPalanca();
         if (uiController != null) uiController.OcultarDatos();
@@ -220,26 +197,18 @@ public class NPCManager : MonoBehaviour
         if (sistemaPalanca != null && sistemaPalanca.IsLocked) return;
 
         decisionTomadaConActual = true;
-        Debug.Log("Palanca bajada. ¡AL INFIERNO!");
 
-        // --- ENCENDER EFECTOS INFIERNO ---
+        // --- DESACTIVAR LEVITACIÓN (Para que caiga bien) ---
+        if (hoverActual != null) hoverActual.DesactivarLevitacion();
+
         if (fxFuegoInfierno != null) fxFuegoInfierno.Play();
-        if (luzInfierno != null) luzInfierno.enabled = true; // <--- Se enciende aquí
-
-        // SONIDO FUEGO
-        if (audioSource != null && sonidoFuego != null)
-        {
-            audioSource.PlayOneShot(sonidoFuego);
-        }
-        // ---------------------------------
+        if (luzInfierno != null) luzInfierno.enabled = true;
+        if (audioSource != null && sonidoFuego != null) audioSource.PlayOneShot(sonidoFuego);
 
         OnDecisionTutorial?.Invoke(false);
         if (GameManager.Instance != null) GameManager.Instance.RegistrarRechazo();
 
-        if (movimientoActual != null)
-        {
-            movimientoActual.CaerAlInfierno();
-        }
+        if (movimientoActual != null) movimientoActual.CaerAlInfierno();
 
         Invoke("LimpiarYTraerSiguiente", 4f);
     }
@@ -251,11 +220,7 @@ public class NPCManager : MonoBehaviour
         if (reaccionActual != null) reaccionActual.ShowPositiveReaction();
 
         if (fxConfetti != null) fxConfetti.Play();
-
-        if (audioSource != null && sonidoAceptar != null)
-        {
-            audioSource.PlayOneShot(sonidoAceptar);
-        }
+        if (audioSource != null && sonidoAceptar != null) audioSource.PlayOneShot(sonidoAceptar);
 
         if (puertasCielo != null)
         {
@@ -276,12 +241,11 @@ public class NPCManager : MonoBehaviour
         }
         if (controladorTrampilla != null) controladorTrampilla.CloseTrapdoor();
 
-        // --- APAGAR EFECTOS INFIERNO (LIMPIEZA) ---
         if (fxFuegoInfierno != null) fxFuegoInfierno.Stop();
-        if (luzInfierno != null) luzInfierno.enabled = false; // <--- Se apaga aquí obligatoriamente
-        // -------------------------------------------
+        if (luzInfierno != null) luzInfierno.enabled = false;
 
         npcActualObj = null;
+        hoverActual = null; // Limpiamos referencia
         mesaOcupada = false;
         npcListoParaSentencia = false;
 
