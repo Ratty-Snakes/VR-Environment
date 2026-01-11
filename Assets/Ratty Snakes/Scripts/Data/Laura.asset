@@ -15,7 +15,8 @@ MonoBehaviour:
   nombre: Laura
   edad: 26
   hobbies: "Hacer rituales sat\xE1nicos"
-  modeloEspecifico: {fileID: 7067213188820658053, guid: 5c9d03fd5e88aa749ac5ef8addd4db9b, type: 3}
+  modeloEspecifico: {fileID: 919132149155446097, guid: 4fb6f58ef2a60ad4cb082aa11299ee2c, type: 3}
+  tonoVoz: 1
   causaMuerte: " Vendi\xF3 su alma al diablo para ver a su kpoper favorito"
   actosBuenos: Recoger las bandejas del McDonalds cuando acababa de comer
   actosMalos: "Contact\xF3 con Satan\xE1s y tuvo fantas\xEDas sexuales con \xE9l"

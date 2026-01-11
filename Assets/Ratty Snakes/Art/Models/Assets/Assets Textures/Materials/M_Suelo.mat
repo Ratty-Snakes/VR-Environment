@@ -13,9 +13,10 @@ Material:
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
   - _EMISSIVE_SIMPLE
-  - _IS_CLIPPING_TRANSMODE
   - _IS_OUTLINE_CLIPPING_YES
+  - _IS_TRANSCLIPPING_ON
   - _OUTLINE_NML
+  - _SHADINGGRADEMAP
   m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -285,7 +286,7 @@ Material:
     - _ClearCoatMask: 0
     - _ClearCoatSmoothness: 0
     - _ClippingMatteMode: 0
-    - _ClippingMode: 2
+    - _ClippingMode: 1
     - _Clipping_Level: 0
     - _CoatMask: 0
     - _ColorShift_Speed: 0
@@ -500,7 +501,7 @@ Material:
     - _ZWrite: 1
     - _ZWriteMode: 0
     - _simpleUI: 0
-    - _utsTechnique: 0
+    - _utsTechnique: 1
     m_Colors:
     - _1st_ShadeColor: {r: 1, g: 1, b: 1, a: 1}
     - _2nd_ShadeColor: {r: 1, g: 1, b: 1, a: 1}
