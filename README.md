@@ -79,6 +79,13 @@ StairwayToHeaven
 * **Mireia Pérez** - *Animación* - [Github](https://github.com/mirept)
 * **Guillem Rodríguez** - *Programación* - [Github](https://github.com/Guillemrv6)
 
+## Créditos
+
+Assets usados en el proyecto:
+* **Casual Hit** - *GURU_GURU* [Unity Asset Store](https://assetstore.unity.com/packages/vfx/particles/casual-hit-318002)
+* **Hyper Casual FX** - *Lana_Studio* [Unity Asset Store](https://assetstore.unity.com/packages/vfx/particles/hyper-casual-fx-200333)
+* **(Free)StylizedVFX Fire Pack** - *Hun0FX* [Unity Asset Store](https://assetstore.unity.com/packages/vfx/particles/fire-explosions/free-stylizedvfx-fire-pack-321082)
+
 ## Licencia 
 
 Este proyecto está bajo la Licencia MTI - mira el archivo [LICENSE.md](LICENSE.md) para detalles
