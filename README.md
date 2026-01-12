@@ -35,7 +35,13 @@ Para StairwayToHeaven necesitas lo siguiente:
 
 ### Instalación 
 
-**(SideQuest / Meta Quest Developer Hub)**
+**Descarga la última versión**
+
+Ve a la pestaña de [Releases](https://github.com/Ratty-Snakes/VR-Environment/releases)de este repositorio y descarga el archivo más reciente:
+
+StairwayToHeaven_v1.0.apk
+
+**SideQuest / Meta Quest Developer Hub**
 
 1. Abre SideQuest o MQDH en tu PC.
 
