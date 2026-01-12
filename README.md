@@ -37,9 +37,11 @@ Para StairwayToHeaven necesitas lo siguiente:
 
 **Descarga la última versión**
 
-Ve a la pestaña de [Releases](https://github.com/Ratty-Snakes/VR-Environment/releases)de este repositorio y descarga el archivo más reciente:
+Ve a la pestaña de [Releases](https://github.com/Ratty-Snakes/VR-Environment/releases) de este repositorio y descarga el archivo APK más reciente:
 
-StairwayToHeaven_v1.0.apk
+```
+StairwayToHeaven_v2.0.apk
+```
 
 **SideQuest / Meta Quest Developer Hub**
 
