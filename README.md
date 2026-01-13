@@ -4,6 +4,8 @@ Stairway To Heaven es un juego de realidad virtual donde encarnas a un oficinist
 
 Durante tu jornada, situado detrás de un escritorio , atenderás a los difuntos uno a uno. Cada muerto presentará una biografía, sus virtudes y defectos, así como los actos lícitos e ilícitos que cometió en la Tierra. Tu objetivo: decidir, según tu criterio, quién es digno de entrar al cielo sin saber si el siguiente será más merecedor que el anterior.
 
+### Tráiler
+
 [![Trailer del Release](https://img.youtube.com/vi/axPnpI4XuZY/maxresdefault.jpg)](https://www.youtube.com/watch?v=axPnpI4XuZY)
 
 
